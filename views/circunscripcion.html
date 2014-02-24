@@ -1,0 +1,55 @@
+{% extends 'layout.html' %}
+{% block content %}
+	<div class="row container">
+		<div class="diputadosTotal">
+			<span>Circunscripción de {{ circunscripcion.nombre }}</span>
+			<span>{{ circunscripcion.total_escanos }} escaños</span>
+		</div>
+		<div class="large-8 columns">
+			<!--#include virtual="/modules/circunscripcion/{{circunscripcion.id}}/diputados" -->
+		</div>
+		<div class="large-4 columns">
+			<table id="totales_votacion" class="totales_votacion large-12 columns">
+				<tbody>
+					{% for total in circunscripcion.totales_votacion %}
+					<tr id="total_{{loop.index}}" class="desglose">
+						{% if total.tipo == "total_votos" %}
+							<th>Votos totales</th>
+							{% elseif total.tipo == "abstencion" %}
+							<th>Abstención</th>
+							{% elseif total.tipo == "nulos" %}
+							<th>Votos nulos</th>
+							{% elseif total.tipo == "blancos" %}
+							<th>Votos en blanco</th>
+						{% endif %}
+						<td>{{total.votos}}</td>
+						<td>{{total.porcentaje}}</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			<table id="desglose_votacion" class="desglose large-12 columns">
+				<thead>
+					<tr>
+						<th>Formación</th>
+						<th>Votos</th>
+						<th>Porcentaje</th>
+						<th>Escaños</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for desglose in circunscripcion.desglose_votacion%}
+					<tr id="desg_{{loop.index}}" class="desglose">
+						{% for detalles in desglose %}
+						<td id="{{loop.key}}" class="{{loop.key}}">{{detalles}}</td>
+						{% endfor %}
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>	
+		</div>
+	</div>
+{% endblock %}
+{% block scripts %}
+	{% parent %}
+{% endblock %}

@@ -1,0 +1,28 @@
+
+{% macro listaOrganos(orgs) %}
+	<tr>
+	{% for org in orgs %}
+		<td><a href='/organo/{{org.id}}'>{{org.nombre}}</a>
+	{% endfor %}
+	</tr>
+{% endmacro %}
+
+{% extends 'layout.html' %}
+{% block content %}
+	<div class="row container">
+		<div class="diputadosTotal">
+			<span>Órganos</span>
+			<span>{{orgGen|length}}</span>
+			<span>{{com|length}}</span>
+			<span>{{subcom|length}}</span>
+		</div>
+		<table>
+			<tbody>
+			{{ listaOrganos(orgGen) }}
+			</tbody>
+		</table>
+	</div>
+{% endblock %}
+{% block scripts %}
+	{% parent %}
+{% endblock %}

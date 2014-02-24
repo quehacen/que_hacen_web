@@ -1,0 +1,60 @@
+<div class="actividad-parlamentaria mark">
+	<div class="columns container large-12 mark mod-votaciones">
+		<h3>Últimas votaciones de {{diputado.nombre}} {{diputado.apellidos}}</h3>
+		<!--#include virtual="/modules/diputado/{{diputado.id}}/votaciones" -->
+	</div>
+	<div class="columns container large-6 mark mod-iniciativas-parlamentarias">
+		<h3>Iniciativas Parlamentarias</h3>
+		<ul class="list box">
+			<li>
+				<span class="data total">{{actividad.iniciativas.total}}</span>
+				<span class="desc">Total</span>
+			</li>
+			<li>
+				<span class="data">{{actividad.iniciativas.preg_orales}}</span>
+				<span class="desc">Preguntas orales</span>
+			</li>
+			<li>
+				<span class="data">{{actividad.iniciativas.preg_escritas}}</span>
+				<span class="desc">Preguntas escritas</span>
+			</li>
+			<li>
+				<span class="data">{{actividad.iniciativas.solicit_comparecencias}}</span>
+				<span class="desc">Solicitud de comparecencias</span>
+			</li>
+			<li>
+				<span class="data">{{actividad.iniciativas.solicit_informes}}</span>
+				<span class="desc">Solicitud de informes</span>
+			</li>
+			<li>
+				<span class="data">{{actividad.iniciativas.solicit_nuevo_organo}}</span>
+				<span class="desc">Solicitud de nuevo órgano</span>
+			</li>				
+		</ul>
+	</div>
+	<div class="columns container large-6 mark mod-intervenciones-parlamentarias">
+		<h3>Intervenciones Parlamentarias</h3>
+		<ul class="list box">
+			<li>
+				<span class="data total">{{actividad.intervenciones.total}}</span>
+				<span class="desc">Total</span>
+			</li>
+			<li>
+				<span class="data">{{actividad.intervenciones.pleno}}</span>
+				<span class="desc">Pleno</span>
+			</li>
+			<li>
+				<span class="data">{{actividad.intervenciones.comision}}</span>
+				<span class="desc">Comisión</span>
+			</li>
+			<li>
+				<span class="data">{{actividad.intervenciones.dipuPerm}}</span>
+				<span class="desc">Diputación permanente</span>
+			</li>
+			<li>
+				<span class="data">{{actividad.intervenciones.otras}}</span>
+				<span class="desc">Otras</span>
+			</li>
+		</ul>
+	</div>
+</div>

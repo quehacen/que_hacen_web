@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+{% block content %}
+	<div class="row">
+		<div class="large-12 columns list">
+			<!--#include virtual="/modules/grupos/list" -->
+		</div>
+	</div>
+	<div class="row container">
+		<div class="diputadosTotal">
+			<span>Formación</span>
+		</div>
+		<div class="content">
+			<ul class="gruposParlamentarios">
+				{% for grupo in formaciones %}
+				<li>
+					<input id="partidos_grupo_{{loop.index}}" type="checkbox" name="partidos_grupo_{{loop.index}}">
+					<label for="partidos_grupo_{{loop.index}}">{{grupo.nombre}}</label>
+					<ul class="partidos">
+						{% for partido in grupo.partidos %}
+						<li>
+							<a href="/formacion/{{partido.id}}"><span>
+								{{partido.nombre_completo}}
+							</span></a>
+						</li>
+						{% endfor %}
+					</ul>
+				</li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+{% endblock %}
+{% block scripts %}
+	{% parent %}
+{% endblock %}

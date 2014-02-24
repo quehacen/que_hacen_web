@@ -1,0 +1,26 @@
+<h1>Ultimas votaciones</h1>
+<ul>
+	{% for votacion in votaciones %}
+	<li>
+		<div class="content">
+			<div class="head">
+				<span class="sesion">Sesión {{votacion.xml.resultado.informacion.sesion}} - </span>
+				<span class="votacion">Votación {{votacion.xml.resultado.informacion.numerovotacion}} - </span>
+				<span class="fecha">{{votacion.xml.resultado.informacion.fecha}}</span>
+			</div>
+			<h1><a href="{{votacion.url}}">{{votacion.xml.resultado.informacion.titulo}}</a></h1>
+			<div class="resultado">
+				<h2>Resultado de la votación</h2>
+				<ul>
+					<li>{{votacion.xml.resultado.totales.afavor}} <span>A favor</span></li>
+					<li>{{votacion.xml.resultado.totales.encontra}} <span>En contra</span></li>
+					<li>{{votacion.xml.resultado.totales.presentes}} <span>Presentes</span></li>
+					<li>{{votacion.xml.resultado.totales.abstenciones}} <span>Abstenciones</span></li>
+					<li>{{votacion.xml.resultado.totales.novotan}} <span>No votan</span></li>
+				</ul>
+			</div>
+		</div>
+	</li>	
+	{% endfor %}
+</ul>
+<div class="more"><a href="">Ver más votaciones</a></div>

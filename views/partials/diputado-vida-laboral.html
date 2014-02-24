@@ -1,0 +1,14 @@
+<div>vida laboral</div>
+<table id="vidalaboral" class="large-12 columns">
+	{{trayectoria}}
+	{% for trayec in trayectoria %}
+		<tr>
+			<td>
+			{% if trayec.fini %}
+				{{trayec.fini}}-{{trayec.ffin}}
+			{% endif %}
+			</td>
+			<td>{{trayec.cargo}}</td>
+		</tr>
+	{% endfor %}
+</table>

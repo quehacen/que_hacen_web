@@ -1,0 +1,50 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+{% spaceless %}
+{% if organo.tipo == "C" %}{% set t_org = "Comisión"%}{% set n_org = organo.pre+" "+organo.nombre %}
+{% elif organo.tipo == "SC" %}{% set t_org = "Subcomisión"%}{% set n_org = organo.pre+" "+organo.nombre %}
+{% else %}{% set t_org = ""%}{% set n_org = organo.nombre %}
+{%endif%}
+
+{% if organo.tipo=="C" or organo.tipo=="SC" %}
+	{% if organo.legis==1 %}{%set legisnom="Legislativa"%}{%else%}{%set legisnom="No legislativa"%}{%endif%}
+	{% if organo.perm==1 %}{%set permnom="permanente"%}{%else%}{%set permnom="no permanente"%}{%endif%}
+	{% if organo.mixta==1 %}{%set mixtanom="mixta"%}{%else%}{%set mixtanom=""%}{%endif%}
+{%endif%}
+
+{% set ndipus=0 %}
+{% set ndipusex=0 %}
+{% for dipu in diputados %}
+	{% for cargo in dipu.cargos_congreso %}
+		{% set cargoid=""+cargo.idOrgano+"" %}
+		{% if cargoid == organo.id %} 
+			{%if !cargo.baja %}{% set ndipus +=1 %}{% else %}{% set ndipusex +=1 %}{% endif %}
+		{% endif %}
+	{% endfor %}
+{% endfor %}
+{% set ndipushist = ndipus+ndipusex %}
+
+{% endspaceless %}
+
+	<div class="row container">
+		<div class="large-12 columns">
+			<span class="encabezadoMod">{{t_org }} {{n_org }}</span>
+		{% if organo.tipo=="C" or organo.tipo=="SC" %}
+			<span class="subTitle2">Tipo: {{legisnom}} {{permnom}} {{mixtanom}}</span>
+			<span class="subTitle2">Fecha de constitución: {{organo.constituida}}</span>
+		{% else %}
+			<span class="subTitle2">(Breve descripción)</span>
+		{% endif %}
+		</div>
+		<div class="large-12 columns mod-grupo-diputados">
+                        <span class="encabezadoMod">{{ndipus}} diputados</span>
+                        <!--<span class="subTitle">Nº diputados históricos: {{ndipushist}}</span>-->
+			
+                        <!--#include virtual="/modules/organo/{{organo.id}}/diputados" -->
+                </div>
+</div>
+{% endblock %}
+{% block scripts %}
+	{% parent %}
+{% endblock %}

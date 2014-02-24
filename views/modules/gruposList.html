@@ -1,0 +1,7 @@
+<ul class="grupos">
+{% for grupo in grupos %}
+<li class="grupo {% if active == grupo.id %}active{% endif %}">
+	<a href="/grupo-parlamentario/{{grupo.nombre}}">{{grupo.nombre}}</a>
+</li>
+{% endfor %}
+</ul>

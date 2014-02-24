@@ -1,0 +1,25 @@
+<table id="bienes" class="large-12 columns">
+{% for bienGrupo in bienes %}
+	<tr>
+		<th>{{loop.key}}</th>
+	</tr>
+	{% for bien in bienGrupo %}
+	<tr>	
+		{% set _bien=bien %}
+		{% if bien.tipo == 'Activos' %}
+			<td>{% include "../partials/bienes/activos.html" with _bien %}</td>
+		{% elseif bien.tipo == 'BIU' %}
+			<td>{% include "../partials/bienes/inmuebles.html" with _bien %}</td>
+		{% elseif bien.tipo == 'BIR' %}
+			<td>{% include "../partials/bienes/bir.html" with _bien %}</td>
+		{% elseif bien.tipo == 'Rentas' %}
+			<td>{% include "../partials/bienes/rentas.html" with _bien %}</td>
+		{% elseif bien.tipo == 'VE' %}
+			<td>{% include "../partials/bienes/vehiculo.html" with _bien %}</td>
+		{% elseif bien.tipo == 'Deudas' %}
+			<td>{% include "../partials/bienes/deudas.html" with _bien %}</td>
+		{% endif %}
+	</tr>	
+	{% endfor %}
+{% endfor %}
+</table>

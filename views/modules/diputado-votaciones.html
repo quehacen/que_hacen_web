@@ -1,0 +1,27 @@
+<ul class="votaciones">
+{% for votacion in votaciones %}
+	<li class="votacion">
+		<div class="info">
+			<span class="sesion">Sesion {{votacion.xml.resultado.informacion.sesion}} - </span>
+			<span class="numerovotacion">Votacion {{votacion.xml.resultado.informacion.numerovotacion}} - </span>
+			<span class="fecha">{{votacion.xml.resultado.informacion.fecha}}</span>
+		</div>
+		<div class="tituloVotacion"><a href="{{votacion.url}}" target="_blank">{{votacion.xml.resultado.informacion.titulo}}</a></div>
+		<div class="resultado">
+			<span class="asentimiento {{votacion.xml.resultado.totales.asentimiento | slugify}}">
+				{% if votacion.xml.resultado.totales.asentimiento == "No"%}Rechazada
+				{% else %}Aprobada{% endif %}
+			</span>
+			{% set _votacion = votacion.xml.resultado.votaciones.votacion|first %}
+			<span class="voto {{_votacion.voto | slugify}}">
+				{% if _votacion.voto == "No" %}Voto en contra
+				{% elseif _votacion.voto == "Sí" %}Voto a favor
+				{% elseif _votacion.voto == "No vota" %}No vota
+				{% elseif _votacion.voto == "Abstención" %}Abstención
+				{% endif %}
+			</span>
+		</div>
+		<div class="textoExpediente">{{votacion.xml.resultado.informacion.textoexpediente}}</div>
+	</li>
+{% endfor %}
+</ul>

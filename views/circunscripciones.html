@@ -1,0 +1,20 @@
+{% extends 'layout.html' %}
+{% block content %}
+	<div class="row container">
+		<div class="diputadosTotal">
+			<span>Circunscripciones</span>
+		</div>
+		<table>
+			<tbody>
+			{% for circuns in circunscripciones %}
+				<tr>
+					<td><a href="/circunscripcion/{{circuns.normalized.url}}">{{ circuns.nombre }}</a></td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
+{% endblock %}
+{% block scripts %}
+	{% parent %}
+{% endblock %}

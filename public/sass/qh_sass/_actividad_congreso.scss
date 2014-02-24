@@ -1,0 +1,96 @@
+%resultado {
+	.asentimiento, .voto{
+		color: white;
+		padding: 4px;
+		font-weight: bold;
+		&.no{
+			background-color: $activityRed;
+		}
+		&.si{
+			background-color: $activityGreen;
+		}
+		&.abstencion{
+			background-color: $activityYellow;
+		}
+		&.no-vota {
+			background-color: black;
+		}
+
+	}
+}
+
+.actividad-parlamentaria {
+	a {
+		@extend %textLink;
+	}
+
+	h3 {
+		display: block;
+		text-align: center;
+	}
+	.votaciones {
+		.votacion {
+			padding: 10px 0;
+			border-bottom: 1px dashed $lightGray;
+			&:last-child {
+				border-bottom: none;
+			}
+			> * {
+				padding: 2px 0;
+			}
+			.info{
+				display: block;
+				color: $secondGray;
+				span {
+					display: inline-block;
+					font-size: 12px;
+				}
+			}
+			.tituloVotacion{
+				padding-bottom: 4px;
+			}
+			.resultado {
+				@extend %resultado;
+				font-size: 14px;
+				span {display: inline-block;}
+			}
+			.textoExpediente{
+				font-size: 14px;
+				line-height: $textLineHeight;
+				color: $secondGray;
+			}
+		}
+	}
+	.mod-iniciativas-parlamentarias, .mod-intervenciones-parlamentarias {
+		$items : 3.1;
+		.list {
+			background-color: $lightGray;
+			display: block;
+			padding: 10px;
+			@include box-shadow(inset 0 0 1px rgba(black,.2));
+		}
+		li {
+			width: floor(percentage(1/$items));
+			min-height: 70px;
+			display: inline-block;
+			vertical-align: top;
+			color:$secondGray;
+			span { 
+				display:block; 
+				text-align: center;
+			}
+			.data {
+				font-size: 32px;
+				font-weight: bold;
+				line-height: 1.2em;
+				&.total {
+					color : $activityGreen;
+				}
+			}
+			.desc {
+				line-height: 1.2em;
+				font-size: 12px;
+			}
+		}
+	}
+}

@@ -1,0 +1,47 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<!--div class="twitterContent">TwitterContent</div-->
+<div class="row">
+	<div class="large-8 columns">
+		<div class="latestPost large-12 columns container">
+			<!--#include virtual="/modules/portada/ultimos-posts" -->
+		</div>
+		<div class="iniciativas latest large-12 columns container">
+			<!--#include virtual="/modules/portada/ultimas-iniciativas" -->
+		</div>	
+	</div>
+	<div class="large-4 columns">
+		<!--div class="participa container">
+			Participa
+		</div-->
+		<div class="actividad container">
+			<div class="header">Actividad en el congreso</div>
+			<ul class="tabs">
+				<li class="active">
+					<a href="#masiniciativas">
+						<h3>Diputados con más iniciativas</h3>
+					</a>
+				</li>
+				<li>
+					<a href="#menosiniciativas">
+						<h3>Diputados con menos iniciativas</h3>
+					</a>
+				</li>
+			</ul>
+			<div class="tabContent">
+				<div id="masiniciativas">
+					<!--#include virtual="/modules/portada/actividad/mas-iniciativas" -->
+				</div>
+				<div id="menosiniciativas">
+					<!--#include virtual="/modules/portada/actividad/menos-iniciativas" -->
+				</div>
+			</div>
+		</div>
+		<!--div class="votaciones container">
+			<!--#include virtual="/modules/portada/ultimas-votaciones" -->
+		<!--/div-->
+
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,305 @@
+body    { background:#f2f2f2; }
+
+ul, 
+ul li   { list-style: none; padding:0; margin:0;}
+
+.fullrow        { max-width:100%; }
+.fullrow .row   { margin-left: auto; margin-right: auto; max-width:62.5em; }
+
+.container { margin-top: 1em;}
+.container,
+.container.diputado { border: 1px solid #c3c3c3; background-color: white; border-radius: 5px;}
+.container .columns { padding:0;}
+
+.header {
+    background-color: black;
+    color: white;
+}
+.header h1 {
+    width: 60%;
+    height: 85px;
+    display: inline-block;
+    overflow: hidden;
+    text-indent: -100%;
+    background-image: url(/images/logo.jpg);
+    background-repeat: no-repeat;
+    background-position: left center;
+    padding: 0;
+    margin: 0;
+    float: left;
+}
+.header form {
+    display: inline-block;
+    width: 40%;
+    padding-top: 1.5em;
+}
+.header form input[type="text"]{
+    display: inline-block;
+    -webkit-border-radius: 2px 0 0 2px;
+    padding: 1em;
+    float: left;
+    border: none;
+    width: 65%;
+    box-shadow: inset 0 0 20px rgba(0,0,0,.2),0px -1px 0px rgba(255,255,255,.4);
+}
+
+.header form input[type="submit"]{
+    background-color:red;
+    border: none;
+    display: inline-block;
+    padding: 1em;
+    float: left;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    width: 35%;
+    border-radius: 0 2px 2px 0;
+    box-shadow: inset 0 0 20px rgba(0,0,0,.2),0px -1px 0px rgba(255,255,255,.3);
+}
+
+.nav { background-color:#333;}
+.nav.secondary          { background-color: #44474c; border-bottom: 4px solid #ff6956; box-shadow: 0 1px 10px rgba(0,0,0,.2);}
+.nav.secondary ul       { padding: 0; margin: 0; }
+.nav.secondary ul li    { display: inline-block; text-transform: uppercase;}
+.nav.secondary ul li a  { color: rgba(255,255,255,.7); font-weight: normal; font-size: 8.5pt; line-height: 1em; text-decoration: none; padding: 14px 7px; display: block;}
+.nav.secondary ul li a.active { background-color: #ff6956; box-shadow: inset 0 1px 1px rgba(255,255,255,.4); font-weight: bold; color: white;}
+
+.footer { background-color:#ff6956; color:white; margin-top: 1em;}
+.footer dl {line-height:1em;font-size: 9pt;}
+.footer dl dt {text-transform:uppercase; font-weight:bold;padding: 1em 0 1em 0; margin:0 0 .5em 0; border-bottom: 1px solid rgba(2552,255,255,.4);}
+.footer dl dd {margin:0;display:block;padding:4px 0;}
+.footer dl dd a {text-decoration:none; color:white; font-weight:bold;display: block;}
+.footer .section {padding: 0 !important;}
+i.social            { display:inline-block; width:22px; height:22px; background: url(/images/socialIcons.png) no-repeat 0 0 transparent;}
+i.social + span     { display:inline-block; vertical-align: top; padding: .45em;}
+i.social.twitter    { background-position: 0px 0; }
+i.social.facebook   { background-position: 0px -22px; }
+i.social.youtube    { background-position: 0 -44px; }
+
+
+.pagination {padding:.1em;}
+.pagination a,
+.pagination span { display:inline-block; font-size:.8em; width:33%; text-align:center;}
+.pagination a { color:#333; }
+.pagination span { font-weight:bold; color:#000; }
+
+.extendedInfoDiputado{}
+
+.infoDiputado {
+    border-bottom: 1px solid #c3c3c3;
+    /*height: 152px;*/
+    height:auto;
+}
+.infoDiputado .ficha {
+    position: relative;
+    display: block;
+    padding: .7em;
+    border-left: 1px solid #c3c3c3;
+}
+.infoDiputado .ficha  > span:first-child { width: 150px; height: 150px; border-radius:50%; border: 4px solid rgb(182, 182, 182); overflow: hidden; padding: 0; display: inline-block; position: relative; margin-right: 30px;}
+.infoDiputado .ficha  > span:first-child > img {display:block; }
+.infoDiputado .ficha  > span:first-child > img.carnet { width: 100%;position: relative;height: auto;display: block;vertical-align: middle;margin-top: -50%;top: 37%;}
+.infoDiputado .ficha img.partido { width: 50px; position: absolute; left: 150px; top: 150px; margin-top: -40px; margin-left: -20px;}
+.infoDiputado .ficha span { display: block; color: #44474c; float: left;}
+.infoDiputado .ficha span.nombre {
+    font-size: 25px;
+    font-weight: bold;
+}
+.infoDiputado .ficha span.circunscripcion {
+    font-size: .9em;
+    padding-top: 1em;
+}
+.infoDiputado .ficha span.grupo {
+    font-size: .9em;
+    padding-top: 0.5em;
+}
+
+.infoDiputado .details {
+    padding: 1em;
+    border-right: 1px solid #c3c3c3;
+}
+.infoDiputado .details li {
+    padding: .2em 0;
+}
+.infoDiputado .details li span { display:block; font-size: .9em; color: #44474c;}
+.infoDiputado .prevDip {
+}
+.infoDiputado .nextDip {}
+.infoDiputado .prevDip,
+.infoDiputado .nextDip { position:relative; height:100%; background-color:white;overflow:hidden; text-indent:-100%; border-radius: 5px;}
+
+.tabs { background-color: #f2f2f2; border: 1px solid #999; font-size: 0.7em; font-weight: bold; background-image: linear-gradient(to bottom,transparent 50%, rgba(0,0,0,.1)); border-radius: 4px; margin: 1em;}
+.tabs li { display: inline-block; padding: .5em 0;}
+.tabs li.active a { background-color: #fe5339; background-image: linear-gradient(to bottom, rgba(255,255,255,.2) 50%,transparent 55%); border-radius: 4px; color: white;}
+.tabs li a { text-decoration: none; color: #333; text-transform: uppercase; padding: 1em; display: block;}
+
+table { width: 100%;}
+table td {}
+#trayectoria { padding:1em;}
+#trayectoria tr { font-size: .5em;} 
+#trayectoria tr:nth-child(odd) { background-color: #f2f2f2;}
+#trayectoria td { font-size: 1.6em; padding: 1em; color: #484b50;} 
+#trayectoria td:first-child { text-align: center; color: #fe5339; font-weight: bold; width: 15%;}
+
+/**
+ listado de diputados
+ **/
+ 
+.diputadosTotal {text-align: center; padding: 1em 0; border-bottom: 1px solid #c3c3c3; }
+.diputadosTotal span {font-size: 20px; display: block; margin: 5px 0; color: #665; }
+.diputadosTotal span:first-child {color:black; font-weight:bold; }
+.diputadosTotal + span {text-align: left; padding: .5em 1em !important; font-size: 20px; line-height:2em; color: #665; }
+
+/** Modulo diputados **/
+.diputados {}
+.diputados .diputado { display: inline-table; width: 7em; padding: 1%; text-align:center; }
+.diputados .diputado a {display:block; margin:0 auto; font-size: 9pt; text-align:center; position:relative; /* min-height: 9em; */}
+
+.diputados .diputado a .fotoimg { width: 90px;
+height: 90px;
+border-radius: 50%;
+border: 4px solid rgb(182, 182, 182);
+overflow: hidden;
+padding: 0;
+display: inline-block;
+position: relative;
+ }
+.diputados .diputado a .partidoimg { height: 2em; position: absolute; top: 66px; margin-left: 1.2em; }
+
+.diputados .diputado a .nombre,
+.diputados .diputado a .grupo,
+.diputados .diputado a .partido { display:block; padding: .4em;}
+.diputados .diputado a .nombre  { }
+.diputados .diputado a .grupo   { }
+.diputados .diputado a .partido { }
+
+.hddn {
+    position:absolute; width:0;height:0;overflow:hidden; text-indent:-100%;
+}
+
+.diputados_p .diputados {overflow-y:visible; overflow-x:hidden;display:block; height: 500px;}
+.grupos_p .diputados { overflow-y:visible; overflow-x:hidden;display:block; height: 500px; }
+
+.diputados_p .diputados .diputado,
+.circunscripciones_p .diputados .diputado,
+.grupos_p .diputados .diputado { width: 19.5%; }
+
+.diputados_p .diputados .diputado a .grupo,
+.circunscripciones_p .diputados .diputado a .grupo,
+.grupos_p .diputados .diputado a .grupo   { /*hddn*/position:absolute; width:0;height:0;overflow:hidden; text-indent:-100%; }
+.diputados_p .diputados .diputado a .partido,
+.circunscripciones_p .diputados .diputado a .partido,
+.grupos_p .diputados .diputado a .partido { /*hddn*/position:absolute; width:0;height:0;overflow:hidden; text-indent:-100%; }
+
+/** Modulo listadoGrupos **/
+.grupos { display:block; background-color:white; border:1px solid #c3c3c3; padding: .3em 1em; border-radius: 5px; margin-top: 1em;}
+.grupos .grupo { display:inline-block; padding:.5em .5em;}
+.grupos .grupo.active {
+    background-color: #fe5339;
+    border-radius: 5px;
+}
+.grupos .grupo a { color:black; font-weight:bold; font-size:8pt; text-transform:uppercase;}
+.grupos .grupo.active a{color: white;}
+
+/**** Modulo iniciativas ***/
+.iniciativas {}
+.iniciativas .iniciativa        { display:block; padding:.5em}
+.iniciativas .iniciativa > *    { display:block;}
+
+.encabezadoMod {text-align: center; padding: 1em 0; border-top: 1px solid #c3c3c3; display: block;font-weight: bold;color: #555;font-size: 15pt;line-height: 1em;}
+.subTitle {text-align: center; line-height:1em; display: block;font-weight: normal;color: #555;font-size: 15pt;margin-top: -.8em;margin-bottom: 1em;}
+
+
+.filtros {}
+.filtros input[type="search"]{-webkit-appearance: none;border: 1px solid #c3c3c3;padding: .5em 0em;font-size: 1em;width: 98%;background: #f2f2f2;color: #44474c;}
+/** acciones 
+ul.diputadosList li *,
+ul.diputadosList li a,
+ul.diputadosList li a img { transition:all .333s 0s;}
+ul.diputadosList li a:hover     { background-color: rgb(0, 162, 184); color: white;}
+ul.diputadosList li a:hover img { -webkit-filter:none;}
+ul.diputadosList li a:hover span { color:white; }
+**/
+
+/**
+ Votacion
+**/
+.infoVotacion       { padding: 1em !important;display:block; }
+.infoVotacion .info { font-size: 9pt; color:#666;}
+.infoVotacion h2    { font-size:12pt; margin: 0; padding: .7em 0;}
+.infoVotacion h2 a  { color: #fe5339; }
+.infoVotacion span  { display:block; }
+.infoVotacion span.resultado            { font-size:10pt; display:inline-block; padding: .4em;line-height:1.2em;color:white; font-weight: bold;}
+.infoVotacion span.resultado.aprobada   { background-color:#6fc354;}
+.infoVotacion span.resultado.noaprobada { background-color:#e22b0b;}
+.infoVotacion .descVotacion { padding:.4em 0;}
+.infoVotacion .descVotacion span { display:block;color:#666;font-size:11pt;line-height:1.2em; padding: 0;}
+.infoVotacion ul.resultado li               { display:inline-block; width: 30%; margin: .4em 0; height:auto;padding:.4em; background-color:#f2f2f2; border:1px solid #c3c3c3; text-align:center; padding-bottom: 3em; position:relative;}
+.infoVotacion ul.resultado li.asentimiento  { display:none;}
+.infoVotacion ul.resultado li span {}
+.infoVotacion ul.resultado li .tipo         { position:absolute;bottom:0;width:100%;left:0; padding: .6em;border-top:1px solid #c3c3c3; line-height: 1em;}
+.infoVotacion ul.resultado li .result       { font-size:30pt; font-weight:bold; line-height: 1.4em; text-shadow: 0 1px 0px white,0 -1px 0 #e4e4e4;}
+.infoVotacion ul.resultado li .votoemitido  { font-size:8pt; color:#666; line-height: 1.5em;}
+
+/* colores */
+.infoVotacion ul.resultado li.afavor .result        { color:#6fc354;}
+.infoVotacion ul.resultado li.encontra .result      { color:#f70504;}
+.infoVotacion ul.resultado li.presentes .result     { color:#1695fe;}
+.infoVotacion ul.resultado li.abstenciones .result  { color:#ecbc02;}
+.infoVotacion ul.resultado li.novotan  .result      { color:#333;}
+/************/
+.infoVotacion ul.resultado li.afavor .tipo          { border-color:#6fc354;}
+.infoVotacion ul.resultado li.encontra .tipo        { border-color:#f70504;}
+.infoVotacion ul.resultado li.presentes .tipo       { border-color:#1695fe;}
+.infoVotacion ul.resultado li.abstenciones .tipo    { border-color:#ecbc02;}
+.infoVotacion ul.resultado li.novotan  .tipo        { border-color:#333;}
+.infoVotacion ol {list-style:none; padding:0}
+
+/* ultimas votaciones */
+.infoVotacion .ultimasvotaciones    {
+    padding: 1em;
+}
+.infoVotacion .ultimasvotaciones li {
+    border-bottom: 1px solid #fe5339;
+    padding: 1em 0;
+}
+.infoVotacion .ultimasvotaciones ul.resultado li {background: none; border: none;display: block;padding: 0;text-align: left;margin: 0;}
+.infoVotacion .ultimasvotaciones ul.resultado li span {display: inline;font-size: 9pt;color: #333;}
+.infoVotacion .ultimasvotaciones ul.resultado li .result { color: #333;}
+.infoVotacion .ultimasvotaciones ul.resultado li .tipo {position: relative;border: none;padding: 0;}
+.infoVotacion .ultimasvotaciones ul.resultado li .tipo i{position:relative; width: 1em; height: 1em; background-color:red;border-radius:100%;display: inline-block;margin-right: .5em;}
+
+.infoVotacion .ultimasvotaciones ul.resultado li.asentimiento {display: none;}
+.infoVotacion .ultimasvotaciones ul.resultado li.afavor .tipo i     { background-color: #6fc354;}
+.infoVotacion .ultimasvotaciones ul.resultado li.encontra .tipo i   { background-color: #f70504;}
+.infoVotacion .ultimasvotaciones ul.resultado li.presentes .tipo i  { background-color: #1695fe;}
+.infoVotacion .ultimasvotaciones ul.resultado li.abstenciones .tipo i { background-color: #ecbc02;}
+.infoVotacion .ultimasvotaciones ul.resultado li.novotan .tipo i    { background-color: #333;}
+
+table{margin:1em 0; border-bottom:1px solid #fe5339;}
+table td,table th {border-bottom:1px solid #e4e4e4;}
+table thead th {border-bottom:1px solid #999;}
+table th {text-align:left;padding:.3em;}
+table td {padding:.3em; font-size:.8em}
+
+.votaciones {display:block;}
+.votaciones li {display:block;}
+.votaciones li span {display:block;}
+.votaciones .votacionesPorSesion {}
+.votaciones .votacionesPorSesion li {padding:.2em .5em;}
+.votaciones .votacionesPorSesion span {font-size:9pt;}
+.votaciones .votacionesPorSesion li a {color:#fe5339; }
+
+
+input[type="checkbox"] { opacity: 0; position: absolute; }
+input[type="checkbox"] ~ label {display:block;}
+input[type="checkbox"] ~ ul {display:none; padding-left: 10px;}
+input[type="checkbox"]:checked ~ ul {display:block;}
+
+a {color: #fe5339; text-decoration: none;}
+.gruposParlamentarios > li { position: relative; padding: .3em; font-size: .8em; }
+.gruposParlamentarios ul > li { display:block; padding: .3em; }
+
+.filter .firstLetterFilter li {
+    display: inline-block;
+}

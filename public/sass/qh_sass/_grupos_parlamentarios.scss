@@ -1,0 +1,41 @@
+.formacion{
+	color: $mainRed;
+	padding: 0px 4px;
+	font-weight:bold;
+}
+
+.mod-grupo-cabecera{
+	
+}
+
+.mod-grupo-iniciciativas{
+	
+}
+
+.mod-grupo-diputados{
+	
+}
+
+.mod-grupo-contacto{
+	
+	.info {
+		
+		font-size: 11px;
+		color: $secondGray;
+		
+		.contact{
+		
+			img{
+				max-width: 30%;
+				display: block;
+			}
+			span {
+				word-wrap: break-word;
+			}
+		}
+		.contacto {
+
+		}
+	}
+	
+}

@@ -1,0 +1,36 @@
+{% set baseURL = "http://dev.quehacenlosdiputados.net" %}
+<div class="columns info large-6 mark">
+	<ul class="columns large-12 list mark">
+	{% for formacion in formaciones %}
+		<li class="columns large-6 contact mark">
+			<div class="info">
+				<img src="{{baseURL}}/img/logosPartidos/{{formacion.nombre | url_decode}}.png" alt=""/>
+				{% if formacion.contacto %}
+					<span>{{formacion.nombre_completo}}</span>
+				{% else %}
+					<span>{{formacion.nombre}}</span>	
+				{% endif %}
+			</div>
+			
+			{% if formacion.contacto %}
+				{% for contacto in formacion.contacto %}
+					<span>{{contacto.url}}</span>
+				{% endfor %}
+			{% endif %}
+		</li>
+	{% endfor %}
+	</ul>
+</div>
+
+<div class="columns map large-6 mark">
+	<ul class="row columns large-12 mark">
+	{% for formacion in formaciones %}
+		{% if formacion.direccion%}
+		<li class="columns large-6 mark">
+			<img src="http://maps.googleapis.com/maps/api/staticmap?center={{formacion.direccion.coordenadas}}&markers={{formacion.direccion.coordenadas}}&zoom=16&size=200x200&sensor=false">
+			<span>{{ formacion.nombre }}: {{ formacion.direccion.texto }}</span>
+		</li>
+		{% endif %}
+	{% endfor %}
+	</ul>
+</div>

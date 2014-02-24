@@ -1,0 +1,16 @@
+<div class="large-12 columns">
+	<h1>Últimas iniciativas parlamentarias</h1>
+</div>
+<div class="content large-12 columns">
+	<ul>
+		{% for iniciativa in iniciativas %}
+		<li>
+			<a href="#">
+				<span>{{iniciativa.titulo}}</span>
+			</a>
+			<span>Presentado el {{iniciativa.presentado}}, calificado el {{iniciativa.calificado}}</span>
+		</li>
+		{% endfor %}
+	</ul>
+	<a href="">ver todas</a>
+</div>

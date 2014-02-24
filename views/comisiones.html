@@ -1,0 +1,59 @@
+{% extends 'layout.html' %}
+
+{% block title %}Comisiones{% endblock %}
+
+{% block content %}
+	<div class="row container">
+		<div class="diputadosTotal">
+			<span>Comisiones del Congreso</span>
+		</div>
+		<div>
+			<ul class="tabs">
+				<li class="tab"><a href="#legislativa">Legislativas / No legislativas</a></li>
+				<li class="tab"><a href="#mixta">Sólo diputados / Mixtas</a></li>
+				<li class="tab"><a href="#permanente">Permanentes / No permanentes</a></li>
+			</ul>
+			<!--select id="filtrosOrg" style='display:block;'>
+			<option>&lt;Selecciona filtro&gt;</option>
+			<option>Legislativas / No legislativas</option>
+			<option>Sólo diputados / Mixtas</option>
+			<option>Permanentes / No permanentes</option>
+			</select-->
+			<div class="containerComisiones">
+				<table>
+					<tbody>
+					{% spaceless %}
+					{% set legisOrd = comisiones|groupBy('legis') %}
+					{% set comLegis=legisOrd[1]%}
+					{% set comNoLegis=legisOrd[0]%}
+					{% endspaceless%}
+
+					<tr>
+						<th>Legislativas ({{comLegis|length}})</th>
+					</tr>
+					{% for com in comLegis %}
+						<tr>
+							<td><a href="/organo/{{com.id}}">Comisión {{com.pre}} {{ com.nombre }}</a></td>
+						</tr>
+					{% endfor %}
+					<tr>
+						<th>No legislativas ({{comNoLegis|length}})</th>
+					</tr>
+					{% for com in comNoLegis %}
+						<tr>
+							<td><a href="/organo/{{com.id}}">Comisión {{com.pre}} {{ com.nombre }}</a></td>
+						</tr>
+					{% endfor %}
+
+					</tbody>
+				</table>
+			</div>	
+		</div>
+	</div>
+{% endblock %}
+{% block scripts %}
+	{% parent %}
+	<script src="/javascripts/vendors/mustache.js"></script>
+	<script src="/javascripts/comisiones.js"></script>
+	
+{% endblock %}

@@ -1,0 +1,37 @@
+{% set baseURL = "http://dev.quehacenlosdiputados.net" %}
+
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{% block title %}{{ titlePage }}{% endblock %}</title>
+	<link rel="stylesheet" href="/stylesheets/foundation.min.css" />
+	<link rel="stylesheet" href="/stylesheets/font-awesome.min.css" />
+	<link rel="stylesheet" href="/stylesheets/main.css" />
+	<link rel="stylesheet" href="/stylesheets/styles.css" />
+	{% block styles %}{% endblock %}
+	{% block extraHead %} {% endblock %}
+</head>
+<body>
+	<div class="header">
+	{% block header %}
+		{% include "./partials/header.html" %}
+	{% endblock %}
+	</div>
+
+	<div class="mainContainer">
+		{% block content %}{% endblock %}
+	</div>
+	<div class="footer">
+	{% block footer %}
+		{% include "./partials/footer.html" %}
+	{% endblock %}
+	</div>
+	{% block scripts %}
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.0/backbone-min.js"></script>
+	{% endblock %}
+	<script src="//localhost:35729/livereload.js"></script>
+</body>
+</html>

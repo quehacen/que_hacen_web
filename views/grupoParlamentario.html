@@ -1,0 +1,44 @@
+{% macro formadoPor(formaciones) %}
+	{% spaceless %}
+	{% set total = formaciones|length %}
+	{% for formacion in formaciones %}
+	<span class="formacion">{{ formacion.nombre}}</span>
+	{% if loop.index == total-1 %}y{% else %},{% endif %}
+	{% endfor %}
+	{% endspaceless %}
+{% endmacro %}
+
+{% extends 'layout.html' %}
+{% block content %}
+	<div class="row">
+		<div class="large-12 columns list">
+			<!--#include virtual="/modules/grupos/list?active={{grupo.id}}" -->
+		</div>
+	</div>
+	<div class="row container">
+		<div id="beginGP" class="large-12 columns mod-grupo-cabecera">
+			<span class="encabezadoMod">Grupo Parlamentario {{ grupo.nombre }}</span>
+			<span class="subTitle">Formado por:{{formadoPor(grupo.formaciones)}} {{ grupo.num_diputados }} diputados</span>
+		</div>
+		<div class="large-12 columns mod-grupo-iniciciativas">
+			<span class="encabezadoMod">Últimas iniciativas parlamentarias</span>
+			<!--#include virtual="/modules/grupo/{{grupo.id}}/iniciativas/3" -->
+		</div>
+		
+		<div class="large-12 columns mod-grupo-diputados">
+			<span class="encabezadoMod">Diputados</span>
+			<!--#include virtual="/modules/grupo/{{grupo.id}}/diputados" -->
+		</div>
+		<div class="large-12 columns mod-grupo-contacto">
+			<span class="encabezadoMod">Información de contacto del Grupo Parlamentario {{ grupo.nombre }}</span>
+			<!--#include virtual="/modules/formaciones?formaciones={{ grupo.formaciones | pluck('nombre') }}" -->
+		</div>
+		<div class="large-12 columns">
+			<a style="display:block;padding:5px;margin:auto;width:180px;font-size:15px;
+			margin-top:15px;margin-bottom:15px;text-align:center" href="#beginGP">Volver al principio</a>
+		</div>		
+	</div>
+{% endblock %}
+{% block scripts %}
+	{% parent %}
+{% endblock %}

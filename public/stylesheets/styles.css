@@ -1,0 +1,183 @@
+.actividad-parlamentaria a {
+  color: #ff6956;
+  text-decoration: none;
+  border-bottom: 1px solid;
+  line-height: 1.3em;
+  padding: 2px 0;
+  margin-bottom: 2px;
+}
+
+.container {
+  margin-top: 1em;
+  border: 1px solid #c3c3c3;
+  background-color: white;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+}
+.container.noradius {
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  -ms-border-radius: 0px;
+  -o-border-radius: 0px;
+  border-radius: 0px;
+}
+.container .columns {
+  padding: 0;
+}
+.container[class*="mod"] {
+  border-color: #dadada;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  -ms-border-radius: 0px;
+  -o-border-radius: 0px;
+  border-radius: 0px;
+}
+
+.list {
+  list-style: none;
+  line-height: 1.5em;
+  margin: 0;
+  font-size: .9em;
+  padding: 20px;
+}
+.list.detailed {
+  -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.2);
+  background-color: #f2f2f2;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+}
+.list.detailed li {
+  padding-top: 0.26em;
+  padding-bottom: 0.26em;
+}
+.list.detailed li .fa {
+  font-size: .8em;
+  color: #ff6956;
+  padding-right: .5em;
+}
+.list.box {
+  padding: 0;
+}
+.list.box li {
+  display: inline-block;
+}
+
+.sharer span {
+  font-size: .8em;
+}
+.sharer a {
+  font-size: 1.2em;
+  padding: 0 0.2em;
+}
+
+.actividad-parlamentaria .votaciones .votacion .resultado .asentimiento, .actividad-parlamentaria .votaciones .votacion .resultado .voto {
+  color: white;
+  padding: 4px;
+  font-weight: bold;
+}
+.actividad-parlamentaria .votaciones .votacion .resultado .asentimiento.no, .actividad-parlamentaria .votaciones .votacion .resultado .voto.no {
+  background-color: #f80403;
+}
+.actividad-parlamentaria .votaciones .votacion .resultado .asentimiento.si, .actividad-parlamentaria .votaciones .votacion .resultado .voto.si {
+  background-color: #6fc354;
+}
+.actividad-parlamentaria .votaciones .votacion .resultado .asentimiento.abstencion, .actividad-parlamentaria .votaciones .votacion .resultado .voto.abstencion {
+  background-color: #e9bb05;
+}
+.actividad-parlamentaria .votaciones .votacion .resultado .asentimiento.no-vota, .actividad-parlamentaria .votaciones .votacion .resultado .voto.no-vota {
+  background-color: black;
+}
+
+.actividad-parlamentaria h3 {
+  display: block;
+  text-align: center;
+}
+.actividad-parlamentaria .votaciones .votacion {
+  padding: 10px 0;
+  border-bottom: 1px dashed #f2f2f2;
+}
+.actividad-parlamentaria .votaciones .votacion:last-child {
+  border-bottom: none;
+}
+.actividad-parlamentaria .votaciones .votacion > * {
+  padding: 2px 0;
+}
+.actividad-parlamentaria .votaciones .votacion .info {
+  display: block;
+  color: #6a6a6a;
+}
+.actividad-parlamentaria .votaciones .votacion .info span {
+  display: inline-block;
+  font-size: 12px;
+}
+.actividad-parlamentaria .votaciones .votacion .tituloVotacion {
+  padding-bottom: 4px;
+}
+.actividad-parlamentaria .votaciones .votacion .resultado {
+  font-size: 14px;
+}
+.actividad-parlamentaria .votaciones .votacion .resultado span {
+  display: inline-block;
+}
+.actividad-parlamentaria .votaciones .votacion .textoExpediente {
+  font-size: 14px;
+  line-height: 1.3em;
+  color: #6a6a6a;
+}
+.actividad-parlamentaria .mod-iniciativas-parlamentarias .list, .actividad-parlamentaria .mod-intervenciones-parlamentarias .list {
+  background-color: #f2f2f2;
+  display: block;
+  padding: 10px;
+  -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.2);
+}
+.actividad-parlamentaria .mod-iniciativas-parlamentarias li, .actividad-parlamentaria .mod-intervenciones-parlamentarias li {
+  width: 32%;
+  min-height: 70px;
+  display: inline-block;
+  vertical-align: top;
+  color: #6a6a6a;
+}
+.actividad-parlamentaria .mod-iniciativas-parlamentarias li span, .actividad-parlamentaria .mod-intervenciones-parlamentarias li span {
+  display: block;
+  text-align: center;
+}
+.actividad-parlamentaria .mod-iniciativas-parlamentarias li .data, .actividad-parlamentaria .mod-intervenciones-parlamentarias li .data {
+  font-size: 32px;
+  font-weight: bold;
+  line-height: 1.2em;
+}
+.actividad-parlamentaria .mod-iniciativas-parlamentarias li .data.total, .actividad-parlamentaria .mod-intervenciones-parlamentarias li .data.total {
+  color: #6fc354;
+}
+.actividad-parlamentaria .mod-iniciativas-parlamentarias li .desc, .actividad-parlamentaria .mod-intervenciones-parlamentarias li .desc {
+  line-height: 1.2em;
+  font-size: 12px;
+}
+
+.formacion {
+  color: #ff6956;
+  padding: 0px 4px;
+  font-weight: bold;
+}
+
+.mod-grupo-contacto .info {
+  font-size: 11px;
+  color: #6a6a6a;
+}
+.mod-grupo-contacto .info .contact img {
+  max-width: 30%;
+  display: block;
+}
+.mod-grupo-contacto .info .contact span {
+  word-wrap: break-word;
+}

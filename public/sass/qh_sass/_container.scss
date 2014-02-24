@@ -1,0 +1,19 @@
+.container { 
+	margin-top: 1em;
+	border: 1px solid #c3c3c3; 
+	background-color: white; 
+	@include border-radius(5px);
+
+	&.noradius {
+		@include border-radius(0px);
+	}
+
+	.columns {
+		padding: 0;
+	}
+
+	&[class*="mod"]{
+		border-color: $mediumGray;
+		@include border-radius(0px);
+	}
+}

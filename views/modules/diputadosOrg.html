@@ -1,0 +1,86 @@
+{% macro mostrar_dipus_org(dipus) %}
+{% spaceless %}
+{% set titulogen=1%}
+{% set tituloVP=0%}
+{% set tituloS=0%}
+{% set vps=0 %}
+{% set secs=0 %}
+{%if dipus['VP'] or dipus['VP1'] or dipus['VP2'] or dipus['VP3'] or dipus['VP4'] %}{% set tituloVP=1%}{%endif%}
+{%if dipus['S'] or dipus['S1'] or dipus['S2'] or dipus['S3'] or dipus['S4'] %}{% set tituloS=1%}{%endif%}
+{% set cargotipos = ['P','VP','VP1','VP2','VP3','VP4','S','S1','S2','S3','S4','PO','POT','POS','POA','V','VS','A'] %}
+{% endspaceless%}
+
+{%for ctipo in cargotipos%}
+{%spaceless%}
+{% if ctipo=="VP"%}
+	{%if tituloVP==1%}{% set titulogen=0 %}{%set vps=1%}{%else%}{%set titulogen=0 %}{%endif%}
+{%elseif ctipo=="S"%}
+	{%if tituloS==1%}{% set titulogen=0 %}{%set secs=1%}{%else%}{%set titulogen=0 %}{%endif%}
+{%elseif ctipo=="S1" or ctipo=="S2" or ctipo=="S3" or ctipo=="S4" %}
+	{% set titulogen=0 %}		
+{%elseif ctipo=="VP1" or ctipo=="VP2" or ctipo=="VP3" or ctipo=="VP4"%}
+	{% set titulogen=0 %}
+{% else %}
+	{% set titulogen=1 %}
+{%endif%}
+{%endspaceless%}
+{%if tituloVP==1 and ctipo=="VP" or tituloS==1 and ctipo=="S"%}
+	<h4>{{ctipo | cargo_tipo}}</h4>
+	<ol class="diputados">
+{%endif%}
+{%if dipus[ctipo] %}
+	{% if titulogen==1%}
+		<h4>{{ctipo | cargo_tipo}}</h4>
+		<ol class="diputados">
+	{%endif%}
+
+	{% for diputado in dipus[ctipo] %}
+		{% spaceless%}	
+		{% if diputado.sexo=="H"%}
+			{% set cargonom = ctipo | cargo_friendly_h %}
+		{%else%}
+			{% set cargonom = ctipo | cargo_friendly_m %}
+		{%endif%}
+		{% if ctipo=="VP" or ctipo=="VP1" or ctipo=="VP2" or ctipo=="VP3" or ctipo=="VP4"%}
+			{%set cargoarriba=1%}
+		{% elseif ctipo=="S" or ctipo=="S1" or ctipo=="S2" or ctipo=="S3" or ctipo=="S4"%}
+			{%set cargoarriba=1%}
+		{%else%}
+			{%set cargoarriba=0%}
+		{%endif%}
+		{%endspaceless%}
+<li class="diputado grupo-{{diputado.grupo | slugify }} partido-{{diputado.partido | slugify}}">
+	<a href="/diputado/{{diputado.normalized.url}}" title="Ver ficha de {{diputado.nombre}} {{diputado.apellidos}}">
+		{{diputado.url}}
+		<span class="fotoimg">
+			<img src="http://dev.quehacenlosdiputados.net/img/imagenesDipus/{{diputado.id}}.jpg" alt="Fotografía de {{diputado.nombre}} {{diputado.apellidos}}">
+		</span>
+		<span class="nombre"><b>{{diputado.apellidos}}</b>, {{diputado.nombre}}</span>
+		<img class="partidoimg" src="http://dev.quehacenlosdiputados.net/img/logosPartidos/{{diputado.partido }}.png" alt="logotipo del partido {{diputado.partido}}">
+	</a>
+	<!--<a href="#"><span class="partido">GP {{diputado.grupo}}</span></a>-->
+	{%if cargoarriba==1%}<a href='#'><span class="partido">{{cargonom}}</span></a>{%endif%}	
+</li>	
+	{%endfor%}
+	{% if titulogen==1%}</ol>{%endif%}
+{%endif%}
+{%if ctipo=="VP4" and vps==1%}</ol>{%endif%}
+{%if ctipo=="S4" and secs==1%}</ol>{%endif%}
+{%endfor%}
+
+{% endmacro %}
+
+
+{% spaceless %}
+{% set dipus = diputados | dipusorg(idorgano)%}
+{% set dipusact = dipus %}{% set dipusact = dipusact | poda_sin('baja') | groupBy('cargo')%}
+{% set dipushist = dipus %}{% set dipushist = dipusact | poda_con('baja') | groupBy('cargo') %}
+{% endspaceless%}
+
+{#
+{% if dipus %}<h3>{{dipus | length}}</h3>{%endif%}
+{% if dipusact %}<h3>{{dipusact | length}}</h3>{%endif%}
+{% if dipushist %}<h3>{{dipushist | length}}</h3>{%endif%}
+#}
+
+{{mostrar_dipus_org(dipusact)}}

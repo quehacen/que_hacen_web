@@ -1,0 +1,11 @@
+<ul>
+	{% for field in _bien %}
+	{% if loop.key != "idDipu" %}
+		{% if loop.key == "euros" %}
+		<li>{{ field | euros }}</li>
+		{% else %}
+		<li>{{ field }}</li>
+		{% endif %}
+	{% endif %}
+	{% endfor %}
+</ul>

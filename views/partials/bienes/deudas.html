@@ -1,0 +1,9 @@
+<ul>
+	<li>Tipo: {{ _bien.tipoDeuda }}</li>
+	<li>Concepto: {{ _bien.concepto }}</li>
+	<li>Capital concedido: {{ _bien.concedido | euros }}</li>
+	<li>Capital pendiente: {{ _bien.pendiente | euros }}</li>
+	<li>Fecha concesión: {{ _bien.fecha_concesion | fecha }}</li>
+	<li>Acreedor: {{ _bien.acreedor }}</li>
+	<li>Otros: {{ _bien.otros }}</li>
+</ul>

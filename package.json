@@ -1,0 +1,20 @@
+{
+  "name": "application-name",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app"
+  },
+  "dependencies": {
+    "express": "3.0.4",
+    "mongojs": "~0.9.6",
+    "consolidate": "~0.9.1",
+    "underscore.string": "~2.3.3",
+    "moment": "~2.4.0",
+    "swig": "~1.1.0",
+    "request": "~2.30.0",
+    "rsj": "0.0.4",
+    "lodash": "~2.4.1",
+    "cheerio": "~0.13.1"
+  }
+}
