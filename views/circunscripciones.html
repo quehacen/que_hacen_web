@@ -1,20 +1,48 @@
 {% extends 'layout.html' %}
+
+{% block styles %}
+<link rel="stylesheet" href="/stylesheets/mapa.css" />
+{%endblock%}
+
+{% block title %}Circunscripciones{%endblock%}
 {% block content %}
 	<div class="row container">
 		<div class="diputadosTotal">
 			<span>Circunscripciones</span>
 		</div>
-		<table>
-			<tbody>
-			{% for circuns in circunscripciones %}
-				<tr>
-					<td><a href="/circunscripcion/{{circuns.normalized.url}}">{{ circuns.nombre }}</a></td>
-				</tr>
-			{% endfor %}
-			</tbody>
-		</table>
+		
+  		<div id="wrapper">
+			<div id="nomDinamico">
+				<span></span>
+			</div>
+    			<div id="map">
+      				<div id="tooltip"></div>
+      					<div id="info">
+        					<h2 class="title"></h2>
+						<p class="total_escanos"></p>
+        					<!---->
+						<dl id="tabsCirc">
+							<dd id="verdatos" class="active">Datos electorales</dd>
+							<dd id="verdipus">Diputados</dd>
+						</dl>
+						<div id='tabsCont'>
+							<div id='datos_elecciones'>
+								<div class="tabla1"></div>
+        							<div class="tabla2"></div>
+							</div>
+							<div id="diputados_">
+								<ol class="diputados"></ol>
+							</div>
+						</div>
+					</div>
+				</div>
+      			</div>
+		</div>
 	</div>
 {% endblock %}
 {% block scripts %}
 	{% parent %}
+        <script src="/javascripts/vendors/raphael-min.js"></script>
+        <script src="/javascripts/spain-map.js"></script>
+        <script src="/javascripts/mapa.js"></script>
 {% endblock %}

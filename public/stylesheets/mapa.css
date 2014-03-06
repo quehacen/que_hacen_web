@@ -1,0 +1,50 @@
+#wrapper {width: 100%; height: 600px; margin:0 auto; padding-left: 15px;;position: relative;overflow: hidden;}
+#wrapper #nomDinamico{position:absolute;top:5px;padding:5px;z-index:999999;width:600px;display:none;overflow:hidden;}
+#wrapper #nomDinamico span{display:block;text-align:center;}
+
+#wrapper #map {position: relative;top:-30px}
+#wrapper #map #tooltip {position: absolute; transition: all 0.5s; z-index: 100}
+#wrapper #map #info {opacity:0; position: absolute; width: 350px; /*height: 600px;*/ right: -100%; top: 30px; transition: all 0.5s; background: #F0F0F0;}
+#wrapper #map #info.active {opacity:1;  right: 0;}
+#wrapper #map #info .title {text-align: center;margin-bottom: 10px;font-size:18px;}
+#wrapper #map #info .total_escanos {text-align:center;padding-bottom: 10px;margin: 5px 0px;font-weight: bold;color: #7A7A7A;text-transform: uppercase;font-size: 12px;/*border-bottom:solid 2px #fdfdfd;*/}
+
+#wrapper #map #tabsCirc{margin:0;width:95%;margin:auto;margin-top:0;}
+#wrapper #map #tabsCirc dd{display:inline-block;margin:0;width:49%;border:1px solid lightgrey;padding:5px;text-align:center;font-size:14px;}
+#wrapper #map #tabsCirc dd:hover{cursor:pointer;}
+#wrapper #map #tabsCirc dd.active{color:white;background-color:#fe5339;}
+
+#wrapper #map #tabsCont{border-top: solid 2px #fdfdfd;width:100%;}
+
+#wrapper #map #info #datos_elecciones{margin:0;padding:0;}
+#wrapper #map #info table { width: 92%; font-size: 14px; padding-bottom: 15px; margin: 0 auto;}
+#wrapper #map #info table thead {}
+#wrapper #map #info table th {text-align: left;}
+#wrapper #map #info table tr {}
+#wrapper #map #info table tbody tr:nth-child(even) {background: #fdfdfd;}
+#wrapper #map #info table td {}
+#wrapper #map #info .tabla1 th:nth-child(1) {width: 50%}
+#wrapper #map #info .tabla1 th:nth-child(2) {width: 25%}
+#wrapper #map #info .tabla1 th:nth-child(3) {width: 25%}
+
+#wrapper #map #info .tabla2 th:nth-child(1) {width: 40%}
+#wrapper #map #info .tabla2 th:nth-child(2) {width: 18%;}
+#wrapper #map #info .tabla2 th:nth-child(3) {width: 22%;}
+#wrapper #map #info .tabla2 th:nth-child(4) {width: 20%}
+
+#wrapper #map #diputados_ {width:100%;/*font-size: 90%;line-height: 120%;*/opacity:0;display:none;transition: all 0.5s; background: #F0F0F0;}
+#wrapper #map #diputados_.active {opacity:1;}
+/*#wrapper #map #diputados_ h3 {float: left; width: 100%;padding: 10px;margin: 0;}*/
+#wrapper #map #diputados_ ol {margin: 0 auto; padding: 0;display:block;width: 94% !important;}
+#wrapper #map #diputados_ ol .diputado {/*float:left*/display:inline-block; width: 160px;margin:0;padding:2px;/*position: relative;*/}
+#wrapper #map #diputados_ ol .diputado a {color: #fe5339; text-decoration: none;}
+#wrapper #map #diputados_ ol .diputado .fotoimg {width: 80px;height: 80px;border-radius: 50%;border: 4px solid rgb(182, 182, 182);overflow: hidden;padding: 0;display: block;position: relative;margin: 0 auto;}
+#wrapper #map #diputados_ ol .diputado .fotoimg img {max-width: 100%;height: auto;}
+#wrapper #map #diputados_ ol .diputado .nombre{color: #868686;text-align: center;float: left;width: 100%;padding-bottom: 5px;}
+#wrapper #map #diputados_ ol .diputado .nombre b {font-weight: bold;}
+#wrapper #map #diputados_ ol .diputado a:hover .nombre {color: #fe5339;}
+#wrapper #map #diputados_ ol .diputado .partidoimg {width: 22px;position: absolute;top: 55px;left: 88px;}
+#wrapper #map #diputados_ ol .diputado .partidoimg img {}
+#wrapper #map #diputados_ ol .diputado .partido {float: left;width: 100%;text-align: center;}
+#wrapper #map #diputados_ ol .diputado .grupo {float: left;width: 100%;text-align: center;font-size:12px;}
+#wrapper #map #diputados_ p {text-align: center;font-size:13px;padding:3px;margin:3px}

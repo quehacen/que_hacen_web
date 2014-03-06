@@ -25,14 +25,49 @@
 {% endfor %}
 {% set ndipushist = ndipus+ndipusex %}
 
+{% if organo.tipo=="SC"%}
+        {% for org in organos %}
+                {%if organo.com_asociada == org.id%}{%set com_asoc=org%}{%endif%}
+        {%endfor%}
+{%endif%}
 {% endspaceless %}
+        <div class="row">
+                <div class="large-12 columns list">
+                        <!--#include virtual="/modules/organos/list?active={{organo.tipo}}" -->
+                </div>
+        </div>
 
 	<div class="row container">
 		<div class="large-12 columns">
 			<span class="encabezadoMod">{{t_org }} {{n_org }}</span>
+			<span class="subTitle2">Fecha de constitución: {{organo.constituida}}</span>
 		{% if organo.tipo=="C" or organo.tipo=="SC" %}
 			<span class="subTitle2">Tipo: {{legisnom}} {{permnom}} {{mixtanom}}</span>
-			<span class="subTitle2">Fecha de constitución: {{organo.constituida}}</span>
+			{% if organo.tipo == "SC"%}
+                        <span class="subTitle2">Comisión de la que proviene: <a href="{{com_asoc.id}}">{{com_asoc.nombre}}</a></span>
+                        {%elseif organo.subcom_asociadas%}
+			{% set num_sc_asoc= organo.subcom_asociadas | length %}
+			{% if num_sc_asoc==1%}<span class="subTitle2">Subcomisón asociada: 
+			{% else %}<span class="subTitle2">Subcomisones asociadas: 
+			{%endif%}
+			{%set n=1%}
+			{%for sc_asoc in organo.subcom_asociadas%}
+                		{% for org in organos %}
+                        		{%if org.id == sc_asoc%}
+                                		{%set subcom=org.nombre%}
+                                		{%if n==1 %}
+                                        		<a href="{{sc_asoc}}">{{subcom}}</a>
+                                		{%elseif n==num_sc_asoc%}
+                                        		y <a href="{{sc_asoc}}">{{subcom}}</a>
+                                		{%else%}
+                                        		, <a href="{{sc_asoc}}">{{subcom}}</a> 
+                                		{%endif%}
+                        		{%endif%}
+                		{%endfor%}
+                	{%set n+=1%}
+        		{%endfor%}
+			</span>
+			{%endif%}
 		{% else %}
 			<span class="subTitle2">(Breve descripción)</span>
 		{% endif %}
@@ -45,6 +80,16 @@
                 </div>
 </div>
 {% endblock %}
+
+{% block title %}{% spaceless %}
+	{% if organo.tipo == "C" %}{% set t_org = "Comisión"%}{% set n_org = organo.pre+" "+organo.nombre %}
+	{% elif organo.tipo == "SC" %}{% set t_org = "Subcomisión"%}{% set n_org = organo.pre+" "+organo.nombre %}
+	{% else %}{% set t_org = ""%}{% set n_org = organo.nombre %}
+	{%endif%}
+	{%endspaceless%}
+{{t_org}} {{n_org}}
+{% endblock %}
+
 {% block scripts %}
 	{% parent %}
 {% endblock %}

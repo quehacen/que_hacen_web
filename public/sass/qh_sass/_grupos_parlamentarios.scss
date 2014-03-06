@@ -19,23 +19,61 @@
 .mod-grupo-contacto{
 	
 	.info {
-		
 		font-size: 11px;
 		color: $secondGray;
 		
-		.contact{
-		
-			img{
-				max-width: 30%;
-				display: block;
-			}
+		.contact {
 			span {
 				word-wrap: break-word;
+				font-size: 10.5pt;
+				line-height: 1.4em;
+			}
+
+			.info{
+				img{
+					max-width: 34%;
+					display: block;
+					margin-bottom:10px;
+				}
+				span {
+					word-wrap: break-word;
+					font-size: 10.5pt;
+					line-height: 1.4em;
+				}
+			}
+
+			.contacto {
+				margin-top:10px;
+				
+				.tipo {
+					display: block;
+					padding:2px 0;
+					
+					a {
+						i {
+							float:left;
+							font-size: 13pt;
+							padding-right:.3em;
+						}
+						span {
+							color:$secondGray;
+							display:inline;
+							font-size: 10pt;
+						}
+					}
+				}
 			}
 		}
-		.contacto {
-
+	}
+	.location {
+		img {
+			border: 1px solid $mediumGray;
+		}
+		span {
+			color:$secondGray;
+			display: block;
+			padding:.5em 0;
+			font-size: 11pt;
 		}
 	}
-	
 }

@@ -2,7 +2,7 @@
 	margin-top: 1em;
 	border: 1px solid #c3c3c3; 
 	background-color: white; 
-	@include border-radius(5px);
+	@include border-radius(2px);
 
 	&.noradius {
 		@include border-radius(0px);
@@ -15,5 +15,10 @@
 	&[class*="mod"]{
 		border-color: $mediumGray;
 		@include border-radius(0px);
+	}
+	.header {
+		background-color: $mainGray;
+		padding: 1.4em;
+		font-weight: bold;
 	}
 }

@@ -2,9 +2,10 @@
 {% for iniciativa in iniciativas %}
 <li class="iniciativa">
 	<a href="#">
+		<i class="fa fa-circle"></i> 
 		<span>{{iniciativa.titulo}}</span>
 	</a>
-	<span>Presentado el {{iniciativa.presentado}}, calificado el {{iniciativa.calificado}}</span>
+	<span>Presentado el {{iniciativa.presentado |fecha }}, calificado el {{iniciativa.calificado |fecha }}</span>
 </li>
 {% endfor %}
 </ul>

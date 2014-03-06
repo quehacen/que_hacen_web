@@ -141,6 +141,12 @@ exports.diputados_circunscripcion = function(req, res){
 	  res.render('modules/diputados',{'diputados':JSON.parse(body)}); 
 	});
 }
+exports.organos_list = function(req, res){
+	request( APIUrl+'/organos', function(error, response, body) {
+	  res.render('modules/organosList',{'organos':JSON.parse(body), 'active':req.query.active }); 
+	});
+}
+
 exports.grupos_list = function(req, res){
 	request( APIUrl+'/grupos', function(error, response, body) {
 	  res.render('modules/gruposList',{'grupos':JSON.parse(body), 'active':req.query.active }); 

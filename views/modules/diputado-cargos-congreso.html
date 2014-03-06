@@ -9,13 +9,14 @@
 		{% set cargo= cargo_c.cargo | cargo_friendly_m %}
 	{% endif %}
 
-		{% if tipo == "DP" %}{% set organo_cool = "Diputación Permanente" %}
-		{% elseif tipo == "JP" %}{% set organo_cool = "Junta de Portavoces" %}
-		{% elseif tipo == "MC" %}{% set organo_cool = "Mesa del Congreso" %}
+		{% if tipo == "DP" %}{% set organo_cool = "Diputación Permanente" %}{%set organo_href="diputacion-permanente"%}
+		{% elseif tipo == "JP" %}{% set organo_cool = "Junta de Portavoces" %}{%set organo_href="junta-de-portavoces"%}
+		{% elseif tipo == "MC" %}{% set organo_cool = "Mesa del Congreso" %}{%set organo_href="mesa-del-congreso"%}
 		{% else %}
 		{% for organo in organos %}
 			{% if organo.id == cargo_c.idOrgano %}
 				{% set organo_cool = organo.nombre %}
+				{% set organo_href=organo.normalized.url%}
 			{% endif %}
 		{%endfor%}
 		{%endif%}
@@ -26,7 +27,7 @@
 		{% set altabaja = "Desde el "+cargo_c.alta %}
 	{% endif %}
 	{%endspaceless%}
-		<tr><td>{{cargo}}</td><td>{{organo_cool}}</td><td>{{altabaja}}</td></tr>
+		<tr><td>{{cargo}}</td><td><a href='/organo/{{organo_href}}'>{{organo_cool}}</a></td><td>{{altabaja}}</td></tr>
 {%endfor%}
 {% endmacro %}
 
@@ -79,6 +80,6 @@
 		{{ muestra_cargos_tipo(cargoshist["SC"],organos,diputado.sexo,"SC") }}
 	{% endif %}
 	{% if !haycargoshist %}
-		<tr><td colspan=3><i>El diputado no tiene ningún cargo histórico (dado de baja) en el Congreso.</i></td></tr>
+		<tr><td colspan=3><i>El diputado no tiene ningún cargo histórico en el Congreso en esta legislatura.</i></td></tr>
 	{%endif%}
         </table>

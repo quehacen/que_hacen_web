@@ -3,6 +3,13 @@
 {% block title %}Subcomisiones{% endblock %}
 
 {% block content %}
+	<div class="row">
+                <div class="large-12 columns list">
+                        <!--#include virtual="/modules/organos/list?active=SC" -->
+                </div>
+        </div>
+
+
 	<div class="row container">
 		<div class="diputadosTotal">
 			<span>Subcomisiones del Congreso</span>
@@ -11,7 +18,7 @@
 			<tbody>
 			{% for com in subcomisiones %}
 				<tr>
-					<td><a href="/organos/{{com.id}}">Subcomisión {{com.pre}} {{ com.nombre }}</a></td>
+					<td><a href="/organo/{{com.normalized.url}}">{{ com.nombre }}</a></td>
 				</tr>
 			{% endfor %}
 

@@ -1,0 +1,113 @@
+/** Modulo diputados **/
+.diputados {
+	max-height:400px;
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
+	padding: 0;
+	margin:0;
+
+	.diputado { 
+		display: inline-table; 
+		width: 11em; 
+		padding: 1%; 
+		text-align:center;
+		
+
+		a {
+			display:block; 
+			color:black; 
+			margin:0 auto; 
+			font-size: 9pt; 
+			text-align:center; 
+			position:relative;
+			
+			&:hover span{
+				color:#fe5339;/*color:lightgrey;*/
+			}
+
+			.fotoimg { 
+				width: 90px;
+				height: 90px;
+				border-radius: 50%;
+				border: 4px solid rgb(182, 182, 182);
+				overflow: hidden;
+				padding: 0;
+				display: inline-block;
+				position: relative;
+			}
+			.partidoimg { 
+				height: 2em; 
+				position: absolute; 
+				top: 66px; 
+				margin-left: 1.2em; 
+			}
+			.nombre  { }
+			.grupo   { }
+			.partido { }
+
+			.nombre,
+			.grupo,
+			.partido { 
+				display:block; 
+				padding: .4em;
+			}
+		}
+
+		.subt{ 
+			font-size:9pt; 
+		}
+	}
+}
+
+.infoDiputado {
+    border-bottom: 1px solid #c3c3c3;
+    height:auto;
+
+	.ficha {
+		position: relative;
+	    display: block;
+		
+		.foto { 
+			width: 150px; height: 150px; border-radius:50%; border: 4px solid rgb(182, 182, 182); overflow: hidden; padding: 0; display: inline-block; position: relative; margin-right: 30px;
+			img {
+				display:block; 
+				.carnet { width: 100%;position: relative;height: auto;display: block;vertical-align: middle;margin-top: -50%;top: 37%;}
+			}
+		}
+		
+		img.partido { 
+			width: 50px; 
+			position: absolute; 
+			left: 150px; 
+			top: 150px; 
+			margin-top: -50px; 
+			margin-left: -30px;
+		}
+		
+		span { display: block; color: #44474c; float: left;
+			&.nombre {font-size: 18pt; font-weight: bold; }
+			&.circunscripcion {font-size: .9em; padding-top: 1em; }
+			&.grupo {font-size: .9em; padding-top: 0.5em; }
+		}
+	}
+
+	.details {
+
+	    li {
+			padding: .2em 0;
+			line-height: 110%;
+			span { display:block; font-size: .8em; color: #44474c;}
+		}
+	}
+}
+.infoDiputado .prevDip {}
+.infoDiputado .nextDip {}
+.infoDiputado #prev,
+.infoDiputado #next { 
+	display: block;
+	text-align: center;
+	min-height: 100%;
+	font-size: 40pt;
+	line-height: 120pt;
+}
+

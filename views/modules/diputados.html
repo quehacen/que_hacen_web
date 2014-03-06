@@ -8,14 +8,9 @@
 		</span>
 		<span class="nombre"><b>{{diputado.apellidos}}</b>, {{diputado.nombre}}</span>
 		<img class="partidoimg" src="http://dev.quehacenlosdiputados.net/img/logosPartidos/{{diputado.partido }}.png" alt="logotipo del partido {{diputado.partido}}">
-		<!--
-		<span class="grupo">{{diputado.grupo}}</span>
-		<span class="partido">{{diputado.partido}}</span>
-		-->
 	</a>
 	<a href="/grupo-parlamentario/{{diputado.grupo}}">
 		<span class="grupo">G.P. {{diputado.grupo}}</span>
-	<!--	<span class="partido">{{diputado.partido}}</span> -->
 	</a>
 </li>
 {% endfor %}

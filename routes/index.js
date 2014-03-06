@@ -16,7 +16,7 @@ exports.index = function(req, res){
 exports.diputados = function(req, res){
 	console.log('Diputados');
 	var viewObject = {'pageActive':"diputados"};
-  request( APIUrl+"/diputados", function(error, response, body) {
+  request( APIUrl+'/diputados?q={"activo":1}&only=["id","nombre","apellidos","normalized","grupo","partido"]', function(error, response, body) {
     viewObject.diputados = JSON.parse(body);
     res.render('diputados', viewObject ); 
   });
@@ -140,7 +140,20 @@ exports.circunscripcion = function(req, res){
 
 exports.organos= function(req, res){
   var viewObject = {'pageActive':"organos"};
-  request( APIUrl+"/organos", function(error, response, body) {
+    request( APIUrl+'/organos?q={"normalized.url":"mesa-del-congreso"}', function(error, response, body) {
+     request( APIUrl+'/organos', function(error2, response2, body2) {
+	var organo=JSON.parse(body)[0];
+	var idorg=organo.id;
+	console.log('IDOrg:'+idorg);
+        request( APIUrl+'/diputados?q={"cargos_congreso.idOrgano":'+idorg+'}&only=["id","nombre","apellidos","grupo","sexo","cargos_congreso"]', function(error3, response3, body3) {
+    	   viewObject.organo = JSON.parse(body)[0];
+	   viewObject.organos= JSON.parse(body2);
+    	   viewObject.diputados=JSON.parse(body3);
+    	   res.render('organo', viewObject ); 
+        });
+     });
+    });
+  /*request( APIUrl+"/organos", function(error, response, body) {
     var organos = JSON.parse(body);
     var orgGen = [];
     var com = [];
@@ -159,18 +172,39 @@ exports.organos= function(req, res){
     viewObject.subcom=subcom;
 
     res.render('organos', viewObject ); 
-  });
+  });*/
 };
 
 exports.organo= function(req, res){
   var viewObject = {'pageActive':"organos"};
-  request( APIUrl+'/organos?q={"id":'+req.params.id+'}', function(error, response, body) {
-    request( APIUrl+'/diputados?q={"cargos_congreso.idOrgano":'+req.params.id+'}&only=["id","nombre","apellidos","grupo","sexo","cargos_congreso"]', function(error2, response2, body2) {
-    	viewObject.organo = JSON.parse(body)[0];
-    	viewObject.diputados=JSON.parse(body2);
-    	res.render('organo', viewObject ); 
+  if( !isNaN(req.params.id) ){
+    // es por id
+    request( APIUrl+'/organos?q={"id":'+req.params.id+'}', function(error, response, body) {
+     request( APIUrl+'/organos', function(error2, response2, body2) {    
+        request( APIUrl+'/diputados?q={"cargos_congreso.idOrgano":'+req.params.id+'}&only=["id","nombre","apellidos","grupo","sexo","cargos_congreso"]', function(error3, response3, body3) {
+    	   viewObject.organo = JSON.parse(body)[0];
+	   viewObject.organos= JSON.parse(body2);
+    	   viewObject.diputados=JSON.parse(body3);
+    	   res.render('organo', viewObject ); 
+        });
+     });
     });
-  });
+  } else {
+    // es por url
+    request( APIUrl+'/organos?q={"normalized.url":"'+req.params.id+'"}', function(error, response, body) {
+     request( APIUrl+'/organos', function(error2, response2, body2) {
+	var organo=JSON.parse(body)[0];
+	var idorg=organo.id;
+	console.log('IDOrg:'+idorg);
+        request( APIUrl+'/diputados?q={"cargos_congreso.idOrgano":'+idorg+'}&only=["id","nombre","apellidos","grupo","sexo","cargos_congreso"]', function(error3, response3, body3) {
+    	   viewObject.organo = JSON.parse(body)[0];
+	   viewObject.organos= JSON.parse(body2);
+    	   viewObject.diputados=JSON.parse(body3);
+    	   res.render('organo', viewObject ); 
+        });
+     });
+    });
+   }
 };
 
 

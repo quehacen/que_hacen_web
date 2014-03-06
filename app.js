@@ -111,6 +111,7 @@ app.get('/modules/grupo/:id/diputados', modules.diputados_grupo);
 app.get('/modules/grupo/:id/iniciativas/:limit', modules.iniciativas_grupo);
 app.get('/modules/formaciones',modules.formaciones_grupo);
 app.get('/modules/organo/:id/diputados',modules.diputados_organo);
+app.get('/modules/organos/list',modules.organos_list);
 
 /*function(req,res){
   GrupoDAO.listado(function( result ){

@@ -7,15 +7,116 @@
   margin-bottom: 2px;
 }
 
+* {
+  line-height: 1.2em;
+}
+
+body {
+  background: #f2f2f2;
+}
+
+ul,
+ul li {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+h1, h2, h3 {
+  font-size: 20pt;
+  font-weight: bold;
+  margin: 0.67em 0;
+}
+
+h2 {
+  font-size: 18pt;
+}
+
+h3 {
+  font-size: 14pt;
+}
+
+a:hover {
+  color: #ff6956;
+}
+
+.mark {
+  padding: 7px !important;
+}
+
+.fullrow {
+  max-width: 100%;
+}
+.fullrow .row {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 62.5em;
+}
+
+.border-left-right {
+  border-left: 1px solid #c3c3c3;
+  border-right: 1px solid #c3c3c3;
+}
+
+.actividad .tabs {
+  background-color: #f2f2f2;
+  border: 0;
+  border-bottom: 1px solid #dadada;
+  font-size: 0.7em;
+  font-weight: bold;
+  background-image: none;
+  border-radius: 0;
+  margin: 0;
+  padding: 0;
+}
+.actividad .tabs > * {
+  display: inline-block;
+  width: 50%;
+  padding: 0;
+  margin: 0;
+}
+.actividad .tabs a {
+  text-decoration: none;
+  color: #fe5339;
+  padding: 15px;
+  display: block;
+  font-size: 10pt;
+  text-transform: none;
+}
+.actividad .tabs .active a {
+  background-color: #fe5339;
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.2) 50%, transparent 55%);
+  border-radius: 0;
+  color: white;
+}
+.actividad .tabs-content {
+  margin: 0;
+  padding: 0;
+}
+.actividad .tabs-content .content {
+  margin: 0;
+  padding: 0;
+}
+.actividad .tabs-content .diputados {
+  margin: 0;
+  padding: 0em;
+}
+.actividad .tabs-content .diputados .diputado {
+  display: inline-table;
+  width: 32%;
+  padding: 1%;
+  text-align: center;
+}
+
 .container {
   margin-top: 1em;
   border: 1px solid #c3c3c3;
   background-color: white;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  -ms-border-radius: 5px;
-  -o-border-radius: 5px;
-  border-radius: 5px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+  border-radius: 2px;
 }
 .container.noradius {
   -webkit-border-radius: 0px;
@@ -34,6 +135,11 @@
   -ms-border-radius: 0px;
   -o-border-radius: 0px;
   border-radius: 0px;
+}
+.container .header {
+  background-color: #44474c;
+  padding: 1.4em;
+  font-weight: bold;
 }
 
 .list {
@@ -76,6 +182,147 @@
 .sharer a {
   font-size: 1.2em;
   padding: 0 0.2em;
+}
+
+/** Modulo diputados **/
+.diputados {
+  max-height: 400px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 0;
+  margin: 0;
+}
+.diputados .diputado {
+  display: inline-table;
+  width: 11em;
+  padding: 1%;
+  text-align: center;
+}
+.diputados .diputado a {
+  display: block;
+  color: black;
+  margin: 0 auto;
+  font-size: 9pt;
+  text-align: center;
+  position: relative;
+}
+.diputados .diputado a:hover span {
+  color: #fe5339;
+  /*color:lightgrey;*/
+}
+.diputados .diputado a .fotoimg {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 4px solid #b6b6b6;
+  overflow: hidden;
+  padding: 0;
+  display: inline-block;
+  position: relative;
+}
+.diputados .diputado a .partidoimg {
+  height: 2em;
+  position: absolute;
+  top: 66px;
+  margin-left: 1.2em;
+}
+.diputados .diputado a .nombre,
+.diputados .diputado a .grupo,
+.diputados .diputado a .partido {
+  display: block;
+  padding: .4em;
+}
+.diputados .diputado .subt {
+  font-size: 9pt;
+}
+
+.infoDiputado {
+  border-bottom: 1px solid #c3c3c3;
+  height: auto;
+}
+.infoDiputado .ficha {
+  position: relative;
+  display: block;
+}
+.infoDiputado .ficha .foto {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 4px solid #b6b6b6;
+  overflow: hidden;
+  padding: 0;
+  display: inline-block;
+  position: relative;
+  margin-right: 30px;
+}
+.infoDiputado .ficha .foto img {
+  display: block;
+}
+.infoDiputado .ficha .foto img .carnet {
+  width: 100%;
+  position: relative;
+  height: auto;
+  display: block;
+  vertical-align: middle;
+  margin-top: -50%;
+  top: 37%;
+}
+.infoDiputado .ficha img.partido {
+  width: 50px;
+  position: absolute;
+  left: 150px;
+  top: 150px;
+  margin-top: -50px;
+  margin-left: -30px;
+}
+.infoDiputado .ficha span {
+  display: block;
+  color: #44474c;
+  float: left;
+}
+.infoDiputado .ficha span.nombre {
+  font-size: 18pt;
+  font-weight: bold;
+}
+.infoDiputado .ficha span.circunscripcion {
+  font-size: .9em;
+  padding-top: 1em;
+}
+.infoDiputado .ficha span.grupo {
+  font-size: .9em;
+  padding-top: 0.5em;
+}
+.infoDiputado .details li {
+  padding: 0.2em 0;
+  line-height: 110%;
+}
+.infoDiputado .details li span {
+  display: block;
+  font-size: .8em;
+  color: #44474c;
+}
+
+.infoDiputado #prev,
+.infoDiputado #next {
+  display: block;
+  text-align: center;
+  min-height: 100%;
+  font-size: 40pt;
+  line-height: 120pt;
+}
+
+/**** Modulo iniciativas ***/
+.iniciativas .iniciativa {
+  display: block;
+  margin-bottom: 1em;
+  font-size: 11pt;
+  line-height: 1.2em;
+}
+.iniciativas .iniciativa > * {
+  display: block;
+}
+.iniciativas .iniciativa a + span {
+  color: #44474c;
 }
 
 .actividad-parlamentaria .votaciones .votacion .resultado .asentimiento, .actividad-parlamentaria .votaciones .votacion .resultado .voto {
@@ -174,10 +421,44 @@
   font-size: 11px;
   color: #6a6a6a;
 }
-.mod-grupo-contacto .info .contact img {
-  max-width: 30%;
-  display: block;
-}
 .mod-grupo-contacto .info .contact span {
   word-wrap: break-word;
+  font-size: 10.5pt;
+  line-height: 1.4em;
+}
+.mod-grupo-contacto .info .contact .info img {
+  max-width: 34%;
+  display: block;
+  margin-bottom: 10px;
+}
+.mod-grupo-contacto .info .contact .info span {
+  word-wrap: break-word;
+  font-size: 10.5pt;
+  line-height: 1.4em;
+}
+.mod-grupo-contacto .info .contact .contacto {
+  margin-top: 10px;
+}
+.mod-grupo-contacto .info .contact .contacto .tipo {
+  display: block;
+  padding: 2px 0;
+}
+.mod-grupo-contacto .info .contact .contacto .tipo a i {
+  float: left;
+  font-size: 13pt;
+  padding-right: .3em;
+}
+.mod-grupo-contacto .info .contact .contacto .tipo a span {
+  color: #6a6a6a;
+  display: inline;
+  font-size: 10pt;
+}
+.mod-grupo-contacto .location img {
+  border: 1px solid #dadada;
+}
+.mod-grupo-contacto .location span {
+  color: #6a6a6a;
+  display: block;
+  padding: 0.5em 0;
+  font-size: 11pt;
 }

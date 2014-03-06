@@ -14,54 +14,76 @@
 	</div>
 	<div class="row container diputado">
 		<div id="infoDiputado" class="infoDiputado large-12 small-12 columns">
-			<a class="prevDip large-1 small-5 columns" href="/diputado/{{ diputado.id - 1 }}">Diputado anterior</a>
-			<div class="ficha large-5 small-12 columns">
-				<span>
-					<img class="carnet" src="{{baseURL}}/img/imagenesDipus/{{diputado.id}}.jpg">
-				</span>
-				<img class="partido" src="{{baseURL}}/img/logosPartidos/{{diputado.partido | url_decode}}.png">
-				<span class="nombre">{{diputado.nombre}}<br/>{{diputado.apellidos}}</span>
-				<span class="circunscripcion">Diputado por <a href="/circunscripcion/{{ diputado.circunscripcion | slugify }}">{{diputado.circunscripcion}}</a></span>
-				<span class="grupo"><a href="/grupo-parlamentario/{{diputado.grupo}}">Grupo parlamentario {{diputado.grupo}}</a></span>
+			<div class="large-1 columns">
+				<a id="prev" href="/diputado/{{ diputado.id - 1 }}"><i class="fa fa-chevron-left"></i></a>
 			</div>
-			<ul class="details large-5 small-5 columns">			
-				<li><span>{{diputado.fecha_nac | fecha}} en {{diputado.lugar_nac}}</span></li>
-				{% if diputado.legislaturas %}
-				<li>
-					{% for legislatura in diputado.legislaturas %}
-						<span>{{legislatura}} Legislatura</span>
-					{% endfor %}
-				</li>
-				{% endif %}
-				<li>
-					{% for contact in diputado.contacto %}
-						{% if contact.tipo == "email" %}
-							<a href="mailto:{{contact.url | url_decode}}">
-								<i class="fa fa-envelope"></i>
-							</a>
-								<!--span class="contact {{contact.tipo}}">{{contact.url | url_decode}}</span-->
-						{% else %}
-							<a href="{{contact.url | url_decode}}" target="_blank">							
-							{% if contact.tipo == "web" %}
-							<i class="fa fa-globe"></i>
-							{% elseif contact.tipo == "twitter" %}
-							<i class="fa fa-twitter-square"></i>
-							{% elseif contact.tipo == "facebook" %}
-							<i class="fa fa-facebook-square"></i>
-							{% elseif contact.tipo == "linkedin" %}
-							<i class="fa fa-linkedin"></i>
-							{% elseif contact.tipo == "wikipedia" %}
-							<i class="fa fa-book"></i>
-							{% endif %}
-							</a>
+			<div class="large-10 columns border-left-right mark">
+				<div class="ficha large-3 columns">
+					<span  class="foto">
+						<img class="carnet" src="{{baseURL}}/img/imagenesDipus/{{diputado.id}}.jpg">
+					</span>
+					<img class="partido" src="{{baseURL}}/img/logosPartidos/{{diputado.partido | url_decode}}.png">
+				</div>
+				<div class="ficha large-3 columns">
+					<span class="nombre">{{diputado.nombre}}<br/>{{diputado.apellidos}}</span>
+					<span class="circunscripcion">Diputado por <a href="/circunscripcion/{{ diputado.circunscripcion | slugify }}">{{diputado.circunscripcion}}</a></span>
+					<span class="grupo"><a href="/grupo-parlamentario/{{diputado.grupo}}">Grupo parlamentario {{diputado.grupo}}</a></span>
+				</div>
+				<div class="large-6 columns">
+					<ul class="details">
+						<li><span>Fecha de nacimiento: {{diputado.fecha_nac | fecha}} ({{diputado.fecha_nac | edad}} años)</span></li>
+						<li><span>Lugar de nacimiento: {%if diputado.lugar_nac%}{{diputado.lugar_nac}}{%else%}Desconocido{%endif%}</span></li>
+						<li><span>Alta como diputado: {{diputado.fecha_alta | fecha}}</li></span>
+						{% if diputado.fecha_baja%}<li><span>Baja: {{diputado.fecha_baja | fecha}}</span></li>{%endif%}	
+						{% if diputado.legislaturas %}
+						{%spaceless%}
+						{%set n=1%}
+						{%set numlegis= diputado.legislaturas | length%}
+						{%for legis in diputado.legislaturas%}
+							{%if n==1%}{%set legistxt=legis%}
+							{%elseif n==numlegis%}{% set legistxt = legistxt+" y "+legis%}
+							{%else%}{%set legistxt = legistxt+", "+legis%}
+							{%endif%}
+							{%set n +=1%}
+						{%endfor%}
+						{%endspaceless%}
+						<li><span>Anteriores legislaturas: {{legistxt}}</span></li>
+						{%else%}	
+						<li><span>Anteriores legislaturas: Ninguna</span></li>
 						{% endif %}
-						
-					{% endfor %}
-				</li>
-				<li><span>Alta: {{diputado.fecha_alta | fecha}}{% if diputado.fecha_baja%} - Baja: {{diputado.fecha_baja | fecha}}{% endif %} </span></li>
-				<li><span>Salario estimado: {{diputado.sueldo.bruto_mes|euros}}</span></li>
-			</ul>
-			<a class="nextDip large-1 small-5 columns" href="/diputado/{{ diputado.id + 1 }}">Diputado siguiente</a>
+						<li>
+							{% for contact in diputado.contacto %}
+								{% if contact.tipo == "email" %}
+									<a href="mailto:{{contact.url | url_decode}}">
+										<i class="fa fa-envelope"></i>
+									</a>
+										<!--span class="contact {{contact.tipo}}">{{contact.url | url_decode}}</span-->
+								{% else %}
+									<a href="{{contact.url | url_decode}}" target="_blank">							
+									{% if contact.tipo == "web" %}
+									<i class="fa fa-globe"></i>
+									{% elseif contact.tipo == "twitter" %}
+									<i class="fa fa-twitter-square"></i>
+									{% elseif contact.tipo == "facebook" %}
+									<i class="fa fa-facebook-square"></i>
+									{% elseif contact.tipo == "linkedin" %}
+									<i class="fa fa-linkedin"></i>
+									{% elseif contact.tipo == "wikipedia" %}
+									<i class="fa fa-book"></i>
+									{% endif %}
+									</a>
+								{% endif %}
+								
+							{% endfor %}
+						</li>
+						<!--<li><span>Alta: {{diputado.fecha_alta | fecha}}{% if diputado.fecha_baja%} - Baja: {{diputado.fecha_baja | fecha}}{% endif %} </span></li>-->
+						<!--<li><span>Salario estimado: {{diputado.sueldo.bruto_mes|euros}}</span></li>-->
+					</ul>
+				</div>
+			</div>
+			<div class="large-1 columns">
+				<a id="next" href="/diputado/{{ diputado.id + 1 }}"><i class="fa fa-chevron-right"></i></a>
+			</div>
 		</div>
 
 		<div id="extendedInfoDiputado" class="extendedInfoDiputado large-12 small-12 columns">

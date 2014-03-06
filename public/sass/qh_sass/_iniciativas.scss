@@ -1,0 +1,20 @@
+/**** Modulo iniciativas ***/
+.iniciativas {
+
+	.iniciativa { 
+		display:block; 
+		margin-bottom: 1em;
+		font-size: 11pt;
+		line-height: 1.2em;
+
+		> * { 
+			display:block; 
+		}
+
+		a{
+			+span{
+				color:$mainGray;
+			}
+		}
+	}
+}

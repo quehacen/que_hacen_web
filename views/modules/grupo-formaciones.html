@@ -1,8 +1,9 @@
 {% set baseURL = "http://dev.quehacenlosdiputados.net" %}
 <div class="columns info large-6 mark">
-	<ul class="columns large-12 list mark">
+	<div class="columns large-12 list mark">
 	{% for formacion in formaciones %}
-		<li class="columns large-6 contact mark">
+	{% if loop.index%2 == 0 %} <div class="row"> {% endif %}
+		<div class="columns large-6 contact mark">
 			<div class="info">
 				<img src="{{baseURL}}/img/logosPartidos/{{formacion.nombre | url_decode}}.png" alt=""/>
 				{% if formacion.contacto %}
@@ -11,26 +12,56 @@
 					<span>{{formacion.nombre}}</span>	
 				{% endif %}
 			</div>
-			
+			<div class="contacto">
 			{% if formacion.contacto %}
-				{% for contacto in formacion.contacto %}
-					<span>{{contacto.url}}</span>
+				{% for contact in formacion.contacto %}
+				<span class="tipo">
+					{% if contact.tipo == "email" %}
+						<a href="mailto:{{contact.url | url_decode}}">
+							<i class="fa fa-envelope"></i>
+					{% elseif contact.tipo == "telefono" %}	
+						<a href="tel:{{contact.url | url_decode}}">
+							<i class="fa fa-phone-square"></i> 
+					{% else %}
+						<a href="{{contact.url | url_decode}}" target="_blank">							
+						{% if contact.tipo == "web" %}
+						<i class="fa fa-globe"></i>
+						{% elseif contact.tipo == "twitter" %}
+						<i class="fa fa-twitter-square"></i>
+						{% elseif contact.tipo == "facebook" %}
+						<i class="fa fa-facebook-square"></i>
+						{% elseif contact.tipo == "linkedin" %}
+						<i class="fa fa-linkedin"></i>
+						{% elseif contact.tipo == "wikipedia" %}
+						<i class="fa fa-book"></i>
+						{% elseif contact.tipo == "youtube" %}
+						<i class="fa fa-youtube-square"></i>
+						{% endif %}						
+					{% endif %}
+						<span class="contact {{contact.tipo}}">{{contact.url | url_decode}}</span>	
+						</a>
+					</span>	
 				{% endfor %}
+
 			{% endif %}
-		</li>
+			</div>
+		</div>
+	{% if loop.index%2 == 0 %} </div> {% endif %}
 	{% endfor %}
-	</ul>
+	</div>
 </div>
 
 <div class="columns map large-6 mark">
-	<ul class="row columns large-12 mark">
+	<div class="columns large-12 mark">
 	{% for formacion in formaciones %}
-		{% if formacion.direccion%}
-		<li class="columns large-6 mark">
-			<img src="http://maps.googleapis.com/maps/api/staticmap?center={{formacion.direccion.coordenadas}}&markers={{formacion.direccion.coordenadas}}&zoom=16&size=200x200&sensor=false">
+	{% if loop.index%2 == 0 %} <div class="row"> {% endif %}	
+		{% if formacion.direccion %}
+		<div class="columns large-6 mark location">
+			<img src="http://maps.googleapis.com/maps/api/staticmap?center={{formacion.direccion.coordenadas}}&markers={{formacion.direccion.coordenadas}}&zoom=16&size=300x300&sensor=false">
 			<span>{{ formacion.nombre }}: {{ formacion.direccion.texto }}</span>
-		</li>
+		</div>
 		{% endif %}
+	{% if loop.index%2 == 0 %} </div> {% endif %}		
 	{% endfor %}
-	</ul>
+	</div>
 </div>

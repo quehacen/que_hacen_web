@@ -1,15 +1,3 @@
-body    { background:#f2f2f2; }
-
-ul,
-ul li   { list-style: none; padding:0; margin:0;}
-
-.mark {
-    padding: .7em !important;
-}
-
-.fullrow        { max-width:100%; }
-.fullrow .row   { margin-left: auto; margin-right: auto; max-width:62.5em; }
-
 .header {
     background-color: black;
     color: white;
@@ -100,52 +88,6 @@ h2.marked { color: #fe5339; }
     columns: 10px 3;
 }
 
-.container .header{
-    background-color: #44474c;
-    padding: 1em;
-}
-
-.actividad .tabs { 
-    background-color: #f2f2f2;
-    border: 0;
-    border-bottom: 1px solid #c3c3c3;
-    font-size: 0.7em;
-    font-weight: bold;
-    background-image: none;
-    border-radius: 0;
-    margin: 0;
-    padding: 0;
-}
-.actividad .tabs li { 
-    display: inline-block;
-    width: 49%;
-    padding: 0;
-    margin: 0;
-}
-.actividad .tabs li.active a { 
-    background-color: #fe5339;
-    background-image: linear-gradient(to bottom, rgba(255,255,255,.2) 50%,transparent 55%);
-    border-radius: 0;
-    color: white;
-}
-.actividad .tabs li a { 
-    text-decoration: none;
-    color: #fe5339;
-    padding: .5em 1.5em;
-    display: block;
-    font-size: 90%;
-    text-transform: none;
-}
-.actividad .diputados {
-    margin: 0;
-    padding: 0em;
-}
-.actividad  .diputados .diputado {
-    display: inline-table;
-    width: 2em;
-    padding: 1%;
-    text-align: center;
-}
 
 .pagination {padding:.1em;}
 .pagination a,
@@ -155,50 +97,6 @@ h2.marked { color: #fe5339; }
 
 .extendedInfoDiputado{}
 
-.infoDiputado {
-    border-bottom: 1px solid #c3c3c3;
-    /*height: 152px;*/
-    height:auto;
-}
-.infoDiputado .ficha {
-    position: relative;
-    display: block;
-    padding: .7em;
-    border-left: 1px solid #c3c3c3;
-}
-.infoDiputado .ficha  > span:first-child { width: 150px; height: 150px; border-radius:50%; border: 4px solid rgb(182, 182, 182); overflow: hidden; padding: 0; display: inline-block; position: relative; margin-right: 30px;}
-.infoDiputado .ficha  > span:first-child > img {display:block; }
-.infoDiputado .ficha  > span:first-child > img.carnet { width: 100%;position: relative;height: auto;display: block;vertical-align: middle;margin-top: -50%;top: 37%;}
-.infoDiputado .ficha img.partido { width: 50px; position: absolute; left: 150px; top: 150px; margin-top: -40px; margin-left: -20px;}
-.infoDiputado .ficha span { display: block; color: #44474c; float: left;}
-.infoDiputado .ficha span.nombre {
-    font-size: 25px;
-    font-weight: bold;
-}
-.infoDiputado .ficha span.circunscripcion {
-    font-size: .9em;
-    padding-top: 1em;
-}
-.infoDiputado .ficha span.grupo {
-    font-size: .9em;
-    padding-top: 0.5em;
-}
-
-.infoDiputado .details {
-    padding: 1em;
-    border-right: 1px solid #c3c3c3;
-}
-.infoDiputado .details li {
-    padding: .2em 0;
-    line-height: 110%;
-
-}
-.infoDiputado .details li span { display:block; font-size: .8em; color: #44474c;}
-.infoDiputado .prevDip {
-}
-.infoDiputado .nextDip {}
-.infoDiputado .prevDip,
-.infoDiputado .nextDip { position:relative; height:100%; background-color:white;overflow:hidden; text-indent:-100%; border-radius: 5px;}
 
 .tabs { background-color: #f2f2f2; border: 1px solid #999; font-size: 0.7em; font-weight: bold; background-image: linear-gradient(to bottom,transparent 50%, rgba(0,0,0,.1)); border-radius: 4px; margin: 1em;}
 .tabs li { display: inline-block; padding: .5em 0;margin-left: 5px}
@@ -223,30 +121,6 @@ table td {}
 .diputadosTotal + span {text-align: left; padding: .5em 1em !important; font-size: 20px; line-height:2em; color: #665; }
 
 ul.diputados li a span {line-height:100%;}
-
-/** Modulo diputados **/
-.diputados {}
-.diputados .diputado { display: inline-table; width: 11em; padding: 1%; text-align:center; }
-.diputados .diputado a {display:block; color:black; margin:0 auto; font-size: 9pt; text-align:center; position:relative; /* min-height: 9em; */}
-.diputados .diputado a:hover span{color:#fe5339;/*color:lightgrey;*/}
-
-.diputados .diputado a .fotoimg { width: 90px;
-height: 90px;
-border-radius: 50%;
-border: 4px solid rgb(182, 182, 182);
-overflow: hidden;
-padding: 0;
-display: inline-block;
-position: relative;
- }
-.diputados .diputado a .partidoimg { height: 2em; position: absolute; top: 66px; margin-left: 1.2em; }
-
-.diputados .diputado a .nombre,
-.diputados .diputado a .grupo,
-.diputados .diputado a .partido { display:block; padding: .4em;}
-.diputados .diputado a .nombre  { }
-.diputados .diputado a .grupo   { }
-.diputados .diputado a .partido { }
 
 .hddn {
     position:absolute; width:0;height:0;overflow:hidden; text-indent:-100%;
@@ -276,11 +150,17 @@ position: relative;
 .grupos .grupo a { color:black; font-weight:bold; font-size:8pt; text-transform:uppercase;}
 .grupos .grupo.active a{color: white;}
 
-/**** Modulo iniciativas ***/
-.iniciativas {}
-.iniciativas ul li {margin: 0 0 10px 0}
-.iniciativas .iniciativa        { display:block; padding:.5em}
-.iniciativas .iniciativa > *    { display:block;}
+/** Modulo listadoOrganos **/
+.organos { display:block; background-color:white; border:1px solid #c3c3c3; padding: .3em 1em; border-radius: 5px; margin-top: 1em;}
+.organos .organo { display:inline-block; padding:.5em .5em;margin-left:3em;}
+.organos .organo.active {
+    background-color: #fe5339;
+    border-radius: 5px;
+}
+.organos .organo a { color:black; font-weight:bold; font-size:8pt; text-transform:uppercase;}
+.organos .organo.active a{color: white;}
+
+
 
 .encabezadoMod {text-align: center; padding: 1em 0; border-top: 1px solid #c3c3c3; display: block;font-weight: bold;color: #555;font-size: 15pt;line-height: 1em;}
 .subTitle {text-align: center; line-height:1em; display: block;font-weight: normal;color: #555;font-size: 15pt;margin-top: -.8em;margin-bottom: 1em;}

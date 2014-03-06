@@ -3,47 +3,75 @@
 {% block title %}Comisiones{% endblock %}
 
 {% block content %}
+	<div class="row">
+                <div class="large-12 columns list">
+                        <!--#include virtual="/modules/organos/list?active=C" -->
+                </div>
+        </div>
+
 	<div class="row container">
 		<div class="diputadosTotal">
 			<span>Comisiones del Congreso</span>
 		</div>
-		<div>
-			<ul class="tabs">
+		<!--<div>-->
+		   <!--<div style='width:100%;'>
+			<div style='width:38%;float:left;'>
+			<span style='display:block;text-align:center;font-size:14px;'>Ordenar</span>
+			<ul id='tabsComisiones' class="tabs">
+				<li class="tab active"><a href="">Nombre</a></li>	
+				<li class="tab"><a href="#numDipus">Nº Diputados</a></li>
+				<li class="tab"><a href="#fechaConst">Fecha constitución</a></li>
+			</ul></div>
+			<div style='width:62%;float:right;'>
+			<span style='display:block;text-align:center;font-size:14px;'>Clasificar</span>
+			<ul id='tabsComisiones' class="tabs">	
 				<li class="tab"><a href="#legislativa">Legislativas / No legislativas</a></li>
-				<li class="tab"><a href="#mixta">Sólo diputados / Mixtas</a></li>
+				<li class="tab"><a href="#mixta">Mixtas / No mixtas</a></li>
+				<li class="tab"><a href="#permanente">Permanentes / No permanentes</a></li>
+			</ul></div>
+                   </div>-->
+			<ul id='tabsComisiones' class="tabs">
+				<li class="tab active"><a href="">Nombre</a></li>	
+				<li class="tab"><a href="#numDipus">Nº Diputados</a></li>
+				<li class="tab"><a href="#fechaConst">Fecha constitución</a></li>
+				<li>|</li>
+				<li class="tab"><a href="#legislativa">Legislativas / No legislativas</a></li>
+				<li class="tab"><a href="#mixta">Mixtas / No mixtas</a></li>
 				<li class="tab"><a href="#permanente">Permanentes / No permanentes</a></li>
 			</ul>
+
 			<!--select id="filtrosOrg" style='display:block;'>
 			<option>&lt;Selecciona filtro&gt;</option>
 			<option>Legislativas / No legislativas</option>
 			<option>Sólo diputados / Mixtas</option>
 			<option>Permanentes / No permanentes</option>
 			</select-->
-			<div class="containerComisiones">
+			<div class="containerComisiones" style="clear:both;">
 				<table>
 					<tbody>
-					{% spaceless %}
+					{#{% spaceless %}
 					{% set legisOrd = comisiones|groupBy('legis') %}
 					{% set comLegis=legisOrd[1]%}
 					{% set comNoLegis=legisOrd[0]%}
 					{% endspaceless%}
-
+					
 					<tr>
 						<th>Legislativas ({{comLegis|length}})</th>
-					</tr>
-					{% for com in comLegis %}
+					</tr>#}
+					{% for com in comisiones %}
 						<tr>
-							<td><a href="/organo/{{com.id}}">Comisión {{com.pre}} {{ com.nombre }}</a></td>
+							<td><a href="/organo/{{com.normalized.url}}">{{ com.nombre }}</a></td>
 						</tr>
 					{% endfor %}
-					<tr>
+					
+					{#<tr>
 						<th>No legislativas ({{comNoLegis|length}})</th>
 					</tr>
 					{% for com in comNoLegis %}
 						<tr>
 							<td><a href="/organo/{{com.id}}">Comisión {{com.pre}} {{ com.nombre }}</a></td>
 						</tr>
-					{% endfor %}
+					{% endfor %}#}
 
 					</tbody>
 				</table>
@@ -54,6 +82,5 @@
 {% block scripts %}
 	{% parent %}
 	<script src="/javascripts/vendors/mustache.js"></script>
-	<script src="/javascripts/comisiones.js"></script>
-	
+	<script src="/javascripts/comisiones.js"></script>	
 {% endblock %}
