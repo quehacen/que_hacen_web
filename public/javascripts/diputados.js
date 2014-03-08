@@ -1,11 +1,3 @@
-/*
-(function(_){
-	_.miFiltro = function(){
-		console.log('filtro');
-		return 'filtro';
-	}
-})(_);*/
-
 function edad(fechanac) {
 	var date = fechanac;
 	var nums = date.split('/');
@@ -57,7 +49,6 @@ function validParams(order, filter){
 		});
 		if(valido==false) return false;
 	}
-
 
 	if(filter!=null){
 		var filtros=filter.split('&');
