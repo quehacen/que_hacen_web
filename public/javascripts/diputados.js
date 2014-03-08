@@ -27,14 +27,14 @@ function templateDipu(sub){
 	template+='</a>';
 	switch(sub){
 		case 'edad': txtsub='{{edad}} años';break;
-		case 'twitter': txtsub='';break;
-		case 'facebook': txtsub='';break;
-		case 'correo': txtsub='';break;
+		case 'twitter':txtsub='{{tw}}';break;
+		case 'facebook': txtsub='{{}}';break;
+		case 'correo': txtsub='olaqase';break;
 		case 'sueldo':txtsub='<a href="/diputado/{{normalized.url}}/salario">{{sueldo.bruto_mes}} €/mes</a>';break;	
-		case 'inic': txtsub='{{inic}} iniciativas';break;
-		case 'interv': txtsub='{{interv}} intervenciones';break;
-		case '': txtsub='G.P. {{grupo}}';break;
-		default: txtsub='{{'+sub+'}}';break;
+		case 'inic': txtsub='{{actividad.0.iniciativas.total}} iniciativas';break;
+		case 'interv': txtsub='{{actividad.0.intervenciones.total}} intervenciones';break;
+		case 'grupo': case '': txtsub='G.P. {{grupo}}';break;
+		default: txtsub='G.P. {{grupo}}';break;
 	}
 	template+='<span class="subt">'+txtsub+'</span>';
 	template+='</li>{{/data}}';
@@ -42,98 +42,337 @@ function templateDipu(sub){
 	return template;
 }
 
+function validParams(order, filter){
+	var valido=true;
+
+	if(order!=null){	
+		var ordenes=order.split('&');
+		_.each(ordenes,function(orden){
+			switch(orden){
+				case 'edad': case 'salario': case 'nombre': case 'inic': case 'interv': 
+					break;
+				default:
+					valido = false;return;
+			}
+		});
+		if(valido==false) return false;
+	}
+
+
+	if(filter!=null){
+		var filtros=filter.split('&');
+		// Mejora --> Detectar si se pasan más de un filtro de circunsc o grupo --> no válido
+		_.each(filtros,function(filtro){
+			var enc;
+			// Filtro de grupo
+			if(filtro.indexOf('grupo=')==0){
+				var gruposf=filtro.substr(6).split('+');
+				_.each(gruposf,function(grupof){
+					enc = _.find(this.grupos, function(g){ 
+						return grupof == toSlug(g.nombre); });
+					if(enc == undefined) valido=false;
+				});
+				//if(enc == undefined){ valido=false; }else{alert('encontrado'); }
+				return;
+			}
+
+			// Filtro de circunscripcion
+			if(filtro.indexOf('circuns=')==0){
+				var circunsf=filtro.substr(8).split('+');
+				_.each(gruposf,function(grupof){
+					enc = _.find(this.circunscripciones, function(c){ 
+						return circunsFiltro == c.normalized.url; });
+					if(enc == undefined) valido=false;
+				});
+				return;
+			}
+
+			switch(filtro){
+				case 'contw': case 'sintw': case 'concorreo': case 'sincorreo': case 'confb': case 'sinfb':
+				case 'mujeres': case 'hombres': case 'sininterv': case 'sininic':
+					break;
+				default:
+					valido=false; return;
+			}
+		});
+		if(valido==false) return false;
+	}
+
+	return true;
+}
+
+
 $(function(){
 	var Router = Backbone.Router.extend({
 		diputados: null,
+		circunscripciones: null,
+		grupos: null,
 		initialize: function(){
-			this.apiCall({q:'{"activo":1}',order:'{"nombre":1}',only:'["id","nombre","apellidos","fecha_nac","grupo","partido","normalized","contacto","sueldo.bruto_mes","actividad.iniciativas","actividad.intervenciones.total"]'}, function(_data){
-				this.diputados = _data;
-				//alert('we have dipus!');
-			});
+			this.apiCall(
+				"diputados",
+				{q:'{"activo":1}',order:'{"normalized.apellidos":1}',only:'["id","nombre","apellidos","fecha_nac","grupo","partido","sexo","circunscripcion","normalized","contacto","sueldo.bruto_mes","actividad.iniciativas.total","actividad.intervenciones.total"]'}, 
+				function(_data){this.diputados = _data;});	
+			this.apiCall(
+				"circunscripciones",
+				{order:'{"normalized.nombre":1}',only:'["id","nombre","normalized"]'}, 
+				function(_data){ this.circunscripciones=_data;});
+			this.apiCall(	
+				"grupos",
+				{order:'{"num_diputados":1}',only:'["id","nombre"]'}, 
+				function(_data){ this.grupos=_data; });
 		},
 		routes:{
-			//'' : 'nombreHandler',
-			//'orden/:ord' : 'ordenHandler',
-			'edad': 'edadHandler',
-			'salario': 'sueldoHandler',
-			'interv': 'intervHandler',
-			'inic': 'inicHandler',
-			
+			'' : 'basicaHandler',
+			'(order/:ord)(/)(filter/:fil)' : 'dipusHandler'
+		},
+	
+		basicaHandler: function(){
+			//alert('sin parámetros');
+			if(!this.diputados){
+				setTimeout(this.basicaHandler,500);
+				return;
+			}
+			var datos=[];
+			datos.data=this.diputados;
+			var numDipus=_.size(datos.data);
+			var template = templateDipu('grupo');
+			$('h3.title').text(numDipus+" diputados");
+			$('.diputados').html( Mustache.render(template, datos));	
 		},
 
-		edadHandler: function(){
-			//alert('HOME');
+		dipusHandler: function(ord,fil){
+			//console.log(ord+" "+fil);
+			$('.diputados').hide();
 			if(!this.diputados){
-				setTimeout(this.edadHandler, 500);
+				setTimeout(this.dipusHandler,500,ord,fil);
 				return;
 			}
-			
-			var porEdad=[];
-			if(typeof(diputados[0].edad) == "undefined"){
-				_.each(diputados,function(dipu){
-					dipu.edad=edad(dipu.fecha_nac);
-				});
+
+			// Comprobamos validez de url
+			var urlValida=true;
+			if(ord == null && fil== null){
+				urlValida=false;
+			}else{
+				// Comprobamos que ord y fil son validos
+				var valid=validParams(ord,fil);
+				if(valid === false){
+					urlValida=false;
+				}
 			}
-			porEdad.data= _.sortBy(diputados, function(dipu){ return dipu.edad; });
-			var template = templateDipu('edad');
-			//$('#tabsComisiones').html(tagsCom("nombre"));
-			$('.diputados').html( Mustache.render(template, porEdad) );
-		},
-	
-		sueldoHandler: function(){
-			if(!this.diputados){
-				setTimeout(this.sueldoHandler, 500);
-				return;
-			}
-			var porSueldo=[];
-			porSueldo.data= _.sortBy(diputados, function(dipu){ return dipu.sueldo.bruto_mes; });
-			var template = templateDipu('sueldo');
-			//$('#tabsComisiones').html(tagsCom("nombre"));
-			$('.diputados').html( Mustache.render(template, porSueldo) );
-		},
-	
-		inicHandler: function(){
-			if(!this.diputados){
-				setTimeout(this.inicHandler, 500);
-				return;
-			}
-			var porInic=[];
-			
-			if(typeof(diputados[0].inic) == "undefined"){
-				_.each(diputados,function(dipu){
-					dipu.inic=dipu.actividad[0].iniciativas.total;
-				});
-			}
-			porInic.data= _.sortBy(diputados, function(dipu){ return dipu.inic; });
-			var template = templateDipu('inic');
-			//$('#tabsComisiones').html(tagsCom("nombre"));
-			$('.diputados').html( Mustache.render(template, porInic) );
-		},
 		
-		intervHandler: function(){
-			if(!this.diputados){
-				setTimeout(this.intervHandler, 500);
+			// Si la url no es válida, no seguimos
+			if(urlValida==false){
+				window.location.href='/404';
+				//alert('url no válida');
 				return;
 			}
-
-			if(typeof(diputados[0].inic) == "undefined"){
-				_.each(diputados,function(dipu){
-					dipu.interv=dipu.actividad[0].intervenciones.total;
-				});
+	
+			// Pre-procesamos --> Incluimos en diputados campos que se vayan a necesitar
+			var ordenes,filtros;
+			if(ord!=null){
+			   ordenes=ord.split('&');
+			   _.each(ordenes,function(orden){
+				switch(orden){
+				   case 'edad':
+					if(typeof(diputados[0].edad) == "undefined"){
+						_.each(diputados,function(dipu){
+							dipu.edad=edad(dipu.fecha_nac);
+						});
+					}
+					break;
+				}
+			   });
+			}else{
+				ordenes=null;
 			}
-			var porInterv=[];
-			porInterv.data= _.sortBy(diputados, function(dipu){ return dipu.actividad[0].intervenciones.total; });
-			var template = templateDipu('interv');
-			//$('#tabsComisiones').html(tagsCom("nombre"));
-			$('.diputados').html( Mustache.render(template, porInterv) );
+			
+			if(fil != null){
+			   filtros=fil.split('&');
+			   _.each(filtros,function(filtro){
+				switch(filtro){
+				   case 'sintw': case 'contw':
+					_.each(diputados, function(dipu){ 
+						if(typeof(dipu.contacto) != "undefined"){
+							_.each(dipu.contacto,function(c){
+								if(c.tipo=="twitter"){
+									dipu.tw=c.url;
+									return;
+								}
+							});
+						}
+					});
+					break;
+
+				   case 'confb': case 'sinfb':
+					_.each(diputados, function(dipu){ 
+						if(typeof(dipu.contacto) != "undefined"){
+							_.each(dipu.contacto,function(c){
+								if(c.tipo=="facebook"){
+									dipu.fb=c.url;
+									return;
+								}
+							});
+						}
+					});
+					break;
+					
+				   case 'concorreo': case 'sincorreo':
+					_.each(diputados, function(dipu){ 
+						if(typeof(dipu.contacto) != "undefined"){
+							var correos=[];
+							var i=0;
+							_.each(dipu.contacto,function(c){
+								if(c.tipo=="email"){
+									correos[i]=c.url;
+									i++;
+								}
+							});
+							if(correos.length>0)	dipu.correos=correos;
+						}
+					});
+					break;
+			      }
+			   });
+			}else{
+				filtros=null;
+			}
+
+			// Procesamos --> Ordenamos y filtramos
+			var sub;
+			var datos=[];
+			dipus=_.clone(this.diputados);
+
+			if(filtros != null){
+			   var filtros=fil.split('&');
+			   //filtros=separarFiltros(filtros);
+			   var temp=[], dipusG=[], dipusC=[];
+			   _.each(filtros,function(filtro){
+	
+			   // Filtros para GP
+			   if(filtro.indexOf('grupo=')==0){
+				var gruposf=filtro.substr(6).split('+');
+				var grupo;
+				_.each(gruposf,function(grupof){
+					grupo = _.find(this.grupos, function(g){ 
+						return grupof == toSlug(g.nombre); });
+				   	temp=_.filter(dipus, function(dipu){ 
+						return dipu.grupo==grupo.nombre;});
+					dipusG=_.union(dipusG,temp);
+				});
+				if(dipusG.length > 0) dipus=dipusG;
+			   }
+			
+			   // Filtros para circuns
+			   else if(filtro.indexOf('circuns=')==0){
+				var circunsf=filtro.substr(8).split('+');
+				var circuns;
+				_.each(circunsf,function(circunf){
+					circuns = _.find(this.circunscripciones, function(c){ 
+						return circunf == c.normalized.url; });
+				   	temp=_.filter(dipus, function(dipu){ 
+						return dipu.circunscripcion==circuns.nombre;});
+					dipusC=_.union(dipusC,temp);
+				});
+				if(dipusC.length > 0) dipus=dipusC;
+			   }
+
+			   // Otros filtros
+			   else{
+				switch(filtro){
+				   case 'sintw':
+					dipus=_.filter(dipus, function(dipu){ return (typeof(dipu.tw) == "undefined");});
+					break;
+				
+				   case 'contw':
+					dipus=_.filter(dipus, function(dipu){ return (typeof(dipu.tw) != "undefined");});
+					sub='twitter';
+					break;
+
+				   case 'sinfb':
+					dipus=_.filter(dipus, function(dipu){ return (typeof(dipu.fb) == "undefined");});
+					break;
+				
+				   case 'confb':
+					dipus=_.filter(dipus, function(dipu){ return (typeof(dipu.fb) != "undefined");});
+					sub='facebook';
+					break;
+
+				   case 'sincorreo':
+					dipus=_.filter(dipus, function(dipu){ return (typeof(dipu.correos) == "undefined");});
+					break;
+				
+				   case 'concorreo':
+					dipus=_.filter(dipus, function(dipu){ return (typeof(dipu.correos) != "undefined");});
+					sub='correos';
+					break;
+
+				   case 'mujeres':
+					dipus=_.filter(dipus, function(dipu){ return  dipu.sexo=="M" ;});
+					break;
+
+				   case 'hombres':
+					dipus=_.filter(dipus, function(dipu){ return  dipu.sexo=="H" ;});
+					break;
+
+				   case 'sininic':
+					dipus=_.filter(dipus, function(dipu){ 
+						return  dipu.actividad[0].iniciativas.total==0 ;});
+					break;
+
+				   case 'sininterv':
+					dipus=_.filter(dipus, function(dipu){ 
+						return  dipu.actividad[0].intervenciones.total==0 ;});
+					break;
+				}
+			   }
+			   });
+			}
+
+			if(ordenes!=null){
+			   _.each(ordenes,function(orden){
+				switch(orden){
+				   case 'edad':
+					dipus=_.sortBy(dipus, function(dipu){ return dipu.edad; });	
+					sub='edad';
+					break;
+
+				   case 'nombre':
+					dipus=_.sortBy(dipus, function(dipu){ return dipu.normalized.apellidos; });	
+					sub='grupo';
+					break;
+
+				   case 'salario':
+					dipus= _.sortBy(dipus, function(dipu){ return dipu.sueldo.bruto_mes; });
+					dipus.reverse();
+					sub='sueldo';
+					break;
+
+				   case 'inic':
+					dipus= _.sortBy(dipus, function(dipu){ 
+						return dipu.actividad[0].iniciativas.total; });
+				   	sub='inic';
+					break;
+
+				   case 'interv':
+					dipus= _.sortBy(dipus, function(dipu){ 
+						return dipu.actividad[0].intervenciones.total; });
+					sub='interv';
+					break;
+				}
+			   });
+			}else{
+				dipus= _.sortBy(dipus, function(dipu){ 
+					return dipu.normalized.apellidos; 
+				});		
+			}
+
+			datos.data=dipus;
+			var template = templateDipu(sub);
+			var numDipus=_.size(dipus);
+			$('h3.title').text(numDipus+' diputados');
+			$('.diputados').html( Mustache.render(template, datos) );	
+			$('.diputados').show();
 		},
-
-
-
-
-
-
-
 
 		/*numDipusHandler: function(){
 			if(!this.comisiones){
@@ -171,46 +410,11 @@ $(function(){
 				$('.containerComisiones').html( Mustache.render(template, ordenadas) );
                         });
 
-		},
-		fechaConstHandler:function(){	
-			if(!this.comisiones){
-				setTimeout(this.fechaConstHandler,500);
-				return;
-			}
-		
-			var ordenadas=[];
-			var datos=_.sortBy(this.comisiones, function(com){
-				var nums=com.constituida.split('/');
-				var fecha= new Date(nums[2],nums[1],nums[0]);  
-				var time=fecha.getTime();
-				//console.log(fecha.getTime());
-				return time;
-				//return fecha.getMilliseconds(); 
-			});
-			ordenadas.data=datos;
-			var template = "<table>{{#data}}<tr><td><a href='organo/{{normalized.url}}'>{{nombre}}</a> ({{constituida}})</td></tr> {{/data}} </table>";
-			$('#tabsComisiones').html(tagsCom("fechaConst"));
-			$('.containerComisiones').html( Mustache.render(template, ordenadas) );
 		},*/
-		apiCall: function(_data, callback){
+
+		apiCall: function(col, _data, callback){
 			$.ajax({
-				url:'http://api.quehacenlosdiputados.net/diputados',
-				//url:'http://localhost:3002/organos',	
-				//url:'http://quehacenlosdiputados.net:quehacenT3ST@api.quehacenlosdiputados.net/organos',
-				//username: 'quehacenlosdiputados.net',
-				//password: 'quehacenT3ST',
-				/*beforeSend: function (xhr){ 
-        			 xhr.setRequestHeader('Authorization', make_base_auth("quehacenlosdiputados.net","quehacenT3ST")); 
-    				},
-				headers: {Authorization: make_base_auth("quehacenlosdiputados.net","quehacenT3ST")},*/
-				data : _data
-			}).done(function(result){
-				callback(result);
-			});
-		},
-		apiDipusCall: function(_data, callback){
-			$.ajax({
-				url:'http://api.quehacenlosdiputados.net/diputados',
+				url:'http://api.quehacenlosdiputados.net/'+col,
 				data : _data
 			}).done(function(result){
 				callback(result);
