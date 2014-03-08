@@ -1,0 +1,13 @@
+.mod-organos{
+	h4 {
+		color:$mainRed;
+		padding:1em 0 0;
+		text-transform: uppercase;
+		font-size: 12pt;
+		text-align: center;
+		font-weight: bold;
+	}
+	.diputados{
+		border-bottom: 1px solid $mainRed;
+	}
+}
