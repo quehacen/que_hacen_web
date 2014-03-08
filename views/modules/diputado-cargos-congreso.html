@@ -30,56 +30,57 @@
 		<tr><td>{{cargo}}</td><td><a href='/organo/{{organo_href}}'>{{organo_cool}}</a></td><td>{{altabaja}}</td></tr>
 {%endfor%}
 {% endmacro %}
+<div class="cargos_congreso mark">
+	<table id="cargos_congreso" class="large-12 columns">
+		{%spaceless%}
+		{% set cargosact = cargos_act %}
+		{% set cargoshist = cargos_act%}
+		{% set cargosact = cargosact | poda_sin('baja') |cargos_ord | groupBy('tipoOrgano')%}
+		{% set cargoshist = cargoshist | poda_con('baja') | cargos_ord | groupBy('tipoOrgano')%}
+		{% if cargosact["JP"] or cargosact["MC"] or cargosact["DP"] or cargosact["C"] or cargosact["SC"]%}
+			{% set haycargosact = 1 %}
+		{%endif%}
+		{% if cargoshist["JP"] or cargoshist["MC"] or cargoshist["DP"] or cargoshist["C"] or cargoshist["SC"]%}
+			{% set haycargoshist = 1 %}
+		{%endif%}
+		{%endspaceless%}
+		
+		<tr><th style="color:rgb(254, 83, 57);font-size:20px;" colspan="3">Cargos actuales</th></tr>
+		{%if cargosact["DP"] or cargosact["JP"] or cargosact["MC"] %}
+			<tr><th colspan="3">Órganos generales</th></tr>
+			{% if cargosact["MC"] %}{{ muestra_cargos_tipo(cargosact["MC"],organos,diputado.sexo,"MC") }}{% endif %}
+			{% if cargosact["JP"] %}{{ muestra_cargos_tipo(cargosact["JP"],organos,diputado.sexo,"JP") }}{% endif %}
+			{% if cargosact["DP"] %}{{ muestra_cargos_tipo(cargosact["DP"],organos,diputado.sexo,"DP") }}{% endif %}
+	        {% endif %}
+		{%if cargosact["C"]%} 
+			<tr><th colspan="3">Comisiones</th></tr>
+			{{muestra_cargos_tipo(cargosact["C"],organos,diputado.sexo,"C") }}
+		{% endif %}
+		{%if cargosact["SC"]%}
+			<tr><th colspan="3">Subcomisiones</th></tr>
+			{{ muestra_cargos_tipo(cargosact["SC"],organos,diputado.sexo,"SP") }}
+		{% endif %}
+		{% if !haycargosact %}
+			<tr><td colspan="3"><i>El diputado no tiene ningún cargo actualmente en el Congreso.</i></td></tr>
+		{%endif%}	
 
-<table id="vidalaboral" class="large-12 columns">
-	{%spaceless%}
-	{% set cargosact = cargos_act %}
-	{% set cargoshist = cargos_act%}
-	{% set cargosact = cargosact | poda_sin('baja') |cargos_ord | groupBy('tipoOrgano')%}
-	{% set cargoshist = cargoshist | poda_con('baja') | cargos_ord | groupBy('tipoOrgano')%}
-	{% if cargosact["JP"] or cargosact["MC"] or cargosact["DP"] or cargosact["C"] or cargosact["SC"]%}
-		{% set haycargosact = 1 %}
-	{%endif%}
-	{% if cargoshist["JP"] or cargoshist["MC"] or cargoshist["DP"] or cargoshist["C"] or cargoshist["SC"]%}
-		{% set haycargoshist = 1 %}
-	{%endif%}
-	{%endspaceless%}
-	
-	<tr><th style="color:rgb(254, 83, 57);font-size:20px;">Cargos actuales</th></tr>
-	{%if cargosact["DP"] or cargosact["JP"] or cargosact["MC"] %}
-		<tr><th>Órganos generales</th></tr>
-		{% if cargosact["MC"] %}{{ muestra_cargos_tipo(cargosact["MC"],organos,diputado.sexo,"MC") }}{% endif %}
-		{% if cargosact["JP"] %}{{ muestra_cargos_tipo(cargosact["JP"],organos,diputado.sexo,"JP") }}{% endif %}
-		{% if cargosact["DP"] %}{{ muestra_cargos_tipo(cargosact["DP"],organos,diputado.sexo,"DP") }}{% endif %}
-        {% endif %}
-	{%if cargosact["C"]%} 
-		<tr><th>Comisiones</th></tr>
-		{{muestra_cargos_tipo(cargosact["C"],organos,diputado.sexo,"C") }}
-	{% endif %}
-	{%if cargosact["SC"]%}
-		<tr><th>Subcomisiones</th></tr>
-		{{ muestra_cargos_tipo(cargosact["SC"],organos,diputado.sexo,"SP") }}
-	{% endif %}
-	{% if !haycargosact %}
-		<tr><td colspan=3><i>El diputado no tiene ningún cargo actualmente en el Congreso.</i></td></tr>
-	{%endif%}	
-
-        <tr><th style="color:rgb(254, 83, 57);font-size:20px;">Cargos históricos</th></tr>
-	{%if cargoshist["DP"] or cargoshist["JP"] or cargoshist["MC"] %}
-		<tr><th>Órganos generales</th></tr>
-		{% if cargoshist["MC"] %}{{ muestra_cargos_tipo(cargoshist["MC"],organos,diputado.sexo,"MC") }}{% endif %}
-		{% if cargoshist["JP"] %}{{ muestra_cargos_tipo(cargoshist["JP"],organos,diputado.sexo,"JP") }}{% endif %}
-		{% if cargoshist["DP"] %}{{ muestra_cargos_tipo(cargoshist["DP"],organos,diputado.sexo,"DP") }}{% endif %}
-        {% endif %}
-	{%if cargoshist["C"]%}
-		<tr><th>Comisiones</th></tr>
-		{{muestra_cargos_tipo(cargoshist["C"],organos,diputado.sexo,"C") }}
-	{% endif %}
-	{%if cargoshist["SC"]%}
-		<tr><th>Subcomisiones</th></tr>
-		{{ muestra_cargos_tipo(cargoshist["SC"],organos,diputado.sexo,"SC") }}
-	{% endif %}
-	{% if !haycargoshist %}
-		<tr><td colspan=3><i>El diputado no tiene ningún cargo histórico en el Congreso en esta legislatura.</i></td></tr>
-	{%endif%}
-        </table>
+	        <tr><th style="color:rgb(254, 83, 57);font-size:20px;" colspan="3">Cargos históricos</th></tr>
+		{%if cargoshist["DP"] or cargoshist["JP"] or cargoshist["MC"] %}
+			<tr><th colspan="3">Órganos generales</th></tr>
+			{% if cargoshist["MC"] %}{{ muestra_cargos_tipo(cargoshist["MC"],organos,diputado.sexo,"MC") }}{% endif %}
+			{% if cargoshist["JP"] %}{{ muestra_cargos_tipo(cargoshist["JP"],organos,diputado.sexo,"JP") }}{% endif %}
+			{% if cargoshist["DP"] %}{{ muestra_cargos_tipo(cargoshist["DP"],organos,diputado.sexo,"DP") }}{% endif %}
+	        {% endif %}
+		{%if cargoshist["C"]%}
+			<tr><th colspan="3">Comisiones</th></tr>
+			{{muestra_cargos_tipo(cargoshist["C"],organos,diputado.sexo,"C") }}
+		{% endif %}
+		{%if cargoshist["SC"]%}
+			<tr><th colspan="3">Subcomisiones</th></tr>
+			{{ muestra_cargos_tipo(cargoshist["SC"],organos,diputado.sexo,"SC") }}
+		{% endif %}
+		{% if !haycargoshist %}
+			<tr><td colspan="3"><i>El diputado no tiene ningún cargo histórico en el Congreso en esta legislatura.</i></td></tr>
+		{%endif%}
+    </table>
+</div>

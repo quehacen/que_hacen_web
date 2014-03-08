@@ -14,29 +14,30 @@
 #wrapper #map #tabsCirc dd:hover{cursor:pointer;}
 #wrapper #map #tabsCirc dd.active{color:white;background-color:#fe5339;}
 
-#wrapper #map #tabsCont{border-top: solid 2px #fdfdfd;width:100%;}
+#wrapper #map #tabsCont{border-top: solid 2px #fdfdfd;width:100%; overflow: auto; height: 490px;}
+
 
 #wrapper #map #info #datos_elecciones{margin:0;padding:0;}
-#wrapper #map #info table { width: 92%; font-size: 14px; padding-bottom: 15px; margin: 0 auto;}
+#wrapper #map #info table { width: 100%; font-size: 14px; padding-bottom: 15px; margin: 0 auto;}
 #wrapper #map #info table thead {}
-#wrapper #map #info table th {text-align: left;}
+#wrapper #map #info table th, #wrapper #map #info table td {text-align: left; font-size:12px;}
 #wrapper #map #info table tr {}
 #wrapper #map #info table tbody tr:nth-child(even) {background: #fdfdfd;}
-#wrapper #map #info table td {}
+#wrapper #map #info table td { word-break: break-word; }
 #wrapper #map #info .tabla1 th:nth-child(1) {width: 50%}
 #wrapper #map #info .tabla1 th:nth-child(2) {width: 25%}
 #wrapper #map #info .tabla1 th:nth-child(3) {width: 25%}
 
 #wrapper #map #info .tabla2 th:nth-child(1) {width: 40%}
-#wrapper #map #info .tabla2 th:nth-child(2) {width: 18%;}
+#wrapper #map #info .tabla2 th:nth-child(2) {width: 28%;}
 #wrapper #map #info .tabla2 th:nth-child(3) {width: 22%;}
-#wrapper #map #info .tabla2 th:nth-child(4) {width: 20%}
+#wrapper #map #info .tabla2 th:nth-child(4) {width: 10%}
 
 #wrapper #map #diputados_ {width:100%;/*font-size: 90%;line-height: 120%;*/opacity:0;display:none;transition: all 0.5s; background: #F0F0F0;}
 #wrapper #map #diputados_.active {opacity:1;}
 /*#wrapper #map #diputados_ h3 {float: left; width: 100%;padding: 10px;margin: 0;}*/
 #wrapper #map #diputados_ ol {margin: 0 auto; padding: 0;display:block;width: 94% !important;}
-#wrapper #map #diputados_ ol .diputado {/*float:left*/display:inline-block; width: 160px;margin:0;padding:2px;/*position: relative;*/}
+#wrapper #map #diputados_ ol .diputado {/*float:left*/display:inline-block; width: 50%;margin:0;padding:2px;/*position: relative;*/}
 #wrapper #map #diputados_ ol .diputado a {color: #fe5339; text-decoration: none;}
 #wrapper #map #diputados_ ol .diputado .fotoimg {width: 80px;height: 80px;border-radius: 50%;border: 4px solid rgb(182, 182, 182);overflow: hidden;padding: 0;display: block;position: relative;margin: 0 auto;}
 #wrapper #map #diputados_ ol .diputado .fotoimg img {max-width: 100%;height: auto;}

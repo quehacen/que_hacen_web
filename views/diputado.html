@@ -24,12 +24,12 @@
 					</span>
 					<img class="partido" src="{{baseURL}}/img/logosPartidos/{{diputado.partido | url_decode}}.png">
 				</div>
-				<div class="ficha large-3 columns">
+				<div class="ficha large-3 columns mark">
 					<span class="nombre">{{diputado.nombre}}<br/>{{diputado.apellidos}}</span>
 					<span class="circunscripcion">Diputado por <a href="/circunscripcion/{{ diputado.circunscripcion | slugify }}">{{diputado.circunscripcion}}</a></span>
 					<span class="grupo"><a href="/grupo-parlamentario/{{diputado.grupo}}">Grupo parlamentario {{diputado.grupo}}</a></span>
 				</div>
-				<div class="large-6 columns">
+				<div class="large-6 columns mark">
 					<ul class="details">
 						<li><span>Fecha de nacimiento: {{diputado.fecha_nac | fecha}} ({{diputado.fecha_nac | edad}} años)</span></li>
 						<li><span>Lugar de nacimiento: {%if diputado.lugar_nac%}{{diputado.lugar_nac}}{%else%}Desconocido{%endif%}</span></li>
@@ -54,12 +54,12 @@
 						<li>
 							{% for contact in diputado.contacto %}
 								{% if contact.tipo == "email" %}
-									<a href="mailto:{{contact.url | url_decode}}">
+									<a href="mailto:{{contact.url | url_decode}}" title="{{contact.url | url_decode}}">
 										<i class="fa fa-envelope"></i>
 									</a>
 										<!--span class="contact {{contact.tipo}}">{{contact.url | url_decode}}</span-->
 								{% else %}
-									<a href="{{contact.url | url_decode}}" target="_blank">							
+									<a href="{{contact.url | url_decode}}" title="{{contact.url | url_decode}}" target="_blank">							
 									{% if contact.tipo == "web" %}
 									<i class="fa fa-globe"></i>
 									{% elseif contact.tipo == "twitter" %}

@@ -40,7 +40,7 @@
 	<div class="row container">
 		<div class="large-12 columns">
 			<span class="encabezadoMod">{{t_org }} {{n_org }}</span>
-			<span class="subTitle2">Fecha de constitución: {{organo.constituida}}</span>
+			<span class="subTitle2">Fecha de constitución: {{organo.constituida|fecha}}</span>
 		{% if organo.tipo=="C" or organo.tipo=="SC" %}
 			<span class="subTitle2">Tipo: {{legisnom}} {{permnom}} {{mixtanom}}</span>
 			{% if organo.tipo == "SC"%}

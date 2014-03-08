@@ -5,10 +5,10 @@
 			<span>Circunscripción de {{ circunscripcion.nombre }}</span>
 			<span>{{ circunscripcion.total_escanos }} escaños</span>
 		</div>
-		<div class="large-8 columns">
+		<div class="large-7 columns mark">
 			<!--#include virtual="/modules/circunscripcion/{{circunscripcion.id}}/diputados" -->
 		</div>
-		<div class="large-4 columns">
+		<div class="large-5 columns mark">
 			<table id="totales_votacion" class="totales_votacion large-12 columns">
 				<tbody>
 					{% for total in circunscripcion.totales_votacion %}

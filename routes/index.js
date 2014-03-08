@@ -51,7 +51,8 @@ exports.diputado = function(req, res){
     // es por id
     request( APIUrl+'/diputado/'+req.params.id, function(error, response, body) {
       viewObject.diputado = JSON.parse(body);
-      res.render('diputado', viewObject );
+      res.redirect('/diputado/'+viewObject.diputado.normalized.url);
+      //res.render('diputado', viewObject );
     });
   } else {
     // es por url

@@ -1,58 +1,59 @@
-<table id="vidalaboral" class="large-12 columns">
-		<tr><th>Estudios</th></tr>
-	{% for titulo in estudios %}
-		<tr>
-			<td>{{titulo.estudio}}</td>
-			<td>{% if titulo.centro %}{{titulo.centro}}{% else %}Centro desconocido{% endif %}</td>
-		</tr>
-	{% endfor %}
+<div class="vidalaboral mark">
+	<table id="vidalaboral" class="large-12 columns">
+			<tr><th colspan="2">Estudios</th></tr>
+		{% for titulo in estudios %}
+			<tr>
+				<td>{{titulo.estudio}}</td>
+				<td>{% if titulo.centro %}{{titulo.centro}}{% else %}Centro desconocido{% endif %}</td>
+			</tr>
+		{% endfor %}
 
-		<tr><th>Vida laboral</th></tr>
-	{% for trayec in trayectoria %}
-		<tr>	
-			<td>{{trayec.cargo}}</td>
-		{% if !trayec.fini and !trayec.ffin %}
-			<td>Fechas desconocidas</td>
-		{% else %}	
-			<td>{% if trayec.fini %}{{trayec.fini}}{% else %}Fecha desconocida{% endif %} - {% if trayec.ffin %}{{trayec.ffin}}{% else %}Fecha desconocida{% endif %}</td>
+			<tr><th colspan="2">Vida laboral</th></tr>
+		{% for trayec in trayectoria %}
+			<tr>	
+				<td>{{trayec.cargo}}</td>
+			{% if !trayec.fini and !trayec.ffin %}
+				<td>Fechas desconocidas</td>
+			{% else %}	
+				<td>{% if trayec.fini %}{{trayec.fini}}{% else %}Fecha desconocida{% endif %} - {% if trayec.ffin %}{{trayec.ffin}}{% else %}Fecha desconocida{% endif %}</td>
+			{% endif %}
+			</tr>
+		{% endfor %}
+
+		{% if cargos_partido %}
+			<tr><th colspan="2">Cargos actuales en el partido</th></tr>
+			{% for cargo_p in cargos_partido %}
+			<tr><td>{{cargo_p.cargo}}</td></tr>
+			{% endfor %}
 		{% endif %}
-		</tr>
-	{% endfor %}
+		
 
-	{% if cargos_partido %}
-		<tr><th>Cargos actuales en el partido</th></tr>
-		{% for cargo_p in cargos_partido %}
-		<tr><td>{{cargo_p.cargo}}</td></tr>
-		{% endfor %}
-	{% endif %}
-	
-
-	{% if cargos_gobierno %}
-		<tr><th>Cargos actuales en el Gobierno</th></tr>
-		{% for cargo_g in cargos_gobierno %}
-		<tr><td>{{cargo_g.cargo}}</td></tr>
-		{% endfor %}
-	{% endif %}
-	
-	
-	{#
-	{% if legislaturas %}
-		<tr><th>Anteriores legislaturas</th></tr>
-		{% for legis in legislaturas %}
-		{% spaceless %}
-		{% if legis == "I"%}{% set legis_trad = "Primera" %}{% endif%}
-		{% if legis == "II"%}{% set legis_trad = "Segunda" %}{% endif%}
-		{% if legis == "III"%}{% set legis_trad = "Tercera" %}{% endif%}
-		{% if legis == "IV"%}{% set legis_trad = "Cuarta" %}{% endif%}
-		{% if legis == "V"%}{% set legis_trad = "Quinta" %}{% endif%}
-		{% if legis == "VI"%}{% set legis_trad = "Sexta" %}{% endif%}
-		{% if legis == "VII"%}{% set legis_trad = "Séptima" %}{% endif%}
-		{% if legis == "VIII"%}{% set legis_trad = "Octava" %}{% endif%}
-		{% if legis == "IX"%}{% set legis_trad = "Novena" %}{% endif%}
-		{% endspaceless %}
-		<tr><td>{{legis_trad}} legislatura (xxxx-xxxx)</td></tr>
-		{% endfor %}
-	{% endif %}
-	#}
-
+		{% if cargos_gobierno %}
+			<tr><th colspan="2">Cargos actuales en el Gobierno</th></tr>
+			{% for cargo_g in cargos_gobierno %}
+			<tr><td>{{cargo_g.cargo}}</td></tr>
+			{% endfor %}
+		{% endif %}
+		
+		
+		{#
+		{% if legislaturas %}
+			<tr><th colspan="2">Anteriores legislaturas</th></tr>
+			{% for legis in legislaturas %}
+			{% spaceless %}
+			{% if legis == "I"%}{% set legis_trad = "Primera" %}{% endif%}
+			{% if legis == "II"%}{% set legis_trad = "Segunda" %}{% endif%}
+			{% if legis == "III"%}{% set legis_trad = "Tercera" %}{% endif%}
+			{% if legis == "IV"%}{% set legis_trad = "Cuarta" %}{% endif%}
+			{% if legis == "V"%}{% set legis_trad = "Quinta" %}{% endif%}
+			{% if legis == "VI"%}{% set legis_trad = "Sexta" %}{% endif%}
+			{% if legis == "VII"%}{% set legis_trad = "Séptima" %}{% endif%}
+			{% if legis == "VIII"%}{% set legis_trad = "Octava" %}{% endif%}
+			{% if legis == "IX"%}{% set legis_trad = "Novena" %}{% endif%}
+			{% endspaceless %}
+			<tr><td>{{legis_trad}} legislatura (xxxx-xxxx)</td></tr>
+			{% endfor %}
+		{% endif %}
+		#}
 	</table>
+</div>
