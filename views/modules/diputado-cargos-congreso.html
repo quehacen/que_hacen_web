@@ -45,7 +45,7 @@
 		{%endif%}
 		{%endspaceless%}
 		
-		<tr><th style="color:rgb(254, 83, 57);font-size:20px;" colspan="3">Cargos actuales</th></tr>
+		<tr><th style="font-size:20px;" colspan="3">Cargos actuales</th></tr>
 		{%if cargosact["DP"] or cargosact["JP"] or cargosact["MC"] %}
 			<tr><th colspan="3">Órganos generales</th></tr>
 			{% if cargosact["MC"] %}{{ muestra_cargos_tipo(cargosact["MC"],organos,diputado.sexo,"MC") }}{% endif %}
@@ -64,7 +64,7 @@
 			<tr><td colspan="3"><i>El diputado no tiene ningún cargo actualmente en el Congreso.</i></td></tr>
 		{%endif%}	
 
-	        <tr><th style="color:rgb(254, 83, 57);font-size:20px;" colspan="3">Cargos históricos</th></tr>
+	        <tr><th style="font-size:20px;" colspan="3">Cargos históricos</th></tr>
 		{%if cargoshist["DP"] or cargoshist["JP"] or cargoshist["MC"] %}
 			<tr><th colspan="3">Órganos generales</th></tr>
 			{% if cargoshist["MC"] %}{{ muestra_cargos_tipo(cargoshist["MC"],organos,diputado.sexo,"MC") }}{% endif %}

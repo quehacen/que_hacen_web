@@ -24,12 +24,12 @@
 					</span>
 					<img class="partido" src="{{baseURL}}/img/logosPartidos/{{diputado.partido | url_decode}}.png">
 				</div>
-				<div class="ficha large-3 columns mark">
+				<div class="ficha large-4 columns mark">
 					<span class="nombre">{{diputado.nombre}}<br/>{{diputado.apellidos}}</span>
 					<span class="circunscripcion">Diputado por <a href="/circunscripcion/{{ diputado.circunscripcion | slugify }}">{{diputado.circunscripcion}}</a></span>
 					<span class="grupo"><a href="/grupo-parlamentario/{{diputado.grupo}}">Grupo parlamentario {{diputado.grupo}}</a></span>
 				</div>
-				<div class="large-6 columns mark">
+				<div class="large-5 columns mark">
 					<ul class="details">
 						<li><span>Fecha de nacimiento: {{diputado.fecha_nac | fecha}} ({{diputado.fecha_nac | edad}} años)</span></li>
 						<li><span>Lugar de nacimiento: {%if diputado.lugar_nac%}{{diputado.lugar_nac}}{%else%}Desconocido{%endif%}</span></li>
@@ -51,7 +51,7 @@
 						{%else%}	
 						<li><span>Anteriores legislaturas: Ninguna</span></li>
 						{% endif %}
-						<li>
+						<li class='network'>
 							{% for contact in diputado.contacto %}
 								{% if contact.tipo == "email" %}
 									<a href="mailto:{{contact.url | url_decode}}" title="{{contact.url | url_decode}}">

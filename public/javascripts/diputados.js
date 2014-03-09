@@ -10,6 +10,18 @@ function toSlug(Text){
     return Text.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'-');
 }
 
+function loadingDiv(){
+	var ancho=parseInt($(window).width());
+	var alto=parseInt($(window).height());
+	ancho=ancho-32;
+	alto=alto-32;
+	var div="<div id='loading' style='position: absolute; left:"+ancho+"px; top:"+alto+";'>";
+	div+="<img src='http://www.movidamovil.com/descargas/images/cmobile/loading.gif' alt='cargando contenido'/>";
+	//div+="<span>Cargando diputados</span>";
+	div+="</div>";
+	return div;
+}
+
 function templateDipu(sub){
 	//var template='<ol class="diputados">
 	var template='{{#data}}<li class="diputado">';
@@ -49,6 +61,7 @@ function validParams(order, filter){
 		});
 		if(valido==false) return false;
 	}
+
 
 	if(filter!=null){
 		var filtros=filter.split('&');
@@ -93,6 +106,13 @@ function validParams(order, filter){
 }
 
 
+$(document).ready(function(){
+	//var loading=loadingDiv();
+	//$('body').append(loading);
+	var img="<img src='http://www.movidamovil.com/descargas/images/cmobile/loading.gif' alt='cargando contenido'/>";
+	$('.diputados').html(img);
+});
+
 $(function(){
 	var Router = Backbone.Router.extend({
 		diputados: null,
@@ -119,7 +139,7 @@ $(function(){
 	
 		basicaHandler: function(){
 			//alert('sin parámetros');
-			if(!this.diputados){
+			if(!this.diputados || !this.grupos || !this.circunscripciones){
 				setTimeout(this.basicaHandler,500);
 				return;
 			}
@@ -128,13 +148,13 @@ $(function(){
 			var numDipus=_.size(datos.data);
 			var template = templateDipu('grupo');
 			$('h3.title').text(numDipus+" diputados");
-			$('.diputados').html( Mustache.render(template, datos));	
+			$('.diputados').html( Mustache.render(template, datos));
 		},
 
 		dipusHandler: function(ord,fil){
 			//console.log(ord+" "+fil);
-			$('.diputados').hide();
-			if(!this.diputados){
+			//$('.diputados').hide();
+			if(!this.diputados || !this.grupos || !this.circunscripciones){
 				setTimeout(this.dipusHandler,500,ord,fil);
 				return;
 			}
@@ -193,7 +213,7 @@ $(function(){
 						}
 					});
 					break;
-
+	
 				   case 'confb': case 'sinfb':
 					_.each(diputados, function(dipu){ 
 						if(typeof(dipu.contacto) != "undefined"){
@@ -362,7 +382,7 @@ $(function(){
 			var numDipus=_.size(dipus);
 			$('h3.title').text(numDipus+' diputados');
 			$('.diputados').html( Mustache.render(template, datos) );	
-			$('.diputados').show();
+			//$('.diputados').show();
 		},
 
 		/*numDipusHandler: function(){
