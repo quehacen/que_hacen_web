@@ -1,3 +1,28 @@
+.submenu.organos {
+	display:block; 
+	background-color:white; 
+	border:1px solid #c3c3c3; 
+	padding: .3em; 
+	border-radius: 5px; 
+	margin-top: 1em;
+	text-align: center;
+
+	.organo { 
+		display:inline-block; 
+		padding:.5em .5em;
+		width:19.6%;
+
+		&.active {
+		    background-color: $mainRed;
+		    border-radius: 5px;
+
+		    a{ color: white; }
+		}
+
+		a { color:black; font-weight:bold; font-size:8pt; text-transform:uppercase;}
+	}
+}
+
 .mod-organos{
 	h4 {
 		color:$mainRed;
@@ -9,5 +34,14 @@
 	}
 	.diputados{
 		border-bottom: 1px solid $mainRed;
+		.diputado {
+			/*a .fotoimg {
+				width: 70px;
+				height: 70px;
+			}
+			.partidoimg {
+				top: 50px;
+			}*/
+		}
 	}
 }
