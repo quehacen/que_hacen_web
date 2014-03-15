@@ -1,8 +1,4 @@
 <div class="actividad-parlamentaria mark">
-	<div class="columns container large-12 mark mod-votaciones">
-		<h3>Últimas votaciones de {{diputado.nombre}} {{diputado.apellidos}}</h3>
-		<!--#include virtual="/modules/diputado/{{diputado.id}}/votaciones" -->
-	</div>
 	<div class="columns container large-6 mark mod-iniciativas-parlamentarias">
 		<h3>Iniciativas Parlamentarias</h3>
 		<ul class="list box">
@@ -56,5 +52,9 @@
 				<span class="desc">Otras</span>
 			</li>
 		</ul>
+	</div>
+	<div class="columns container large-12 mark mod-votaciones">
+		<h3>Últimas votaciones de {{diputado.nombre}} {{diputado.apellidos}}</h3>
+		<!--#include virtual="/modules/diputado/{{diputado.id}}/votaciones" -->
 	</div>
 </div>

@@ -2,24 +2,27 @@
 {% for votacion in votaciones %}
 	<li class="votacion">
 		<div class="info">
-			<span class="sesion">Sesion {{votacion.xml.resultado.informacion.sesion}} - </span>
-			<span class="numerovotacion">Votacion {{votacion.xml.resultado.informacion.numerovotacion}} - </span>
+			<span class="sesion">Sesión {{votacion.xml.resultado.informacion.sesion}} - </span>
+			<span class="numerovotacion">Votación {{votacion.xml.resultado.informacion.numerovotacion}} - </span>
 			<span class="fecha">{{votacion.xml.resultado.informacion.fecha | fecha}}</span>
 		</div>
 		<div class="tituloVotacion"><a href="{{votacion.url}}" target="_blank">{{votacion.xml.resultado.informacion.titulo}}</a></div>
+{%spaceless%}
+{% if votacion.xml.resultado.totales.asentimiento == "No"%}{% set txtResul="Rechazada"%}{%set iresul="down"%}
+{% else %}{% set txtResul="Aprobada" %}{% set iresul="up"%}
+{% endif %}
+
+{% set _votacion = votacion.xml.resultado.votaciones.votacion|first %}
+{% if _votacion.voto == "No" %}{% set txtVoto="Votó en contra" %}{% set ivoto="thumbs-down"%}
+{% elseif _votacion.voto == "Sí" %}{% set txtVoto="Votó a favor"%}{% set ivoto="thumbs-up"%}
+{% elseif _votacion.voto == "No vota" %}{% set txtVoto="No vota"%}{% set ivoto="times"%}
+{% elseif _votacion.voto == "Abstención" %}{% set txtVoto="Abstención"%}{% set ivoto="minus-square-o"%}
+{% endif %}
+
+{%endspaceless%}
 		<div class="resultado">
-			<span class="asentimiento {{votacion.xml.resultado.totales.asentimiento | slugify}}">
-				{% if votacion.xml.resultado.totales.asentimiento == "No"%}Rechazada
-				{% else %}Aprobada{% endif %}
-			</span>
-			{% set _votacion = votacion.xml.resultado.votaciones.votacion|first %}
-			<span class="voto {{_votacion.voto | slugify}}">
-				{% if _votacion.voto == "No" %}Votó en contra
-				{% elseif _votacion.voto == "Sí" %}Votó a favor
-				{% elseif _votacion.voto == "No vota" %}No vota
-				{% elseif _votacion.voto == "Abstención" %}Abstención
-				{% endif %}
-			</span>
+			<span class="asentimiento {{votacion.xml.resultado.totales.asentimiento | slugify}}"><i class="fa fa-thumbs-{{iresul}}"> </i> {{txtResul}}</span>
+			<span class="voto {{_votacion.voto | slugify}}"><i class="fa fa-{{ivoto}}"> </i> {{txtVoto}}</span>
 		</div>
 		<div class="textoExpediente">{{votacion.xml.resultado.informacion.textoexpediente}}</div>
 	</li>

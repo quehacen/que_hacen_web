@@ -1,8 +1,15 @@
 <div class="vidalaboral mark">
 <table id="bienes" class="large-12 columns">
 {% for bienGrupo in bienes %}
+{%spaceless%}
+	{%if loop.key == "BIU"%}{% set tipoBien="Bienes inmuebles urbanos"%}
+	{%elseif loop.key == "BIR"%}{% set tipoBien="Bienes inmuebles rurales"%}
+	{%elseif loop.key == "VE"%}{% set tipoBien="Vehículos"%}
+	{%else%}{% set tipoBien=loop.key%}
+	{%endif%}
+{%endspaceless%}
 	<tr>
-		<th>{{loop.key}}</th>
+		<th>{{tipoBien}}</th>
 	</tr>
 	{% for bien in bienGrupo %}
 	<tr>	
