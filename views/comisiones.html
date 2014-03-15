@@ -13,67 +13,40 @@
 		<div class="diputadosTotal">
 			<span>Comisiones del Congreso</span>
 		</div>
-		<!--<div>-->
-		   <!--<div style='width:100%;'>
-			<div style='width:38%;float:left;'>
-			<span style='display:block;text-align:center;font-size:14px;'>Ordenar</span>
-			<ul id='tabsComisiones' class="tabs">
-				<li class="tab active"><a href="">Nombre</a></li>	
-				<li class="tab"><a href="#numDipus">Nº Diputados</a></li>
-				<li class="tab"><a href="#fechaConst">Fecha constitución</a></li>
-			</ul></div>
-			<div style='width:62%;float:right;'>
-			<span style='display:block;text-align:center;font-size:14px;'>Clasificar</span>
-			<ul id='tabsComisiones' class="tabs">	
-				<li class="tab"><a href="#legislativa">Legislativas / No legislativas</a></li>
-				<li class="tab"><a href="#mixta">Mixtas / No mixtas</a></li>
-				<li class="tab"><a href="#permanente">Permanentes / No permanentes</a></li>
-			</ul></div>
-                   </div>-->
-			<ul id='tabsComisiones' class="tabs">
-				<li class="tab active"><a href="">Nombre</a></li>	
-				<li class="tab"><a href="#numDipus">Nº Diputados</a></li>
-				<li class="tab"><a href="#fechaConst">Fecha constitución</a></li>
-				<li>|</li>
-				<li class="tab"><a href="#legislativa">Legislativas / No legislativas</a></li>
-				<li class="tab"><a href="#mixta">Mixtas / No mixtas</a></li>
-				<li class="tab"><a href="#permanente">Permanentes / No permanentes</a></li>
-			</ul>
+			<div class="containerComisiones mark" style="min-height:400px;">
+				<table style='display:none'>
+				<tbody>
+					<tr>
+						<th><a href="#nombre">Nombre</a></th>
+						<th><a href="#numDipus">Nº diputados</a></th>
+						<th><a href="#fechaConst">Fecha constitución</a></th>
+						<th><a href="#legislativa">Legislativa</a></th>
+						<th><a href="#permanente">Permanente</a></th>
+						<th><a href="#mixta">Mixta</a></th>
+					</tr>
 
-			<!--select id="filtrosOrg" style='display:block;'>
-			<option>&lt;Selecciona filtro&gt;</option>
-			<option>Legislativas / No legislativas</option>
-			<option>Sólo diputados / Mixtas</option>
-			<option>Permanentes / No permanentes</option>
-			</select-->
-			<div class="containerComisiones mark" style="clear:both;">
-				<table>
-					<tbody>
 					{#{% spaceless %}
 					{% set legisOrd = comisiones|groupBy('legis') %}
 					{% set comLegis=legisOrd[1]%}
 					{% set comNoLegis=legisOrd[0]%}
-					{% endspaceless%}
+					{% endspaceless%}#}
 					
-					<tr>
-						<th>Legislativas ({{comLegis|length}})</th>
-					</tr>#}
 					{% for com in comisiones %}
-						<tr>
-							<td><a href="/organo/{{com.normalized.url}}">{{ com.nombre }}</a></td>
-						</tr>
-					{% endfor %}
-					
-					{#<tr>
-						<th>No legislativas ({{comNoLegis|length}})</th>
+					{%spaceless%}
+						{%if com.legis==1%}{%set legis="si"%}{%else%}{%set legis="no"%}{%endif%}
+						{%if com.perm==1%}{%set perm="si"%}{%else%}{%set perm="no"%}{%endif%}
+						{%if com.mixta==1%}{%set mixta="si"%}{%else%}{%set mixta="no"%}{%endif%}
+					{%endspaceless%}
+					<tr>
+						<td><a href="/organo/{{com.normalized.url}}">{{ com.nombre }}</a></td>
+						<td>numdipus</td>
+						<td>{{com.constituida}}</td>
+						<td>{{legis}}</td>
+						<td>{{perm}}</td>
+						<td>{{mixta}}</td>
 					</tr>
-					{% for com in comNoLegis %}
-						<tr>
-							<td><a href="/organo/{{com.id}}">Comisión {{com.pre}} {{ com.nombre }}</a></td>
-						</tr>
-					{% endfor %}#}
-
-					</tbody>
+					{% endfor %}
+				</tbody>
 				</table>
 			</div>	
 		</div>
