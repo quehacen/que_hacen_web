@@ -4,14 +4,8 @@
 		<div class="post">
 			<h1><a href="{{post.link}}">{{post.title}}</a></h1>
 			<span class="date"><i class="fa fa-calendar"></i>{{ post.pubDate | dateFromNow }}</span>
-			<img src="{{post.description|post_img_src}}" alt="{{post.description|post_img_alt}}">
-			<div class="summary">{{post.summary|raw}}<!--span> ó </span>
-				<a href="{{post.meta.link}}">ir al blog</a></div-->
-			<div class="links">
-				<a href="{{post.link}}" class="btn">Seguir leyendo</a>
-				<span> ó </span>
-				<a href="{{post.meta.link}}">ir al blog</a>
-			</div>
+			<img src="{{post.description|post_img_src}}" alt="{{post.description|post_img_alt}}" />
+			<div class="summary">{{post.summary|raw}}</div>
 		</div>
 	</li>
 	{% endfor %}

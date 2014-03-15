@@ -23,7 +23,13 @@ exports.ultimos_posts = function(req, res){
 		if(err){
 			res.end();
 		}
-		res.render('modules/ultimos-posts',{'posts':JSON.parse(json)});
+		var posts = JSON.parse(json);
+		var postCollection = [];
+		var totalPosts = ( parseInt(req.params.posts) ) ? parseInt(req.params.posts) : posts.length;
+		for (var i=0, last = totalPosts; i<last; i++){
+			postCollection.push(posts[i]);
+		}
+		res.render('modules/ultimos-posts',{'posts':postCollection});
 	});
 }
 

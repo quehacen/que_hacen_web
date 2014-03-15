@@ -27,7 +27,7 @@ function templateDipu(sub){
 	var template='{{#data}}<li class="diputado">';
 	template+='<a href="/diputado/{{normalized.url}}" title="Ver ficha de {{nombre}} {{apellidos}}">';
 	template+='<span class="fotoimg"><img src="/img/imagenesDipus/{{id}}.jpg" alt="Fotografía de {{nombre}} {{apellidos}}"></span>';
-	template+='<span class="nombre"><b>{{apellidos}}</b>, {{nombre}}</span><img class="partidoimg" src="/img/logosPartidos/{{partido }}.png" alt="logotipo del partido {{partido}}"></span>';
+	template+='<span class="nombre"><b>{{apellidos}}</b>, {{nombre}}</span><img class="partidoimg" src="/img/miniaturasPartidos/{{partido }}.png" alt="logotipo del partido {{partido}}"></span>';
 	template+='</a>';
 	switch(sub){
 		case 'edad': txtsub='{{edad}} años';break;

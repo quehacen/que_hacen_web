@@ -92,7 +92,7 @@ app.get('/404', function(req, res){
 });
 
 /*** Modules **************************************************************/
-app.get('/modules/portada/ultimos-posts', modules.ultimos_posts);
+app.get('/modules/portada/ultimos-posts/:posts', modules.ultimos_posts);
 app.get('/modules/portada/ultimas-iniciativas', modules.ultimas_iniciativas);
 app.get('/modules/portada/ultimas-votaciones', modules.ultimas_votaciones);
 app.get('/modules/portada/actividad/mas-iniciativas', modules.mas_iniciativas);
