@@ -40,6 +40,7 @@
 	<div class="row container">
 		<div class="large-12 columns">
 			<span class="encabezadoMod">{{t_org }} {{n_org }}</span>
+                        <span class="subTitle2">{{ndipus}} diputados</span>
 			<span class="subTitle2">Fecha de constitución: {{organo.constituida|fecha}}</span>
 		{% if organo.tipo=="C" or organo.tipo=="SC" %}
 			<span class="subTitle2">Tipo: {{legisnom}} {{permnom}} {{mixtanom}}</span>
@@ -73,9 +74,7 @@
 		{% endif %}
 		</div>
 		<div class="large-12 columns mod-organos">
-                        <span class="encabezadoMod">{{ndipus}} diputados</span>
                         <!--<span class="subTitle">Nº diputados históricos: {{ndipushist}}</span>-->
-			
                         <!--#include virtual="/modules/organo/{{organo.id}}/diputados" -->
                 </div>
 </div>

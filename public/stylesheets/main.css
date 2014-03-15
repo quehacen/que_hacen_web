@@ -80,7 +80,7 @@ i.social.youtube    { background-position: 0 -44px; }
 .insideContent p { line-height: 1.3em; }
 .insideContent ul { padding-left: 2em; }
 .insideContent ul li { list-style-type: disc; padding:.2em 0em; }
-h2.marked { color: #fe5339; }
+h2.marked { color: black; }
 
 .donantes {
     -webkit-columns: 10px 3;
@@ -95,7 +95,7 @@ h2.marked { color: #fe5339; }
 .pagination a { color:#333; }
 .pagination span { font-weight:bold; color:#000; }
 
-.extendedInfoDiputado{}
+.extendedInfoDiputado{padding-bottom:7px;}
 li.network{font-size:1.5em;}
 
 .tabs { background-color: #f2f2f2; border: 1px solid #999; font-size: 0.7em; font-weight: bold; background-image: linear-gradient(to bottom,transparent 50%, rgba(0,0,0,.1)); border-radius: 4px; margin: 1em;}
@@ -115,10 +115,12 @@ table td {}
  listado de diputados
  **/
 
-.diputadosTotal {text-align: center; padding: 1em 0; border-bottom: 1px solid #c3c3c3; }
+.diputadosTotal {text-align: center; padding: 1em 0; border-bottom: 1px solid #c3c3c3; position:relative;}
 .diputadosTotal span {font-size: 20px; display: block; margin: 5px 0; color: #665; }
 .diputadosTotal span:first-child {color:black; font-weight:bold; }
 .diputadosTotal + span {text-align: left; padding: .5em 1em !important; font-size: 20px; line-height:2em; color: #665; }
+.diputadosTotal span.volverlistado{position:absolute; top:25px; left:15px;margin:0;font-size:14px;}
+.diputadosTotal span.volverlistado i{color:#fe5339;margin-right:5px;}
 
 ul.diputados li a span {line-height:100%;}
 

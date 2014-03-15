@@ -411,7 +411,7 @@ a:hover {
 }
 
 .formacion {
-  color: #ff6956;
+  color: black;
   padding: 0px 4px;
   font-weight: bold;
 }
@@ -490,17 +490,19 @@ a:hover {
   text-transform: uppercase;
 }
 
+.mod-organos {border-top: 1px solid #C3C3C3;}
+
 .mod-organos h4 {
-  color: #ff6956;
+  color: black;
   padding: 1em 0 0;
   text-transform: uppercase;
   font-size: 12pt;
   text-align: center;
   font-weight: bold;
 }
-.mod-organos .diputados {
+/*.mod-organos .diputados {
   border-bottom: 1px solid #ff6956;
-}
+}*/
 .mod-organos .diputados .diputado {
   /*a .fotoimg {
   	width: 70px;

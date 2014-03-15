@@ -1,9 +1,19 @@
 {% extends 'layout.html' %}
 
-{% block title %}Diputado {{diputado.nombre}} {{diputado.apellidos}} {% endblock %}
-
+{% block title %}
+{%if diputado.sexo == 'H'%}Diputado {{diputado.nombre}} {{diputado.apellidos}}
+{%else%}Diputada {{diputado.nombre}} {{diputado.apellidos}}
+{%endif%}
+{%endblock%}
 
 {% block content %}
+{%spaceless%}
+{%if diputado.sexo == 'H'%}
+	{% set sex='o'%}
+{%else%}
+	{% set sex='a'%}
+{%endif%}
+{%endspaceless%}
 	<div class="row">
 		<div class="columns large-2 large-offset-10 sharer mark">
 			<span>Compartir</span>
@@ -25,16 +35,21 @@
 					<img class="partido" src="{{baseURL}}/img/logosPartidos/{{diputado.partido | url_decode}}.png">
 				</div>
 				<div class="ficha large-4 columns mark">
+					{%if diputado.activo==0%}
+					<span class="nombre" style="color:red">{{diputado.nombre}}<br/>{{diputado.apellidos}}</span>
+					<span class="circunscripcion"><span style="color: red !important; font-weight:bold; display:inline-block;margin:0">Exdiputad{{sex}}</span> por <a href="/circunscripcion/{{ diputado.circunscripcion | slugify }}">{{diputado.circunscripcion}}</a></span>
+					{%else%}
 					<span class="nombre">{{diputado.nombre}}<br/>{{diputado.apellidos}}</span>
-					<span class="circunscripcion">Diputado por <a href="/circunscripcion/{{ diputado.circunscripcion | slugify }}">{{diputado.circunscripcion}}</a></span>
+					<span class="circunscripcion">Diputad{{sex}} por <a href="/circunscripcion/{{ diputado.circunscripcion | slugify }}">{{diputado.circunscripcion}}</a></span>
+					{%endif%}
 					<span class="grupo"><a href="/grupo-parlamentario/{{diputado.grupo}}">Grupo parlamentario {{diputado.grupo}}</a></span>
 				</div>
 				<div class="large-5 columns mark">
 					<ul class="details">
 						<li><span>Fecha de nacimiento: {{diputado.fecha_nac | fecha}} ({{diputado.fecha_nac | edad}} años)</span></li>
 						<li><span>Lugar de nacimiento: {%if diputado.lugar_nac%}{{diputado.lugar_nac}}{%else%}Desconocido{%endif%}</span></li>
-						<li><span>Alta como diputado: {{diputado.fecha_alta | fecha}}</li></span>
-						{% if diputado.fecha_baja%}<li><span>Baja: {{diputado.fecha_baja | fecha}}</span></li>{%endif%}	
+						<li><span>Alta como diputad{{sex}}: {{diputado.fecha_alta | fecha}}</span></li>
+						{% if diputado.fecha_baja%}<li><span style='color:red'>Baja como diputad{{sex}}: {{diputado.fecha_baja | fecha}}</span></li>{%endif%}	
 						{% if diputado.legislaturas %}
 						{%spaceless%}
 						{%set n=1%}
@@ -76,8 +91,6 @@
 								
 							{% endfor %}
 						</li>
-						<!--<li><span>Alta: {{diputado.fecha_alta | fecha}}{% if diputado.fecha_baja%} - Baja: {{diputado.fecha_baja | fecha}}{% endif %} </span></li>-->
-						<!--<li><span>Salario estimado: {{diputado.sueldo.bruto_mes|euros}}</span></li>-->
 					</ul>
 				</div>
 			</div>

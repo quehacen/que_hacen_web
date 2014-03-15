@@ -61,18 +61,17 @@ $(document).ready(function(){
           }
           tabla2 += "</tr>";
         })
-        tabla1 += "</tbody></table>";
-
+	tabla2 += "</tbody></table>";
+	tabla2 +="<p style='text-align:center'><a href='/circunscripcion/"+provincia.normalized.url+"'>Ver ficha completa de "+provincia.nombre+"</a></p>";
 	//ad info diputados
 	var dipusdiv="";
 	var cont=0;
         _.each(diputados,function(dipu){
 	    if(dipu.activo == 1){
-	      if(cont<8){
 		dipusdiv+="<li class='diputado'>";
 		dipusdiv+="<a href='/diputado/"+dipu.normalized.url+"' title='Ver ficha de "+dipu.nombre+" "+dipu.apellidos+"'>";
 		dipusdiv+="<span class='fotoimg'><img src='/img/imagenesDipus/"+dipu.id+".jpg' alt='Fotografia de "+dipu.nombre+" "+dipu.apellidos+"'/></span>";
-		dipusdiv+="<span class='nombre'><b>"+dipu.nombre+" "+dipu.apellidos+"</b></span>";
+		dipusdiv+="<span class='nombre'><b>"+dipu.apellidos+", "+dipu.nombre+"</b></span>";
 		dipusdiv+="<img class='partidoimg' src='/img/logosPartidos/"+dipu.partido+".png' alt='Logo del partido"+dipu.partido+"'/>";
 		dipusdiv+="</a>";
 		//dipusdiv+="<a href='/grupo-parlamentario/"+dipu.grupo+"'>";
@@ -80,17 +79,11 @@ $(document).ready(function(){
 		dipusdiv+="</li>";
 		//dipusdiv+="</a></li>";
 		cont++;
-	      }else{
-		cont=9;
-		return false;
-	      }	
 	   }
 	});
 	dipusdiv+="</ol>";
 	
-	if(cont==9){
-		dipusdiv+="<p style='text-align:center'><a href='/circunscripcion/"+provincia.normalized.url+"'>Ver todos</a></p>";
-	}
+	dipusdiv+="<p style='text-align:center'><a href='/circunscripcion/"+provincia.normalized.url+"'>Ver ficha completa de "+provincia.nombre+"</a></p>";
 	
         $('#info .diputados').empty();
         $('#info .diputados').append(dipusdiv);
