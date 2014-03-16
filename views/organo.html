@@ -2,9 +2,21 @@
 {% block content %}
 
 {% spaceless %}
-{% if organo.tipo == "C" %}{% set t_org = "Comisión"%}{% set n_org = organo.pre+" "+organo.nombre %}
-{% elif organo.tipo == "SC" %}{% set t_org = "Subcomisión"%}{% set n_org = organo.pre+" "+organo.nombre %}
-{% else %}{% set t_org = ""%}{% set n_org = organo.nombre %}
+{% if organo.tipo == "C" %}
+	{% set t_org = "Comisión"%}
+	{% set n_org = organo.pre+" "+organo.nombre %}
+{% elif organo.tipo == "SC" %}
+	{% set t_org = "Subcomisión"%}
+	{% set n_org = organo.pre+" "+organo.nombre %}
+{% else %}{% set t_org = ""%}
+	{% set n_org = organo.nombre %}
+	{%if organo.tipo=="MC"%}
+	{% set descr="La Mesa es el órgano rector de la Cámara. Se reúne cada semana y califica los escritos y documentos parlamentarios, declara su admisión o inadmisión y decide el procedimiento de tramitación de las distintas iniciativas. Asimismo coordina los trabajos, calendario, régimen y gobierno de la institución."%}
+	{%elif organo.tipo=="JP"%}
+	{% set descr="La Junta de Portavoces regula cuestiones de la organización de la Cámara y da su consentimiento a asuntos determinados. Está formada por los portavoces de los grupos parlamentarios."%}
+	{%else%}
+	{% set descr="La Diputación Permanente vela por los poderes de la Cámara cuando no está reunida o se disuelve y solicita la celebración de las sesiones extraordinarias del Pleno."%}
+	{%endif%}
 {%endif%}
 
 {% if organo.tipo=="C" or organo.tipo=="SC" %}
@@ -70,7 +82,7 @@
 			</span>
 			{%endif%}
 		{% else %}
-			<span class="subTitle2">(Breve descripción)</span>
+			<span class="subTitle2">{{descr}}</span>
 		{% endif %}
 		</div>
 		<div class="large-12 columns mod-organos">
