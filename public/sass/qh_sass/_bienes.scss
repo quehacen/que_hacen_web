@@ -1,4 +1,4 @@
-#bienes{
+#bienes, #salario{
 	dl{
 		display:block;
 		//* display: inline-block; */
@@ -8,7 +8,7 @@
 		//* width: 33%; */
 		vertical-align: top;
 		border-bottom: 1px solid #e4e4e4;
-		padding: 5px;
+		padding: 5px 0;
 		&:last-child{
 			border-bottom: none;
 		}
@@ -18,4 +18,12 @@
 	}
 	dt { width:25%; }
 	dd { width:74%; }
+}
+
+#salario{
+	th {
+		width:25%;
+	}
+	dt { width:55%; }
+	dd { width:44%; }
 }

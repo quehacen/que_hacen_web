@@ -232,16 +232,6 @@ a:hover {
 }
 .diputados .diputado .subt {
   font-size: 9pt;
-  padding:2pt;
-  display:block;
-}
-.diputados .diputado .subtrs a{
-  display:inline-block;
-  margin:0pt 3pt;
-  font-size:18pt;
-}
-.diputados .diputado .subtrs a:hover i{
-  color: #fe5339 !important;
 }
 
 .infoDiputado {
@@ -419,7 +409,7 @@ a:hover {
   font-size: 12px;
 }
 
-#bienes dl {
+#bienes dl, #salario dl {
   display: block;
   font-size: 10pt;
   margin: 0;
@@ -427,21 +417,31 @@ a:hover {
   margin: 0;
   vertical-align: top;
   border-bottom: 1px solid #e4e4e4;
-  padding: 5px;
+  padding: 5px 0;
 }
-#bienes dl:last-child {
+#bienes dl:last-child, #salario dl:last-child {
   border-bottom: none;
 }
-#bienes dt, #bienes dd {
+#bienes dt, #bienes dd, #salario dt, #salario dd {
   display: inline-block;
   padding: 0;
   margin: 0;
 }
-#bienes dt {
+#bienes dt, #salario dt {
   width: 25%;
 }
-#bienes dd {
+#bienes dd, #salario dd {
   width: 74%;
+}
+
+#salario th {
+  width: 25%;
+}
+#salario dt {
+  width: 55%;
+}
+#salario dd {
+  width: 44%;
 }
 
 .formacion {
