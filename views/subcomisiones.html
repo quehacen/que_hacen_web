@@ -3,29 +3,51 @@
 {% block title %}Subcomisiones{% endblock %}
 
 {% block content %}
-<div class="row">
-	<div class="large-12 columns list">
-		<!--#include virtual="/modules/organos/list?active=SC" -->
-	</div>
-</div>
-<div class="row container">
-	<div class="diputadosTotal">
-		<span>Subcomisiones del Congreso</span>
-	</div>
-	<div class="containerSubComisiones mark">
-		<table>
-			<tbody>
-			{% for com in subcomisiones %}
-				<tr>
-					<td><a href="/organo/{{com.normalized.url}}">{{ com.nombre }}</a></td>
-				</tr>
-			{% endfor %}
+	<div class="row">
+                <div class="large-12 columns list">
+                        <!--#include virtual="/modules/organos/list?active=SC" -->
+                </div>
+        </div>
 
-			</tbody>
-		</table>
+
+	<div class="row container">
+		<div class="diputadosTotal">
+			<span>Subcomisiones del Congreso</span>
+		</div>
+		<div class="containerSubComisiones mark" style="min-height:400px;">
+			<table style='display:none'>
+                                <tbody>
+                                        <tr>
+                                                <th><a href="#nombre">Nombre</a></th>
+                                                <th><a href="#numDipus">Nº diputados</a></th>
+                                                <th><a href="#fechaConst">Fecha constitución</a></th>
+                                                <th><a href="#legislativa">Legislativa</a></th>
+                                                <th><a href="#permanente">Permanente</a></th>
+                                                <th><a href="#mixta">Mixta</a></th>
+                                        </tr>
+
+                                        {% for com in subcomisiones %}
+                                        {%spaceless%}
+                                                {%if com.legis==1%}{%set legis="si"%}{%else%}{%set legis="no"%}{%endif%}
+                                                {%if com.perm==1%}{%set perm="si"%}{%else%}{%set perm="no"%}{%endif%}
+                                                {%if com.mixta==1%}{%set mixta="si"%}{%else%}{%set mixta="no"%}{%endif%}
+                                        {%endspaceless%}
+                                        <tr>
+                                                <td><a href="/organo/{{com.normalized.url}}">{{ com.nombre }}</a></td>
+                                                <td></td>
+                                                <td>{{com.constituida}}</td>
+                                                <td>{{legis}}</td>
+                                                <td>{{perm}}</td>
+                                                <td>{{mixta}}</td>
+                                        </tr>
+                                        {% endfor %}
+				</tbody>
+			</table>
+		</div>	
 	</div>
-</div>
 {% endblock %}
 {% block scripts %}
 	{% parent %}
+        <script src="/javascripts/vendors/mustache.js"></script>
+        <script src="/javascripts/subcomisiones.js"></script>
 {% endblock %}
