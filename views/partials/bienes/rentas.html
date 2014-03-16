@@ -1,5 +1,8 @@
-<ul>
-	<li>Renta: {{ _bien.tipoRenta }}</li>
-	<li>Concepto: {{ _bien.concepto }}</li>
-	<li>euros: {{ _bien.euros | euros }}</li>
-</ul>
+<dl>
+	<dt>Renta</dt>
+		<dd>{% if _bien.tipoRenta %}{{ _bien.tipoRenta }}{%else%}{{no_disponible}}{% endif %}</dd>
+	<dt>Concepto</dt>
+		<dd>{% if _bien.concepto %}{{ _bien.concepto }}{%else%}{{no_disponible}}{% endif %}</dd>
+	<dt>Euros</dt>
+		<dd>{% if _bien.euros %}{{ _bien.euros | euros }}{%else%}{{no_disponible}}{% endif %}</dd>
+</dl>

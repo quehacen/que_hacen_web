@@ -1,9 +1,16 @@
-<ul>
-	<li>Tipo: {{ _bien.tipoBIU }}</li>
-	<li>Tamaño: {{ _bien.tamano }}</li>
-	<li>Valor catastral: {{ _bien.valor_catast | euros }}</li>
-	<li>Situacion: {{ _bien.situacion }}</li>
-	<li>Fecha de adquisición: {{ _bien.fecha_adq | fecha }}</li>
-	<li>Derecho a bien: {{ _bien.derecho_bien }}</li>
-	<li>Título adquisición: {{ _bien.titulo_adq }}</li>
-</ul>
+<dl>
+	<dt>Tipo</dt>
+		<dd>{% if _bien.tipoBIU %}{{ _bien.tipoBIU }}{%else%}{{no_disponible}}{% endif %}</dd>
+	<dt>Tamaño</dt>
+		<dd>{% if _bien.tamano %}{{ _bien.tamano }}{%else%}{{no_disponible}}{% endif %}</dd>
+	<dt>Valor catastral</dt>
+		<dd>{% if _bien.valor_catast %}{{ _bien.valor_catast | euros }}{%else%}{{no_disponible}}{% endif %}</dd>
+	<dt>Situacion</dt>
+		<dd>{% if _bien.situacion %}{{ _bien.situacion }}{%else%}{{no_disponible}}{% endif %}</dd>
+	<dt>Fecha de adquisición</dt>
+		<dd>{% if _bien.fecha_adq %}{{ _bien.fecha_adq | fecha }}{%else%}{{no_disponible}}{% endif %}</dd>
+	<dt>Derecho a bien</dt>
+		<dd>{% if _bien.derecho_bien %}{{ _bien.derecho_bien }}{%else%}{{no_disponible}}{% endif %}</dd>
+	<dt>Título adquisición</dt>
+		<dd>{% if _bien.titulo_adq %}{{ _bien.titulo_adq }}{%else%}{{no_disponible}}{% endif %}</dd>
+</dl>

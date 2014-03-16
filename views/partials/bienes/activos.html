@@ -1,8 +1,14 @@
-<ul>
-	<li>Concepto: {{ _bien.concepto }}</li>
-	<li>Títulos: {{ _bien.titulos }}</li>
-	<li>Entidad: {{ _bien.entidad }}</li>
-	<li>Euros: {{ _bien.euros | euros }}</li>
-	<li>Fecha de cotización: {{ _bien.fecha_cotiz }}</li>
-	<li>Otros: {{ _bien.otros }}</li>
-</ul>
+<dl>
+	<dt>Concepto</dt>
+		<dd>{% if _bien.concepto %}{{ _bien.concepto }}{% else %}{{no_disponible}}{% endif %}</dd>
+	<dt>Títulos</dt>
+		<dd>{% if _bien.titulos %}{{ _bien.titulos }}{% else %}{{no_disponible}}{% endif %}</dd>
+	<dt>Entidad</dt>
+		<dd>{% if _bien.entidad %}{{ _bien.entidad }}{% else %}{{no_disponible}}{% endif %}</dd>
+	<dt>Euros</dt>
+		<dd>{% if _bien.euros %}{{ _bien.euros | euros }}{% else %}{{no_disponible}}{% endif %}</dd>
+	<dt>Fecha de cotización</dt>
+		<dd>{% if _bien.fecha_cotiz %}{{ _bien.fecha_cotiz }}{% else %}{{no_disponible}}{% endif %}</dd>
+	<dt>Otros</dt>
+		<dd>{% if _bien.otros %}{{ _bien.otros }}{% else %}{{no_disponible}}{% endif %}</dd>
+</dl>
