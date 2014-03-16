@@ -22,27 +22,55 @@ function loadingDiv(){
 	return div;
 }
 
-function templateDipu(sub){
+function templateDipu(sub,subrs){
 	//var template='<ol class="diputados">
 	var template='{{#data}}<li class="diputado">';
 	template+='<a href="/diputado/{{normalized.url}}" title="Ver ficha de {{nombre}} {{apellidos}}">';
 	template+='<span class="fotoimg"><img src="/img/imagenesDipus/{{id}}.jpg" alt="Fotografía de {{nombre}} {{apellidos}}"></span>';
 	template+='<span class="nombre"><b>{{apellidos}}</b>, {{nombre}}</span><img class="partidoimg" src="/img/miniaturasPartidos/{{partido }}.png" alt="logotipo del partido {{partido}}"></span>';
 	template+='</a>';
+
+	var txtrs='';
+	if(typeof(subrs) != "undefined" && subrs.length > 0){
+		_.each(subrs,function(rs){
+			var rsi='';
+			var rscolor='';
+			switch(rs){
+				case 'tw':
+					rscolor='#5DD7FC';
+					rsi='twitter-square';
+					//rsi='twitter';
+					break;
+				case 'fb':
+					rscolor='#3C599B';
+					rsi='facebook-square';
+					//rsi='facebook';
+					break;
+			}
+			if(rs=="correos"){
+				txtrs+='{{#correos}}';
+				txtrs+='<a target="_blank" href="mailto:{{.}}"> <i style="color:#B6B6B6" class="fa fa-envelope-o"></i></a>';
+				txtrs+='{{/correos}}';
+			}else{
+				txtrs+='<a target="_blank" href="{{'+rs+'}}"> <i style="color:'+rscolor+'" class="fa fa-'+rsi+'"></i></a> ';
+			}
+		});
+	}
+
 	switch(sub){
 		case 'edad': txtsub='{{edad}} años';break;
-		case 'twitter':txtsub='{{tw}}';break;
-		case 'facebook': txtsub='{{}}';break;
-		case 'correo': txtsub='olaqase';break;
 		case 'sueldo':txtsub='<a href="/diputado/{{normalized.url}}/salario">{{sueldo.bruto_mes}} €/mes</a>';break;	
 		case 'inic': txtsub='{{actividad.0.iniciativas.total}} iniciativas';break;
 		case 'interv': txtsub='{{actividad.0.intervenciones.total}} intervenciones';break;
 		case 'grupo': case '': txtsub='G.P. {{grupo}}';break;
 		default: txtsub='G.P. {{grupo}}';break;
 	}
-	template+='<span class="subt">'+txtsub+'</span>';
+	
+	if(sub!='' || sub=='' && txtrs=='') 
+		template+='<span class="subt">'+txtsub+'</span>';
+	if(txtrs!='')	
+		template+='<span class="subt subtrs">'+txtrs+'</span>';
 	template+='</li>{{/data}}';
-	//template+='</ol>';
 	return template;
 }
 
@@ -140,7 +168,7 @@ $(function(){
 		basicaHandler: function(){
 			//alert('sin parámetros');
 			if(!this.diputados || !this.grupos || !this.circunscripciones){
-				setTimeout(this.basicaHandler,500);
+				setTimeout(this.basicaHandler,1000);
 				return;
 			}
 			var datos=[];
@@ -155,7 +183,7 @@ $(function(){
 			//console.log(ord+" "+fil);
 			//$('.diputados').hide();
 			if(!this.diputados || !this.grupos || !this.circunscripciones){
-				setTimeout(this.dipusHandler,500,ord,fil);
+				setTimeout(this.dipusHandler,1000,ord,fil);
 				return;
 			}
 
@@ -238,7 +266,7 @@ $(function(){
 									i++;
 								}
 							});
-							if(correos.length>0)	dipu.correos=correos;
+							if(correos.length>0) dipu.correos=correos;
 						}
 					});
 					break;
@@ -249,7 +277,8 @@ $(function(){
 			}
 
 			// Procesamos --> Ordenamos y filtramos
-			var sub;
+			var sub='';
+			var subrs=[];
 			var datos=[];
 			dipus=_.clone(this.diputados);
 
@@ -296,7 +325,7 @@ $(function(){
 				
 				   case 'contw':
 					dipus=_.filter(dipus, function(dipu){ return (typeof(dipu.tw) != "undefined");});
-					sub='twitter';
+					subrs.push('tw');
 					break;
 
 				   case 'sinfb':
@@ -305,7 +334,7 @@ $(function(){
 				
 				   case 'confb':
 					dipus=_.filter(dipus, function(dipu){ return (typeof(dipu.fb) != "undefined");});
-					sub='facebook';
+					subrs.push('fb');
 					break;
 
 				   case 'sincorreo':
@@ -314,7 +343,7 @@ $(function(){
 				
 				   case 'concorreo':
 					dipus=_.filter(dipus, function(dipu){ return (typeof(dipu.correos) != "undefined");});
-					sub='correos';
+					subrs.push('correos');
 					break;
 
 				   case 'mujeres':
@@ -348,8 +377,7 @@ $(function(){
 					break;
 
 				   case 'nombre':
-					dipus=_.sortBy(dipus, function(dipu){ return dipu.normalized.apellidos; });	
-					sub='grupo';
+					dipus=_.sortBy(dipus, function(dipu){ return dipu.normalized.apellidos; });
 					break;
 
 				   case 'salario':
@@ -378,7 +406,7 @@ $(function(){
 			}
 
 			datos.data=dipus;
-			var template = templateDipu(sub);
+			var template = templateDipu(sub,subrs);
 			var numDipus=_.size(dipus);
 			$('h3.title').text(numDipus+' diputados');
 			$('.diputados').html( Mustache.render(template, datos) );	

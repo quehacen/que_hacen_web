@@ -232,6 +232,16 @@ a:hover {
 }
 .diputados .diputado .subt {
   font-size: 9pt;
+  padding:2pt;
+  display:block;
+}
+.diputados .diputado .subtrs a{
+  display:inline-block;
+  margin:0pt 3pt;
+  font-size:18pt;
+}
+.diputados .diputado .subtrs a:hover i{
+  color: #fe5339 !important;
 }
 
 .infoDiputado {
