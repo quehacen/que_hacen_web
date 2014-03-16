@@ -20,6 +20,9 @@ $(document).ready(function(){
 			$( this ).css("text-decoration","none");
 	});
 });*/
+function mayusFirst(string){
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
 $(document).ready(function(){
 	$().html('');
@@ -29,18 +32,29 @@ $(document).ready(function(){
 	$('.containerComisiones').html(div);
 });
 
-
-
-function templateComisiones(sel){	
+function templateComisiones(sel){
 	// Cabecera de la tabla
 	var template = '<table><tbody><tr>';
         var hrefs= ["nombre","numDipus","fechaConst","legislativa","permanente","mixta"];  
         var titulos= ["Nombre","Nº diputados","Fecha constitución","Legislativa","Permanente","Mixta"];
+	var claseSel, iconSel;
+	
+	//if($('#'+sel+'col a').hasClass('sel') ){
+	if(Backbone.history.fragment == sel+"R"){
+		claseSel="selRev";
+		hrefSel=sel;
+		iconSel="fa fa-chevron-up";
+	}else{
+		claseSel="sel";
+		hrefSel=sel+'R';
+		iconSel="fa fa-chevron-down";
+	}
+
         for(var i=0;i<6;i++){
                 if(hrefs[i]==sel){
-                        template+='<th><a class="sel" style="text-decoration:underline" href="#'+hrefs[i]+'">'+titulos[i]+'</a></th>';
+                        template+='<th id="'+hrefs[i]+'col"><a class="'+claseSel+'" style="text-decoration:underline" href="#'+hrefSel+'">'+titulos[i]+'</a> <i style="color:#FE5339;" class="'+iconSel+'"></i></th>';
                 }else{
-                        template+='<th><a href="#'+hrefs[i]+'">'+titulos[i]+'</a></th>';
+                        template+='<th id="'+hrefs[i]+'col"><a href="#'+hrefs[i]+'">'+titulos[i]+'</a></th>';
                 }
         }
 	template+='</tr>';
@@ -63,14 +77,15 @@ $(function(){
 				// Añadimos campos que harán falta	
 				comisiones=_data[0];
 				_.each(comisiones,function(com){
-					if(com.legis==1){ com.legistxt="sí";
-					}else{ com.legistxt="no";}
+					com.nombre=mayusFirst(com.nombre);
+					if(com.legis==1){ com.legistxt="Sí";
+					}else{ com.legistxt="No";}
 
-					if(com.perm==1){ com.permtxt="sí";}
-					else{ com.permtxt="no";}
+					if(com.perm==1){ com.permtxt="Sí";}
+					else{ com.permtxt="No";}
 				
-					if(com.mixta==1){ com.mixtatxt="sí";
-					}else{ com.mixtatxt="no";}
+					if(com.mixta==1){ com.mixtatxt="Sí";
+					}else{ com.mixtatxt="No";}
                         	});
 
 				// Añadimos nº de diputados
@@ -97,11 +112,17 @@ $(function(){
 		routes:{
 			'' : 'nombreHandler',
 			'nombre' : 'nombreHandler',
+			'nombreR' : 'nombreHandler',
 			'legislativa': 'legislativaHandler',
+			'legislativaR': 'legislativaHandler',
 			'mixta': 'mixtaHandler',
+			'mixtaR': 'mixtaHandler',
 			'permanente': 'permanenteHandler',
+			'permanenteR':'permanenteHandler',
 			'numDipus':'numDipusHandler',
-			'fechaConst':'fechaConstHandler'
+			'numDipusR':'numDipusHandler',
+			'fechaConst':'fechaConstHandler',
+			'fechaConstR':'fechaConstHandler'
 		},
 
 		nombreHandler: function(){
@@ -111,6 +132,9 @@ $(function(){
 			}
 			var datos=[];
 			datos.data= _.sortBy(this.comisiones, function(com){ return com.nombre; });
+			if(Backbone.history.fragment == "nombreR"){
+				datos.data.reverse();
+			}
 			var template = templateComisiones('nombre');
 			$('.containerComisiones').html( Mustache.render(template, datos) );
 		},
@@ -127,6 +151,9 @@ $(function(){
 			});
 			var datos=[];
 			datos.data=_.union(dataFiltered['legis'],dataFiltered['nolegis']);
+			if(Backbone.history.fragment == "legislativaR"){
+				datos.data.reverse();
+			}
 			var template = templateComisiones('legislativa');
 			$('.containerComisiones').html( Mustache.render(template, datos) );
 		},
@@ -143,6 +170,9 @@ $(function(){
 			});
 			var datos=[];
 			datos.data=_.union(dataFiltered['mixta'],dataFiltered['nomixta']);
+			if(Backbone.history.fragment == "mixtaR"){
+				datos.data.reverse();
+			}
 			var template = templateComisiones('mixta');
 			$('.containerComisiones').html( Mustache.render(template, datos) );
 		},
@@ -159,6 +189,9 @@ $(function(){
 			});
 			var datos=[];
 			datos.data=_.union(dataFiltered['perm'],dataFiltered['noperm']);
+			if(Backbone.history.fragment == "permanenteR"){
+				datos.data.reverse();
+			}
 			var template = templateComisiones('permanente');
 			$('.containerComisiones').html( Mustache.render(template, datos) );
 		},
@@ -170,7 +203,9 @@ $(function(){
 			}
 			var datos = [];
 			datos.data=_.sortBy(this.comisiones, function(com){ return com.numDiputados; });
-			datos.data.reverse();
+			if(Backbone.history.fragment == "numDipusR"){
+				datos.data.reverse();
+			}
 			console.log(datos.data);
 			var template = templateComisiones('numDipus');
 			$('.containerComisiones').html( Mustache.render(template, datos) );
@@ -189,6 +224,9 @@ $(function(){
 				var time=fecha.getTime();
 				return time;
 			});
+			if(Backbone.history.fragment == "fechaConstR"){
+				datos.data.reverse();
+			}
 
 			var template = templateComisiones('fechaConst');
 			$('.containerComisiones').html( Mustache.render(template, datos) );
