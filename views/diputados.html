@@ -3,26 +3,26 @@
 	<div class="row container">
 		<div class="diputadosTotal">
 			<h2>Diputados del Congreso</h2>
-			<span>Formado por {{ diputados | length }} diputados</span>
+			<!--<span>Formado por {{ diputados | length }} diputados</span>-->
 		</div>
-		<div class="large-7 small-12 columns">
-			<h3 class="title">Diputados</h3>
-			<div class="filter">
-				{% include "./partials/filtroDiputados.html" %}
-			</div>
+		<div class="large-9 small-12 columns">
+			<h3 class="title" style="text-align:center">Diputados</h3>
+			<!--<div class="filter">
+				{#{% include "./partials/filtroDiputados.html" %}#}
+			</div>-->
 			{% include "./modules/diputados.html" %}
 			<!-- #include virtual="/modules/diputados" -->
 		</div>
-		<div class="filtros large-5 small-12 columns">
-			<input type="search" placeholder="Buscar diputado por nombre">
+		<div class="filtros large-3 small-12 columns">
+			<span style="text-align:center">[Filtros] Coming <i>/suun/</i></span>
+			<!--<input type="search" placeholder="Buscar diputado por nombre">
 			<input type="button" value="Buscar">
 
 			<form id="gruposParlamentarios">
 				{% for grupo in grupos %}
 				<input type="radio" name="grupoParlamentario" value="{{grupo}}"><label for="grupoParlamentario">Grupo Parlamentario {{grupo}}</label>
 				{% endfor %}
-			</form>
-			
+			</form>-->
 		</div>
 	</div>
 {% endblock %}

@@ -14,7 +14,7 @@
 #wrapper #map #tabsCirc dd:hover{cursor:pointer;}
 #wrapper #map #tabsCirc dd.active{color:white;background-color:#fe5339;}
 
-#wrapper #map #tabsCont{border-top: solid 2px #fdfdfd;width:100%; overflow: auto; height: 490px;}
+#wrapper #map #tabsCont{border-top: solid 2px #fdfdfd;width:100%; overflow-y: auto; overflow-x: hidden; height: 490px;}
 
 
 #wrapper #map #info #datos_elecciones{margin:0;padding:0;}

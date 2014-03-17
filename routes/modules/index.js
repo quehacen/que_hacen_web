@@ -12,7 +12,7 @@ exports.ultimas_iniciativas = function(req, res){
 };
 
 exports.ultimas_votaciones = function(req, res){ 
-	request( APIUrl+"/votaciones?limit=2", function(error, response, body) {
+	request( APIUrl+'/votaciones?limit=2&not=["xml.resultado.votaciones"]', function(error, response, body) {
 	  res.render('modules/ultimas-votaciones',{'votaciones':JSON.parse(body)}); 
 	});
 };

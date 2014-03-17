@@ -223,8 +223,9 @@ ul.diputadosList li a:hover span { color:white; }
 .infoVotacion .ultimasvotaciones ul.resultado li.abstenciones .tipo i { background-color: #ecbc02;}
 .infoVotacion .ultimasvotaciones ul.resultado li.novotan .tipo i    { background-color: #333;}
 
-table{margin:1em 0; border-bottom:1px solid #fe5339;}
+table{margin:1em 0; /*border-bottom:1px solid #fe5339;*/}
 table td,table th {border-bottom:1px solid #e4e4e4;}
+table tr:last-child td,table tr:last-child th {border-bottom:none;}
 table thead th {border-bottom:1px solid #999;}
 table th {text-align:left;padding:.3em;}
 table td {padding:.3em; font-size:.8em}

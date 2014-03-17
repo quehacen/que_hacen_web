@@ -55,7 +55,18 @@
 		}
 
 		.subt{ 
-			font-size:9pt; 
+			font-size: 9pt;
+			padding:2pt;
+			display:block;
+		}
+		.subtrs a{
+			display:inline-block;
+			margin:0pt 3pt;
+			font-size:18pt;
+
+			&:hover i{
+				color: #fe5339 !important;
+			}
 		}
 	}
 }

@@ -34,6 +34,9 @@
 	}
 	.diputados{
 		border-bottom: 1px solid $mainRed;
+		&:last-child{
+			border-bottom: none;
+		}
 		.diputado {
 			/*a .fotoimg {
 				width: 70px;
