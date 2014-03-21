@@ -15,6 +15,9 @@
 {%endif%}
 {%endspaceless%}
 	<div class="row">
+		<div style="position:relative;float:left;width:20%;"> 
+		<span class='volverlistado' style="top:15px !important;"><i class='fa fa-chevron-left'></i><a href='/diputados'>Ir al listado de diputados</a></span>
+		</div>
 		<div class="columns large-2 large-offset-10 sharer mark">
 			<span>Compartir</span>
 			<a href="javascript:void(window.open('https://plus.google.com/share?ur\l='+encodeURIComponent(location), 'Compartir diputado {{diputado.nombre}} {{diputado.apellidos}}','width=600,height=460,menubar=no,location=no,status=no'));"><i class="fa fa-google-plus-square"></i></a>
@@ -67,13 +70,28 @@
 						<li><span>Anteriores legislaturas: Ninguna</span></li>
 						{% endif %}
 						<li class='network'>
-							{% for contact in diputado.contacto %}
+							{%spaceless%}
+							{# Imprimimos primero los correos #}
+							{% set concorreo=0%}
+							{%for contact in diputado.contacto%}
 								{% if contact.tipo == "email" %}
+									{% set concorreo=1%}
 									<a href="mailto:{{contact.url | url_decode}}" title="{{contact.url | url_decode}}">
 										<i class="fa fa-envelope"></i>
 									</a>
-										<!--span class="contact {{contact.tipo}}">{{contact.url | url_decode}}</span-->
-								{% else %}
+								{%endif%}
+							{%endfor%}
+							{%if concorreo==0%}
+								<span style="display:inline-block;"><i title="Este diputado no ofrece correo electrónico" alt="Este diputado no ofrece correo electrónico" style="color:grey !important;font-size:1.3em" class="fa fa-envelope"></i></span>
+								<!--<a style="pointer-events:none" title="sin correo electrónico" alt="sin correo electrónico"><i style="color:grey !important;" class="fa fa-envelope"></i></a>-->
+							{%endif%}
+							{%endspaceless%}
+							{% for contact in diputado.contacto %}
+								{#{% if contact.tipo == "email" %}
+									<a href="mailto:{{contact.url | url_decode}}" title="{{contact.url | url_decode}}">
+										<i class="fa fa-envelope"></i>
+									</a>#}
+								{% if contact.tipo != "email" %}
 									<a href="{{contact.url | url_decode}}" title="{{contact.url | url_decode}}" target="_blank">							
 									{% if contact.tipo == "web" %}
 									<i class="fa fa-globe"></i>

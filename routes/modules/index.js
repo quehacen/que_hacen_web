@@ -34,12 +34,12 @@ exports.ultimos_posts = function(req, res){
 }
 
 exports.mas_iniciativas = function(req, res){
-	request( APIUrl+'/diputados?limit=10&order={"actividad.iniciativas.total":-1}', function(error, response, body) {
+	request( APIUrl+'/diputados?q={"activo":1}&limit=10&order={"actividad.iniciativas.total":-1}', function(error, response, body) {
 	  res.render('modules/diputados',{'diputados':JSON.parse(body)}); 
 	});
 }
 exports.menos_iniciativas = function(req, res){
-	request( APIUrl+'/diputados?limit=10&order={"actividad.iniciativas.total":1}', function(error, response, body) {
+	request( APIUrl+'/diputados?q={"activo":1}&limit=10&order={"actividad.iniciativas.total":1}', function(error, response, body) {
 	  res.render('modules/diputados',{'diputados':JSON.parse(body)}); 
 	});
 }
