@@ -312,6 +312,9 @@ a:hover {
 }
 .infoDiputado .details li.network a {
   margin-right: 5px;
+  display: inline-block;
+  text-align: center;
+  float: left;
 }
 
 .infoDiputado #prev,
