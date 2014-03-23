@@ -111,6 +111,10 @@ table td {}
 #trayectoria td { font-size: 1.6em; padding: 1em; color: #484b50;}
 #trayectoria td:first-child { text-align: center; color: #fe5339; font-weight: bold; width: 15%;}
 
+span.volverlistado{position:absolute; top:25px; left:15px;margin:0;font-size:14px;}
+span.volverlistadoDesp{top:50px;}
+span.volverlistado i{color:#fe5339;margin-right:5px;}
+
 /**
  listado de diputados
  **/
@@ -223,7 +227,11 @@ ul.diputadosList li a:hover span { color:white; }
 .infoVotacion .ultimasvotaciones ul.resultado li.abstenciones .tipo i { background-color: #ecbc02;}
 .infoVotacion .ultimasvotaciones ul.resultado li.novotan .tipo i    { background-color: #333;}
 
+<<<<<<< HEAD
 table{margin:1em 0; /*border-bottom:1px solid #fe5339;*/}
+=======
+table{margin:1em 0;/* border-bottom:1px solid #fe5339;*/}
+>>>>>>> FETCH_HEAD
 table td,table th {border-bottom:1px solid #e4e4e4;}
 table tr:last-child td,table tr:last-child th {border-bottom:none;}
 table thead th {border-bottom:1px solid #999;}

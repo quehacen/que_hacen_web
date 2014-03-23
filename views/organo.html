@@ -51,6 +51,11 @@
 
 	<div class="row container">
 		<div class="large-12 columns">
+			{% if organo.tipo=="C"%} 
+			<span class='volverlistado volverlistadoDesp'><i class='fa fa-chevron-left'></i><a href='/comisiones'>Ir al listado de comisiones</a></span>
+			{%elif organo.tipo=="SC" %}
+			<span class='volverlistado volverlistadoDesp'><i class='fa fa-chevron-left'></i><a href='/subcomisiones'>Ir al listado de subcomisiones</a></span>
+			{%endif%}
 			<span class="encabezadoMod">{{t_org }} {{n_org }}</span>
                         <span class="subTitle2">{{ndipus}} diputados</span>
 			<span class="subTitle2">Fecha de constitución: {{organo.constituida|fecha}}</span>
