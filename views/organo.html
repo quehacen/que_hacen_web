@@ -48,26 +48,28 @@
                         <!--#include virtual="/modules/organos/list?active={{organo.tipo}}" -->
                 </div>
         </div>
-
-	<div class="row container organos">
-		<div class="large-12 columns">
+    <div class="row">
+    	<div class="large-12 columns">
 			{% if organo.tipo=="C"%} 
 			<span class='volverlistado volverlistadoDesp'><i class='fa fa-chevron-left'></i><a href='/comisiones'>Ir al listado de comisiones</a></span>
 			{%elif organo.tipo=="SC" %}
 			<span class='volverlistado volverlistadoDesp'><i class='fa fa-chevron-left'></i><a href='/subcomisiones'>Ir al listado de subcomisiones</a></span>
 			{%endif%}
 		</div>
+    </div>
+
+	<div class="row container organos">
 		<div class="large-12 columns">
 			<span class="encabezadoMod">{{t_org }} {{n_org }}</span>
-            <span class="subTitle2">{{ndipus}} diputados</span>
+            <span class="subTitle2"><strong>{{ndipus}} diputados</strong></span>
 		{% if organo.tipo=="C" or organo.tipo=="SC" %}
-			<span class="subTitle2">Tipo: {{legisnom}} {{permnom}} {{mixtanom}}</span>
+			<span class="subTitle2 sub">Tipo: {{legisnom}} {{permnom}} {{mixtanom}}</span>
 			{% if organo.tipo == "SC"%}
-                        <span class="subTitle2">Comisión de la que proviene: <a href="{{com_asoc.id}}">{{com_asoc.nombre}}</a></span>
+                        <span class="subTitle2 sub">Comisión de la que proviene: <a href="{{com_asoc.id}}">{{com_asoc.nombre}}</a></span>
                         {%elseif organo.subcom_asociadas%}
 			{% set num_sc_asoc= organo.subcom_asociadas | length %}
-			{% if num_sc_asoc==1%}<span class="subTitle2">Subcomisón asociada: 
-			{% else %}<span class="subTitle2">Subcomisones asociadas: 
+			{% if num_sc_asoc==1%}<span class="subTitle2 sub">Subcomisón asociada: 
+			{% else %}<span class="subTitle2 sub">Subcomisones asociadas: 
 			{%endif%}
 			{%set n=1%}
 			{%for sc_asoc in organo.subcom_asociadas%}

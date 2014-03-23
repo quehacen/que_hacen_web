@@ -1,10 +1,16 @@
+.volverlistado.volverlistadoDesp{
+	position:relative;
+	top:0;
+	left:0;
+}
+
 .organos{
 	.subTitle2 {
 		color:black;
 		&.desc{
 			padding: 0 10px;
 		}
-		&.date {
+		&.date, &.sub {
 			color:$secondGray;
 		}
 	}

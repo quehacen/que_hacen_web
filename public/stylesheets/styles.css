@@ -519,13 +519,19 @@ a:hover {
   font-size: 11pt;
 }
 
+.volverlistado.volverlistadoDesp {
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
 .organos .subTitle2 {
   color: black;
 }
 .organos .subTitle2.desc {
   padding: 0 10px;
 }
-.organos .subTitle2.date {
+.organos .subTitle2.date, .organos .subTitle2.sub {
   color: #6a6a6a;
 }
 
