@@ -266,7 +266,7 @@ a:hover {
 .infoDiputado .ficha .foto img {
   display: block;
 }
-.infoDiputado .ficha .foto img .carnet {
+.infoDiputado .ficha .foto img.carnet {
   width: 100%;
   position: relative;
   height: auto;

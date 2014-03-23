@@ -83,7 +83,7 @@
 			width: 150px; height: 150px; border-radius:50%; border: 4px solid rgb(182, 182, 182); overflow: hidden; padding: 0; display: inline-block; position: relative; margin-right: 30px;
 			img {
 				display:block; 
-				.carnet { width: 100%;position: relative;height: auto;display: block;vertical-align: middle;margin-top: -50%;top: 37%;}
+				&.carnet { width: 100%;position: relative;height: auto;display: block;vertical-align: middle;margin-top: -50%;top: 37%;}
 			}
 		}
 		
