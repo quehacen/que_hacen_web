@@ -319,6 +319,12 @@ a:hover {
   line-height: 120pt;
 }
 
+.extendedInfoDiputado .unknow {
+  color: #6a6a6a;
+  font-style: italic;
+  font-size: 0.9em;
+}
+
 /**** Modulo iniciativas ***/
 .iniciativas .iniciativa {
   display: block;

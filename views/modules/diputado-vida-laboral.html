@@ -4,7 +4,7 @@
 		{% for titulo in estudios %}
 			<tr>
 				<td>{{titulo.estudio}}</td>
-				<td>{% if titulo.centro %}{{titulo.centro}}{% else %}Centro desconocido{% endif %}</td>
+				<td>{% if titulo.centro %}{{titulo.centro}}{% else %}<span class="unknow">Centro desconocido</span>{% endif %}</td>
 			</tr>
 		{% endfor %}
 
@@ -13,9 +13,9 @@
 			<tr>	
 				<td>{{trayec.cargo}}</td>
 			{% if !trayec.fini and !trayec.ffin %}
-				<td>Fechas desconocidas</td>
+				<td><span class="unknow">Fechas desconocidas</span></td>
 			{% else %}	
-				<td>{% if trayec.fini %}{{trayec.fini}}{% else %}Fecha desconocida{% endif %} - {% if trayec.ffin %}{{trayec.ffin}}{% else %}Fecha desconocida{% endif %}</td>
+				<td>{% if trayec.fini %}{{trayec.fini}}{% else %}<span class="unknow">Fecha desconocida</span>{% endif %} - {% if trayec.ffin %}{{trayec.ffin}}{% else %}<span class="unknow">Fecha desconocida</span>{% endif %}</td>
 			{% endif %}
 			</tr>
 		{% endfor %}
