@@ -512,6 +512,16 @@ a:hover {
   font-size: 11pt;
 }
 
+.organos .subTitle2 {
+  color: black;
+}
+.organos .subTitle2.desc {
+  padding: 0 10px;
+}
+.organos .subTitle2.date {
+  color: #6a6a6a;
+}
+
 .submenu.organos {
   display: block;
   background-color: white;

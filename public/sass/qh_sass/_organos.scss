@@ -1,3 +1,15 @@
+.organos{
+	.subTitle2 {
+		color:black;
+		&.desc{
+			padding: 0 10px;
+		}
+		&.date {
+			color:$secondGray;
+		}
+	}
+}
+
 .submenu.organos {
 	display:block; 
 	background-color:white; 
