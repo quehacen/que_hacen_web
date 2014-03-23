@@ -462,7 +462,7 @@ a:hover {
 }
 
 .formacion {
-  color: #ff6956;
+  color: black;
   padding: 0px 4px;
   font-weight: bold;
 }
@@ -560,7 +560,7 @@ a:hover {
   font-weight: bold;
 }
 .mod-organos .diputados {
-  border-bottom: 1px solid #ff6956;
+  border-bottom: 1px solid #dadada;
 }
 .mod-organos .diputados:last-child {
   border-bottom: none;

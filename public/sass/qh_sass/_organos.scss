@@ -45,7 +45,7 @@
 		font-weight: bold;
 	}
 	.diputados{
-		border-bottom: 1px solid $mainRed;
+		border-bottom: 1px solid $mediumGray;//$mainRed;
 		&:last-child{
 			border-bottom: none;
 		}
