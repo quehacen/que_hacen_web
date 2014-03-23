@@ -56,6 +56,7 @@ cursor: pointer;
 .nav.secondary ul li.right    { float:right;}
 .nav.secondary ul li a  { color: rgba(255,255,255,.7); font-weight: normal; font-size: 8.5pt; line-height: 1.1em; text-decoration: none; padding: 14px 7px; display: block;}
 .nav.secondary ul li a.active { background-color: #ff6956; box-shadow: inset 0 1px 1px rgba(255,255,255,.4); font-weight: bold; color: white;}
+.nav.secondary ul li a:hover:not(.active) {background-color:black;}
 
 .footer { background-color:#ff6956; color:white; margin-top: 1em;}
 .footer dl {line-height:1em;font-size: 9pt;}
