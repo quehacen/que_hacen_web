@@ -114,6 +114,11 @@
 			padding: .2em 0;
 			line-height: 110%;
 			span { display:block; font-size: .8em; color: #44474c;}
+			&.network {
+				a {
+					margin-right: 5px;
+				}
+			}
 		}
 	}
 }

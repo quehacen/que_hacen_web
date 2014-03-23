@@ -310,6 +310,9 @@ a:hover {
   font-size: .8em;
   color: #44474c;
 }
+.infoDiputado .details li.network a {
+  margin-right: 5px;
+}
 
 .infoDiputado #prev,
 .infoDiputado #next {
