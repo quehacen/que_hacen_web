@@ -1,4 +1,4 @@
-<dl>
+<!--dl>
 	<dt>Concepto</dt>
 		<dd>{% if _bien.concepto %}{{ _bien.concepto }}{% else %}{{no_disponible}}{% endif %}</dd>
 	<dt>Títulos</dt>
@@ -11,4 +11,10 @@
 		<dd>{% if _bien.fecha_cotiz %}{{ _bien.fecha_cotiz }}{% else %}{{no_disponible}}{% endif %}</dd>
 	<dt>Otros</dt>
 		<dd>{% if _bien.otros %}{{ _bien.otros }}{% else %}{{no_disponible}}{% endif %}</dd>
-</dl>
+</dl-->
+<td>{% if _bien.concepto %}{{ _bien.concepto }}{% else %}{{no_disponible}}{% endif %}</td>
+<td>{% if _bien.titulos %}{{ _bien.titulos }}{% else %}{{no_disponible}}{% endif %}</td>
+<td>{% if _bien.entidad %}{{ _bien.entidad }}{% else %}{{no_disponible}}{% endif %}</td>
+<td>{% if _bien.euros %}{{ _bien.euros | euros }}{% else %}{{no_disponible}}{% endif %}</td>
+<td>{% if _bien.fecha_cotiz %}{{ _bien.fecha_cotiz }}{% else %}{{no_disponible}}{% endif %}</td>
+<td>{% if _bien.otros %}{{ _bien.otros }}{% else %}{{no_disponible}}{% endif %}</td>

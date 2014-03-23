@@ -1,8 +1,3 @@
-<dl>
-	<dt>Tipo de vehículo</dt>
-		<dd>{% if _bien.tipoVE %}{{ _bien.tipoVE }}{%else%}{{no_disponible}}{% endif %}</dd>
-	<dt>Marca/Modelo</dt>
-		<dd>{% if _bien.marca %}{{ _bien.marca }} {{ _bien.modelo }}{%else%}{{no_disponible}}{% endif %}</dd>
-	<dt>Fecha de adquisición</dt>
-		<dd>{% if _bien.fecha_adq %}{{ _bien.fecha_adq | fecha }}{%else%}{{no_disponible}}{% endif %}</dd>
-</dl>
+<td>{% if _bien.tipoVE %}{{ _bien.tipoVE }}{%else%}{{no_disponible}}{% endif %}</td>
+<td>{% if _bien.marca %}{{ _bien.marca }} {{ _bien.modelo }}{%else%}{{no_disponible}}{% endif %}</td>
+<td>{% if _bien.fecha_adq %}{{ _bien.fecha_adq | fecha }}{%else%}{{no_disponible}}{% endif %}</td>

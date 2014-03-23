@@ -1,16 +1,7 @@
-<dl>
-	<dt>Tipo</dt>
-		<dd>{% if _bien.tipoDeuda %}{{ _bien.tipoDeuda }}{%else%}{{no_disponible}}{% endif %}</dd>
-	<dt>Concepto</dt>
-		<dd>{% if _bien.concepto %}{{ _bien.concepto }}{%else%}{{no_disponible}}{% endif %}</dd>
-	<dt>Capital concedido</dt>
-		<dd>{% if _bien.concedido %}{{ _bien.concedido | euros }}{%else%}{{no_disponible}}{% endif %}</dd>
-	<dt>Capital pendiente</dt>
-		<dd>{% if _bien.pendiente %}{{ _bien.pendiente | euros }}{%else%}{{no_disponible}}{% endif %}</dd>
-	<dt>Fecha concesión</dt>
-		<dd>{% if _bien.fecha_concesion %}{{ _bien.fecha_concesion | fecha }}{%else%}{{no_disponible}}{% endif %}</dd>
-	<dt>Acreedor</dt>
-		<dd>{% if _bien.acreedor %}{{ _bien.acreedor }}{%else%}{{no_disponible}}{% endif %}</dd>
-	<dt>Otros</dt>
-		<dd>{% if _bien.otros %}{{ _bien.otros }}{%else%}{{no_disponible}}{% endif %}</dd>
-</dl>
+<td>{% if _bien.tipoDeuda %}{{ _bien.tipoDeuda }}{%else%}{{no_disponible}}{% endif %}</td>
+<td>{% if _bien.concepto %}{{ _bien.concepto }}{%else%}{{no_disponible}}{% endif %}</td>
+<td>{% if _bien.concedido %}{{ _bien.concedido | euros }}{%else%}{{no_disponible}}{% endif %}</td>
+<td>{% if _bien.pendiente %}{{ _bien.pendiente | euros }}{%else%}{{no_disponible}}{% endif %}</td>
+<td>{% if _bien.fecha_concesion %}{{ _bien.fecha_concesion | fecha }}{%else%}{{no_disponible}}{% endif %}</td>
+<td>{% if _bien.acreedor %}{{ _bien.acreedor }}{%else%}{{no_disponible}}{% endif %}</td>
+<td>{% if _bien.otros %}{{ _bien.otros }}{%else%}{{no_disponible}}{% endif %}</td>

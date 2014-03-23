@@ -1,35 +1,58 @@
 <div class="vidalaboral mark">
 <table id="bienes" class="large-12 columns">
 {% for bienGrupo in bienes %}
-{%spaceless%}
-	{%if loop.key == "BIU"%}{% set tipoBien="Bienes inmuebles urbanos"%}
-	{%elseif loop.key == "BIR"%}{% set tipoBien="Bienes inmuebles rurales"%}
-	{%elseif loop.key == "VE"%}{% set tipoBien="Vehículos"%}
-	{%else%}{% set tipoBien=loop.key%}
-	{%endif%}
-{%endspaceless%}
+	{%spaceless%}
+		{%if loop.key == "BIU"%}{% set tipoBien="Bienes inmuebles urbanos"%}
+		{%elseif loop.key == "BIR"%}{% set tipoBien="Bienes inmuebles rurales"%}
+		{%elseif loop.key == "VE"%}{% set tipoBien="Vehículos"%}
+		{%else%}{% set tipoBien=loop.key%}
+		{%endif%}
+	{%endspaceless%}
 	<tr>
 		<th>{{tipoBien}}</th>
 	</tr>
 	<tr>
 		<td>
-	{% for bien in bienGrupo %}
-		{% set _bien=bien %}
-		{% set no_disponible=' -- ' %}
-		{% if bien.tipo == 'Activos' %}
-			{% include "../partials/bienes/activos.html" with _bien %}
-		{% elseif bien.tipo == 'BIU' %}
-			{% include "../partials/bienes/inmuebles.html" with _bien %}
-		{% elseif bien.tipo == 'BIR' %}
-			{% include "../partials/bienes/bir.html" with _bien %}
-		{% elseif bien.tipo == 'Rentas' %}
-			{% include "../partials/bienes/rentas.html" with _bien %}
-		{% elseif bien.tipo == 'VE' %}
-			{% include "../partials/bienes/vehiculo.html" with _bien %}
-		{% elseif bien.tipo == 'Deudas' %}
-			{% include "../partials/bienes/deudas.html" with _bien %}
-		{% endif %}
-	{% endfor %}
+			<table>
+				<thead>
+				<tr>
+					{% if loop.key == 'Activos' %}
+						{% include "../partials/bienes/activosHeader.html" %}
+					{% elseif loop.key == 'BIU' %}
+						{% include "../partials/bienes/inmueblesHeader.html" %}
+					{% elseif loop.key == 'BIR' %}
+						{% include "../partials/bienes/birHeader.html" %}
+					{% elseif loop.key == 'Rentas' %}
+						{% include "../partials/bienes/rentasHeader.html" %}
+					{% elseif loop.key == 'VE' %}
+						{% include "../partials/bienes/vehiculoHeader.html" %}
+					{% elseif loop.key == 'Deudas' %}
+						{% include "../partials/bienes/deudasHeader.html" %}
+					{% endif %}
+				</tr>
+				</thead>
+				<tbody>
+				{% for bien in bienGrupo %}
+					{% set _bien=bien %}
+					{% set no_disponible=' -- ' %}
+					<tr>
+						{% if bien.tipo == 'Activos' %}
+							{% include "../partials/bienes/activos.html" with _bien %}
+						{% elseif bien.tipo == 'BIU' %}
+							{% include "../partials/bienes/inmuebles.html" with _bien %}
+						{% elseif bien.tipo == 'BIR' %}
+							{% include "../partials/bienes/bir.html" with _bien %}
+						{% elseif bien.tipo == 'Rentas' %}
+							{% include "../partials/bienes/rentas.html" with _bien %}
+						{% elseif bien.tipo == 'VE' %}
+							{% include "../partials/bienes/vehiculo.html" with _bien %}
+						{% elseif bien.tipo == 'Deudas' %}
+							{% include "../partials/bienes/deudas.html" with _bien %}
+						{% endif %}
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
 		</td>
 	</tr>
 {% endfor %}
