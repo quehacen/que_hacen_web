@@ -1,12 +1,6 @@
 {% extends 'layout.html' %}
 
 {% block title %}
-{%if diputado.sexo == 'H'%}Diputado {{diputado.nombre}} {{diputado.apellidos}}
-{%else%}Diputada {{diputado.nombre}} {{diputado.apellidos}}
-{%endif%}
-{%endblock%}
-
-{% block content %}
 {%spaceless%}
 {%if diputado.sexo == 'H'%}
 	{% set sex='o'%}
@@ -14,6 +8,22 @@
 	{% set sex='a'%}
 {%endif%}
 {%endspaceless%}
+{%if diputado.activo==0%} 
+	Exdiputad{{sex}} {{diputado.nombre}} {{diputado.apellidos}}
+{%else%}
+	Diputad{{sex}} {{diputado.nombre}} {{diputado.apellidos}}
+{%endif%}
+{%endblock%}
+
+{% block content %}
+	{%spaceless%}
+	{%if diputado.sexo == 'H'%}
+		{% set sex='o'%}
+	{%else%}
+		{% set sex='a'%}
+	{%endif%}
+	{%endspaceless%}
+
 	<div class="row">
 		<div class="large-12 small-6 columns"> 
 			<span class='volverlistado' style="top:15px !important;">
@@ -55,7 +65,11 @@
 						<li><span>Fecha de nacimiento: {{diputado.fecha_nac | fecha}} ({{diputado.fecha_nac | edad}} años)</span></li>
 						<li><span>Lugar de nacimiento: {%if diputado.lugar_nac%}{{diputado.lugar_nac}}{%else%}Desconocido{%endif%}</span></li>
 						<li><span>Alta como diputad{{sex}}: {{diputado.fecha_alta | fecha}}</span></li>
-						{% if diputado.fecha_baja%}<li><span style='color:red'>Baja como diputad{{sex}}: {{diputado.fecha_baja | fecha}}</span></li>{%endif%}	
+						{% if diputado.fecha_baja%}<li><span style='color:red'>Baja como diputad{{sex}}: {{diputado.fecha_baja | fecha}}</span></li>
+						<li><span class="subst">Sustituid{{sex}} por: <a href="/diputado/{{diputado.diputado_sust.normalized.url}}">{{diputado.diputado_sust.nombre}}, {{diputado.diputado_sust.apellidos}}</a></span></li>{%endif%}
+						{% if diputado.id_sustituido %}	
+						<li><span class="subst">Sustituye a: <a href="/diputado/{{diputado.diputado_sust.normalized.url}}">{{diputado.diputado_sust.nombre}}, {{diputado.diputado_sust.apellidos}}</a></span></li>
+						{% endif %}
 						{% if diputado.legislaturas %}
 						{%spaceless%}
 						{%set n=1%}

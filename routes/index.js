@@ -58,7 +58,14 @@ exports.diputado = function(req, res){
     // es por url
     request( APIUrl+'/diputados?q={"normalized.url":"'+req.params.id+'"}', function(error, response, body) {
       viewObject.diputado = JSON.parse(body)[0];
-      res.render('diputado', viewObject );
+      if(viewObject.diputado.id_sustituto || viewObject.diputado.id_sustituido) {
+        request( APIUrl+'/diputado/'+(viewObject.diputado.id_sustituto || viewObject.diputado.id_sustituido), function(error, response, body2) {
+          viewObject.diputado.diputado_sust = JSON.parse(body2);
+          res.render('diputado', viewObject );
+        });
+      }else{
+        res.render('diputado', viewObject );
+      }
     });
   }
 
