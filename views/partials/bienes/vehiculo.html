@@ -1,3 +1,4 @@
 <td>{% if _bien.tipoVE %}{{ _bien.tipoVE }}{%else%}{{no_disponible}}{% endif %}</td>
 <td>{% if _bien.marca %}{{ _bien.marca }} {{ _bien.modelo }}{%else%}{{no_disponible}}{% endif %}</td>
 <td>{% if _bien.fecha_adq %}{{ _bien.fecha_adq | fecha }}{%else%}{{no_disponible}}{% endif %}</td>
+<td>{% if _bien.otros %}{{ _bien.otros }}{%else%}{{no_disponible}}{% endif %}</td>

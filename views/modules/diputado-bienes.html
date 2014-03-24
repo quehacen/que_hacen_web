@@ -9,7 +9,7 @@
 		{%endif%}
 	{%endspaceless%}
 	<tr>
-		<th>{{tipoBien}}</th>
+		<th>{{tipoBien}} <span>({{bienGrupo|length}})</span></th>
 	</tr>
 	<tr>
 		<td>
@@ -29,6 +29,7 @@
 					{% elseif loop.key == 'Deudas' %}
 						{% include "../partials/bienes/deudasHeader.html" %}
 					{% endif %}
+
 				</tr>
 				</thead>
 				<tbody>
