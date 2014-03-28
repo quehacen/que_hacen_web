@@ -60,8 +60,8 @@ function templateDipu(sub,subrs){
 	switch(sub){
 		case 'edad': txtsub='{{edad}} años';break;
 		case 'sueldo':txtsub='<a href="/diputado/{{normalized.url}}/salario">{{sueldo.bruto_mes}} €/mes</a>';break;	
-		case 'inic': txtsub='{{actividad.0.iniciativas.total}} iniciativas';break;
-		case 'interv': txtsub='{{actividad.0.intervenciones.total}} intervenciones';break;
+		case 'inic': txtsub='{{actividad.iniciativas.total}} iniciativas';break;
+		case 'interv': txtsub='{{actividad.intervenciones.total}} intervenciones';break;
 		case 'grupo': case '': txtsub='G.P. {{grupo}}';break;
 		default: txtsub='G.P. {{grupo}}';break;
 	}
@@ -388,13 +388,13 @@ $(function(){
 
 				   case 'inic':
 					dipus= _.sortBy(dipus, function(dipu){ 
-						return dipu.actividad[0].iniciativas.total; });
+						return dipu.actividad.iniciativas.total; });
 				   	sub='inic';
 					break;
 
 				   case 'interv':
 					dipus= _.sortBy(dipus, function(dipu){ 
-						return dipu.actividad[0].intervenciones.total; });
+						return dipu.actividad.intervenciones.total; });
 					sub='interv';
 					break;
 				}

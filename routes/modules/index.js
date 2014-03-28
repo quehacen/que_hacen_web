@@ -64,7 +64,7 @@ exports.diputado_actividad = function(req, res){
 	request( APIUrl+'/diputado/'+req.params.id+'?only=["actividad","id","nombre","apellidos"]', function(error, response, body) {
 		var respData = JSON.parse(body);
 	  	res.render('modules/diputado-actividad-parlamentaria',{
-	  		'actividad':respData.actividad[0],
+	  		'actividad':respData.actividad,
 			'votaciones':respData.actividad.votaciones,
 	  		'diputado':{
 	  			id: respData.id,
