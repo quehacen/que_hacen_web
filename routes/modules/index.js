@@ -12,7 +12,7 @@ exports.ultimas_iniciativas = function(req, res){
 };
 
 exports.ultimas_votaciones = function(req, res){ 
-	request( APIUrl+'/votaciones?limit=2&not=["xml.resultado.votaciones"]', function(error, response, body) {
+	request( APIUrl+"/votaciones?limit=2", function(error, response, body) {
 	  res.render('modules/ultimas-votaciones',{'votaciones':JSON.parse(body)}); 
 	});
 };
@@ -65,6 +65,7 @@ exports.diputado_actividad = function(req, res){
 		var respData = JSON.parse(body);
 	  	res.render('modules/diputado-actividad-parlamentaria',{
 	  		'actividad':respData.actividad[0],
+			'votaciones':respData.actividad.votaciones,
 	  		'diputado':{
 	  			id: respData.id,
 	  			nombre: respData.nombre,
@@ -132,7 +133,7 @@ exports.diputado_salario = function(req, res){
 
 
 exports.diputado_votaciones = function(req, res){
-	request( APIUrl+'/diputado/'+req.params.id+'/votaciones?limit=2', function(error, response, body) {
+	request( APIUrl+'/diputado/'+req.params.id+'/votaciones?limit=5', function(error, response, body) {
 		//console.log(JSON.parse(body));
 	  res.render('modules/diputado-votaciones',{'votaciones':JSON.parse(body)}); 
 	});

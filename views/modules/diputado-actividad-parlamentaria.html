@@ -54,7 +54,31 @@
 		</ul>
 	</div>
 	<div class="columns container large-12 mark mod-votaciones">
-		<h3>Últimas votaciones de {{diputado.nombre}} {{diputado.apellidos}}</h3>
+		<h3>Votaciones en el Pleno del Congreso</h3>
+                <ul class="list box">
+                        <li>
+                                <span class="data">{{votaciones.si}}</span>
+                                <span class="desc">Votos a favor</span>
+                        </li>
+                        <li>
+                                <span class="data">{{votaciones.no}}</span>
+                                <span class="desc">Votos en contra</span>
+                        </li>
+                        <li>
+                                <span class="data">{{votaciones.abs}}</span>
+                                <span class="desc">Abstenciones</span>
+                        </li>
+                        <li>
+                                <span class="data">{{votaciones.no_vota}}</span>
+                                <span class="desc">No votos</span>
+                        </li>
+                        <li>
+                                <span class="data">{{votaciones.dias_no_vota}}</span>
+                                <span class="desc">Días que no ha votado</span>
+                        </li>
+                </ul>
+
+		<h3>Últimas votaciones</h3>
 		<!--#include virtual="/modules/diputado/{{diputado.id}}/votaciones" -->
 	</div>
 </div>
