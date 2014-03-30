@@ -1,4 +1,5 @@
 var request = require('request');
+var async = require('async');
 var APIUrl = 'http://localhost:3002';
 
 /*
@@ -61,12 +62,16 @@ exports.diputado = function(req, res){
       if(viewObject.diputado.id_sustituto || viewObject.diputado.id_sustituido) {
         request( APIUrl+'/diputado/'+(viewObject.diputado.id_sustituto || viewObject.diputado.id_sustituido), function(error, response, body2) {
           viewObject.diputado.diputado_sust = JSON.parse(body2);
-          res.render('diputado', viewObject );
+          renderView( viewObject );
         });
       }else{
-        res.render('diputado', viewObject );
+        renderView( viewObject );
       }
     });
+  }
+
+  function renderView(result){
+    res.render('diputado', result );
   }
 
 };

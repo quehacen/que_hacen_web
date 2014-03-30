@@ -28,36 +28,87 @@
 		display: block;
 		text-align: center;
 	}
-	.votaciones {
-		.votacion {
-			padding: 10px 0;
-			border-bottom: 1px dashed $lightGray;
-			&:last-child {
-				border-bottom: none;
-			}
-			> * {
-				padding: 2px 0;
-			}
-			.info{
-				display: block;
-				color: $secondGray;
-				span {
-					display: inline-block;
-					font-size: 12px;
+	.mod-votaciones{
+		.votaciones-pleno{
+			display: block;
+
+			.resultpleno{
+				display:inline-block;
+				float: left;
+				width: 19%;
+				border: 1px solid $mediumGray;
+				margin:{
+					right: .5%;
+					left: .5%;
+				}
+				background-color: $lightGray;
+				
+				.data, .desc{ 
+					display:block; 
+					width:100%;
+					text-align: center;
+				}
+
+				.data {
+					font-size: 30pt;
+					font-weight: bold;
+					line-height:2em;
+					border-bottom: 1px solid;
+				}
+				.desc {
+					color: $secondGray;
+					background-color:white;
+					line-height:2em;
+				}
+				
+				&.afavor 	{
+					.data{ color: $activityGreen; border-color:$activityGreen;}
+				}
+				&.encontra 	{
+					.data{ color: $activityRed; border-color:$activityRed;}
+				}
+				&.abstenciones {
+					.data{ color: $activityYellow; border-color:$activityYellow;}
+				}
+				&.novota 	{
+					.data{ color: $activityBlue; border-color:$activityBlue;}
+				}
+				&.diasnovotados {
+					.data{ color: black; border-color:black;}
 				}
 			}
-			.tituloVotacion{
-				padding-bottom: 4px;
-			}
-			.resultado {
-				@extend %resultado;
-				font-size: 14px;
-				span {display: inline-block;}
-			}
-			.textoExpediente{
-				font-size: 14px;
-				line-height: $textLineHeight;
-				color: $secondGray;
+		}
+		.votaciones {
+			.votacion {
+				padding: 10px 0;
+				border-bottom: 1px dashed $lightGray;
+				&:last-child {
+					border-bottom: none;
+				}
+				> * {
+					padding: 2px 0;
+				}
+				.info{
+					display: block;
+					color: $secondGray;
+					span {
+						display: inline-block;
+						font-size: 12px;
+					}
+				}
+				.tituloVotacion{
+					padding-bottom: 4px;
+				}
+				.resultado {
+					@extend %resultado;
+					font-size: 14px;
+					span {display: inline-block;}
+				}
+				.textoExpediente{
+					font-size: 14px;
+					line-height: $textLineHeight;
+					color: $secondGray;
+				}
 			}
 		}
 	}
