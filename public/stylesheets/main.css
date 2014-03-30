@@ -320,3 +320,68 @@ table#vidalaboral {
 .latestPost .post .date i{
     margin-right: 1em;
 }
+
+
+/* EVENTOS*/
+
+.eventos{
+   margin-top:5px;
+   margin-bottom:5px;;
+}
+.eventos .evento {
+  padding: 10px;
+}
+
+.eventos .evento > * {
+  padding: 2px 0;
+}
+
+.eventos .evento .sineventos{
+  color: #6a6a6a;
+  display: inline-block;
+  padding:5px;
+  font-size: 14px;
+}
+.eventos .evento .info {
+  display: block;
+  color: #6a6a6a;
+}
+.eventos .evento .info span {
+  display: inline-block;
+  width:98%;
+  font-size: 12px;
+  padding:0px;
+}
+
+.eventos .evento .od span{
+  font-size:13px;
+  line-height:1.3em;
+}
+
+.eventos .evento .info span i{
+  font-size:15px;
+  padding-left:3px;
+  color:#B40404;
+}
+
+.eventos .evento .tituloEvento{
+  padding-bottom: 0px;
+  font-size:14px;
+}
+
+.eventos .evento .tituloEvento a:hover{
+  text-decoration:underline;
+}
+
+.eventos .evento .resultado{
+  font-size: 14px;
+}
+.eventos .evento .resultado span{
+  display: inline-block;
+}
+.eventos .evento .textoExpediente{
+  font-size: 14px;
+  line-height: 1.3em;
+  color: #6a6a6a;
+}
+
