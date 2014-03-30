@@ -1,5 +1,6 @@
 var moment = require('moment');
 var _ = require('underscore.string');
+var __=require('lodash');
 var cheerio = require('cheerio');
 
 module.exports= function(swig){
