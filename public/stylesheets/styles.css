@@ -147,7 +147,7 @@ a:hover {
   line-height: 1.5em;
   margin: 0;
   font-size: .9em;
-  padding: 20px;
+  /*padding: 20px;*/
 }
 .list.detailed {
   -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.2);
@@ -346,21 +346,21 @@ a:hover {
   color: #44474c;
 }
 
-.actividad-parlamentaria .votaciones .votacion .resultado .asentimiento, .actividad-parlamentaria .votaciones .votacion .resultado .voto {
+.actividad-parlamentaria .mod-votaciones .votaciones .votacion .resultado .asentimiento, .actividad-parlamentaria .mod-votaciones .votaciones .votacion .resultado .voto {
   color: white;
   padding: 4px;
   font-weight: bold;
 }
-.actividad-parlamentaria .votaciones .votacion .resultado .asentimiento.no, .actividad-parlamentaria .votaciones .votacion .resultado .voto.no {
+.actividad-parlamentaria .mod-votaciones .votaciones .votacion .resultado .asentimiento.no, .actividad-parlamentaria .mod-votaciones .votaciones .votacion .resultado .voto.no {
   background-color: #f80403;
 }
-.actividad-parlamentaria .votaciones .votacion .resultado .asentimiento.si, .actividad-parlamentaria .votaciones .votacion .resultado .voto.si {
+.actividad-parlamentaria .mod-votaciones .votaciones .votacion .resultado .asentimiento.si, .actividad-parlamentaria .mod-votaciones .votaciones .votacion .resultado .voto.si {
   background-color: #6fc354;
 }
-.actividad-parlamentaria .votaciones .votacion .resultado .asentimiento.abstencion, .actividad-parlamentaria .votaciones .votacion .resultado .voto.abstencion {
+.actividad-parlamentaria .mod-votaciones .votaciones .votacion .resultado .asentimiento.abstencion, .actividad-parlamentaria .mod-votaciones .votaciones .votacion .resultado .voto.abstencion {
   background-color: #e9bb05;
 }
-.actividad-parlamentaria .votaciones .votacion .resultado .asentimiento.no-vota, .actividad-parlamentaria .votaciones .votacion .resultado .voto.no-vota {
+.actividad-parlamentaria .mod-votaciones .votaciones .votacion .resultado .asentimiento.no-vota, .actividad-parlamentaria .mod-votaciones .votaciones .votacion .resultado .voto.no-vota {
   background-color: black;
 }
 
@@ -368,34 +368,82 @@ a:hover {
   display: block;
   text-align: center;
 }
-.actividad-parlamentaria .votaciones .votacion {
+.actividad-parlamentaria .mod-votaciones .votaciones-pleno {
+  display: block;
+}
+.actividad-parlamentaria .mod-votaciones .votaciones-pleno .resultpleno {
+  display: inline-block;
+  float: left;
+  width: 19%;
+  border: 1px solid #dadada;
+  margin-right: .5%;
+  margin-left: .5%;
+  background-color: #f2f2f2;
+}
+.actividad-parlamentaria .mod-votaciones .votaciones-pleno .resultpleno .data, .actividad-parlamentaria .mod-votaciones .votaciones-pleno .resultpleno .desc {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+.actividad-parlamentaria .mod-votaciones .votaciones-pleno .resultpleno .data {
+  font-size: 30pt;
+  font-weight: bold;
+  line-height: 2em;
+  border-bottom: 1px solid;
+}
+.actividad-parlamentaria .mod-votaciones .votaciones-pleno .resultpleno .desc {
+  color: #6a6a6a;
+  background-color: white;
+  line-height: 2em;
+}
+.actividad-parlamentaria .mod-votaciones .votaciones-pleno .resultpleno.afavor .data {
+  color: #6fc354;
+  border-color: #6fc354;
+}
+.actividad-parlamentaria .mod-votaciones .votaciones-pleno .resultpleno.encontra .data {
+  color: #f80403;
+  border-color: #f80403;
+}
+.actividad-parlamentaria .mod-votaciones .votaciones-pleno .resultpleno.abstenciones .data {
+  color: #e9bb05;
+  border-color: #e9bb05;
+}
+.actividad-parlamentaria .mod-votaciones .votaciones-pleno .resultpleno.novota .data {
+  color: #1795fc;
+  border-color: #1795fc;
+}
+.actividad-parlamentaria .mod-votaciones .votaciones-pleno .resultpleno.diasnovotados .data {
+  color: black;
+  border-color: black;
+}
+.actividad-parlamentaria .mod-votaciones .votaciones .votacion {
   padding: 10px 0;
   border-bottom: 1px dashed #f2f2f2;
 }
-.actividad-parlamentaria .votaciones .votacion:last-child {
+.actividad-parlamentaria .mod-votaciones .votaciones .votacion:last-child {
   border-bottom: none;
 }
-.actividad-parlamentaria .votaciones .votacion > * {
+.actividad-parlamentaria .mod-votaciones .votaciones .votacion > * {
   padding: 2px 0;
 }
-.actividad-parlamentaria .votaciones .votacion .info {
+.actividad-parlamentaria .mod-votaciones .votaciones .votacion .info {
   display: block;
   color: #6a6a6a;
 }
-.actividad-parlamentaria .votaciones .votacion .info span {
+.actividad-parlamentaria .mod-votaciones .votaciones .votacion .info span {
   display: inline-block;
   font-size: 12px;
 }
-.actividad-parlamentaria .votaciones .votacion .tituloVotacion {
+.actividad-parlamentaria .mod-votaciones .votaciones .votacion .tituloVotacion {
   padding-bottom: 4px;
 }
-.actividad-parlamentaria .votaciones .votacion .resultado {
+.actividad-parlamentaria .mod-votaciones .votaciones .votacion .resultado {
   font-size: 14px;
 }
-.actividad-parlamentaria .votaciones .votacion .resultado span {
+.actividad-parlamentaria .mod-votaciones .votaciones .votacion .resultado span {
   display: inline-block;
 }
-.actividad-parlamentaria .votaciones .votacion .textoExpediente {
+.actividad-parlamentaria .mod-votaciones .votaciones .votacion .textoExpediente {
   font-size: 14px;
   line-height: 1.3em;
   color: #6a6a6a;
@@ -520,13 +568,13 @@ a:hover {
 }
 
 .volverlistado.volverlistadoDesp {
-  position: relative;
-  top: 0;
-  left: 0;
+  position: absolute;
+  top: 8px;
+  left: 5px;
 }
 
 .organos .subTitle2 {
-  color: black;
+  color: black; 
 }
 .organos .subTitle2.desc {
   padding: 0 10px;

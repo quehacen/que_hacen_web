@@ -97,8 +97,9 @@
                         <!--#include virtual="/modules/organos/list?active={{organo.tipo}}" -->
                 </div>
         </div>
+    {% if organo.tipo == "C" or organo.tipo=="SC"%}
     <div class="row">
-    	<div class="large-12 columns">
+    	<div class="large-12 columns" style="height:20px;">
 			{% if organo.tipo=="C"%} 
 			<span class='volverlistado volverlistadoDesp'><i class='fa fa-chevron-left'></i><a href='/comisiones'>Ir al listado de comisiones</a></span>
 			{%elif organo.tipo=="SC" %}
@@ -106,6 +107,7 @@
 			{%endif%}
 	</div>
     </div>
+    {%endif%}
 
  	<div class="row container organos">
 		<div class="large-12 columns">
@@ -150,27 +152,6 @@
                         <!--#include virtual="/modules/organo/{{organo.id}}/diputados" -->
                 </div>
 		<div class="columns mod-organos" style="width:34%">
-		{% if organo.tipo !== "C" or organo.tipo == "C" and organo.legis == 1%}
-                        <div class="actividad container" style="margin-top:0px;">
-	                        <div class="header">Actividad</div>
-        		                <dl class="tabs" data-tab>
-                        		  <dd class="active"><a href="#proximos">Próximos eventos</a></dd>
-                          		  <dd><a href="#ultimos">Últimos eventos</a></dd>
-                        		</dl>
-                        	<div class="tabs-content">
-                          	   <div class="content active" id="proximos">
-					<div class="eventos">
-					{{ lista_eventos(proximos,"próximos")}}
-					</div>
-                          	    </div>
-                          	    <div class="content" id="ultimos">
-					<div class="eventos">
-					{{ lista_eventos(siguientes,"siguientes")}}
-					</div>
-                             	    </div>
-                        	</div>
-                	</div>
-		{%else%}
                         <div class="actividad container" style="margin-top:0px;">
 	                        <div class="header">Próximos eventos</div>
                         	<div class="tabs-content">
@@ -191,7 +172,6 @@
                              	    </div>
                         	</div>
 			</div>
-		{%endif%}
                 </div>
 </div>
 {% endblock %}
