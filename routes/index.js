@@ -16,7 +16,7 @@ exports.index = function(req, res){
 
 exports.diputados = function(req, res){
 	console.log('Diputados');
-	var viewObject = {'pageActive':"diputados"};
+	var viewObject = { "originalURL" : req.originalUrl, 'pageActive':"diputados"};
   request( APIUrl+'/diputados?q={"activo":1}&only=["id","nombre","apellidos","normalized","grupo","partido"]', function(error, response, body) {
     viewObject.diputados = JSON.parse(body);
     res.render('diputados', viewObject ); 
@@ -25,7 +25,7 @@ exports.diputados = function(req, res){
 
 exports.diputado = function(req, res){
   console.log('Diputado', req.params);
-  var viewObject = {'pageActive':"diputados"};
+  var viewObject = { "originalURL" : req.originalUrl, 'pageActive':"diputados"};
   var subPageActive = req.params.tipo || "actividad";
   
   switch(subPageActive) {
@@ -77,7 +77,7 @@ exports.diputado = function(req, res){
 };
 
 exports.grupos = function(req, res){
-  var viewObject = {'pageActive':"grupos"};
+  var viewObject = { "originalURL" : req.originalUrl, 'pageActive':"grupos"};
   /* Descomentar cuando haya una portada de grupos parlamentarios
     request( APIUrl+"/grupos", function(error, response, body) {
     viewObject.grupos = JSON.parse(body);
@@ -90,7 +90,7 @@ exports.grupos = function(req, res){
 };
 
 exports.grupo = function(req, res){
-  var viewObject = {'pageActive':"grupos"};
+  var viewObject = { "originalURL" : req.originalUrl, 'pageActive':"grupos"};
   if( !isNaN(req.params.id) ){
     // es por id
     request( APIUrl+"/grupo/"+req.params.id, function(error, response, body) {
@@ -108,7 +108,7 @@ exports.grupo = function(req, res){
 };
 
 exports.circunscripciones = function(req, res){
-  var viewObject = {'pageActive':"circunscripciones"};
+  var viewObject = { "originalURL" : req.originalUrl, 'pageActive':"circunscripciones"};
   request( APIUrl+"/circunscripciones", function(error, response, body) {
     viewObject.circunscripciones = JSON.parse(body);
     res.render('circunscripciones', viewObject ); 
@@ -116,7 +116,7 @@ exports.circunscripciones = function(req, res){
 };
 
 exports.circunscripcion = function(req, res){
-  var viewObject = {'pageActive':"circunscripciones"};
+  var viewObject = { "originalURL" : req.originalUrl, 'pageActive':"circunscripciones"};
   if( !isNaN(req.params.id) ){
     // es por id
     request( APIUrl+"/circunscripcion/"+req.params.id, function(error, response, body) {
@@ -134,7 +134,7 @@ exports.circunscripcion = function(req, res){
 };
 
 exports.circunscripcion = function(req, res){
-  var viewObject = {'pageActive':"circunscripciones"};
+  var viewObject = { "originalURL" : req.originalUrl, 'pageActive':"circunscripciones"};
   if( !isNaN(req.params.id) ){
     // es por id
     request( APIUrl+"/circunscripcion/"+req.params.id, function(error, response, body) {
@@ -152,7 +152,7 @@ exports.circunscripcion = function(req, res){
 };
 
 exports.organos= function(req, res){
-  var viewObject = {'pageActive':"organos"};
+  var viewObject = { "originalURL" : req.originalUrl, 'pageActive':"organos"};
     request( APIUrl+'/organos?q={"normalized.url":"mesa-del-congreso"}', function(error, response, body) {
      request( APIUrl+'/organos', function(error2, response2, body2) {
 	var organo=JSON.parse(body)[0];
@@ -189,7 +189,7 @@ exports.organos= function(req, res){
 };
 
 exports.organo= function(req, res){
-  var viewObject = {'pageActive':"organos"};
+  var viewObject = { "originalURL" : req.originalUrl, 'pageActive':"organos"};
   if( !isNaN(req.params.id) ){
     // es por id
     request( APIUrl+'/organos?q={"id":'+req.params.id+'}', function(error, response, body) {
@@ -222,7 +222,7 @@ exports.organo= function(req, res){
 
 
 exports.comisiones = function(req, res){
-  var viewObject = {'pageActive':"organos"};
+  var viewObject = { "originalURL" : req.originalUrl, 'pageActive':"organos"};
     request( APIUrl+'/organos?q={"tipo":"^C"}&order={"nombre":1}', function(error, response, body) {
     viewObject.comisiones = JSON.parse(body);
       res.render('comisiones', viewObject ); 
@@ -230,7 +230,7 @@ exports.comisiones = function(req, res){
 };
 
 exports.subcomisiones = function(req, res){
-  var viewObject = {'pageActive':"organos"};
+  var viewObject = { "originalURL" : req.originalUrl, 'pageActive':"organos"};
     request( APIUrl+'/organos?q={"tipo":"^S"}&order={"nombre":1}', function(error, response, body) {
     viewObject.subcomisiones = JSON.parse(body);
       res.render('subcomisiones', viewObject ); 

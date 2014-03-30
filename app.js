@@ -93,10 +93,10 @@ app.get('/404', function(req, res){
 
 /*** Modules **************************************************************/
 app.get('/modules/portada/ultimos-posts/:posts', modules.ultimos_posts);
-app.get('/modules/portada/ultimas-iniciativas', modules.ultimas_iniciativas);
-app.get('/modules/portada/ultimas-votaciones', modules.ultimas_votaciones);
-app.get('/modules/portada/actividad/mas-iniciativas', modules.mas_iniciativas);
-app.get('/modules/portada/actividad/menos-iniciativas', modules.menos_iniciativas);
+app.get('/modules/portada/ultimas-iniciativas/:limit', modules.ultimas_iniciativas);
+app.get('/modules/portada/ultimas-votaciones/:limit', modules.ultimas_votaciones);
+app.get('/modules/portada/actividad/mas-iniciativas/:limit', modules.mas_iniciativas);
+app.get('/modules/portada/actividad/menos-iniciativas/:limit', modules.menos_iniciativas);
 app.get('/modules/diputados', modules.diputados);
 app.get('/modules/diputado/:id/tags', modules.diputado_web_tags);
 app.get('/modules/diputado/:id/bienes', modules.diputado_bienes);

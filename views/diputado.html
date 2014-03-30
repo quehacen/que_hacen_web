@@ -8,7 +8,7 @@
 	{% set sex='a'%}
 {%endif%}
 {%endspaceless%}
-{%if diputado.activo==0%} 
+{%if diputado.activo==0%}
 	Exdiputad{{sex}} {{diputado.nombre}} {{diputado.apellidos}}
 {%else%}
 	Diputad{{sex}} {{diputado.nombre}} {{diputado.apellidos}}
@@ -34,8 +34,8 @@
 		<div class="columns large-2 large-offset-10 small-6 small-offset-6 sharer mark">
 			<span>Compartir</span>
 			<a href="javascript:void(window.open('https://plus.google.com/share?ur\l='+encodeURIComponent(location), 'Compartir diputado {{diputado.nombre}} {{diputado.apellidos}}','width=600,height=460,menubar=no,location=no,status=no'));"><i class="fa fa-google-plus-square"></i></a>
-			<a href="https://www.facebook.com/sharer/sharer.php?u={{baseURL}}/{{diputado.normalized.url}}" target="_blank"><i class="fa fa-facebook-square"></i></a>
-			<a href="https://twitter.com/share?url={{baseURL}}/{{diputado.normalized.url}}"><i class="fa fa-twitter-square"></i></a>
+			<a href="https://www.facebook.com/sharer/sharer.php?u={{baseURL}}{{originalURL}}" target="_blank"><i class="fa fa-facebook-square"></i></a>
+			<a href="https://twitter.com/share?url={{baseURL}}{{originalURL}}"><i class="fa fa-twitter-square"></i></a>
 		</div>
 	</div>
 	<div class="row container diputado">
@@ -143,19 +143,14 @@
 				<li id="salario" class="{% if subPageActive=='salario' %}active{% endif %}"><a href="/diputado/{{diputado.normalized.url}}/salario">Salario</a></li>
 			</ul>
 			{% if subPageActive=='actividad' %}
-				{% set canonical = "actividad"  %}
 				<!--#include virtual="/modules/diputado/{{diputado.id}}/actividad" -->
 			{% elseif subPageActive=='cargos-congreso' %}
-				{% set canonical = "cargos-congreso"  %}
 				<!--#include virtual="/modules/diputado/{{diputado.id}}/cargos-congreso" -->
 			{% elseif subPageActive=='vida-laboral' %}
-				{% set canonical = "vida-laboral"  %}
 				<!--#include virtual="/modules/diputado/{{diputado.id}}/vida-laboral" -->
 			{% elseif subPageActive=='declaracion-de-bienes' %}
-				{% set canonical = "bienes"  %}
 				<!--#include virtual="/modules/diputado/{{diputado.id}}/bienes" -->
 			{% elseif subPageActive=='salario' %}
-				{% set canonical = "salario"  %}
 				<!--#include virtual="/modules/diputado/{{diputado.id}}/salario" -->
 			{% endif %}
 		</div>
@@ -173,6 +168,13 @@
 {% endblock %}
 
 {% block extraHead %}
-	<link rel="canonical" href="{{baseURL}}/{{diputado.normalized.url}}/{{canonical}}" />
+	<link rel="canonical" href="{{baseURL}}{{originalURL}}" />
+{% endblock %}
+
+{% set og_title =  "Diputado "+diputado.nombre+", "+diputado.apellidos %}
+{% set og_image =  "/img/imagenesDipus/"+diputado.id %}
+{% set og_desc =  "Diputado "+diputado.nombre+", "+diputado.apellidos %}
+{% block ogMetas %}
+{% parent %}
 {% endblock %}
 
