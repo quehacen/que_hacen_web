@@ -40,6 +40,22 @@ module.exports= function(swig){
 	  }
 
 	});
+
+	swig.setFilter('diaSemana', function(input) {
+	  var dia;
+	  var date = input;
+	  var dateLength = date.split('/').length;
+	
+	  if( dateLength <= 1 || dateLength > 3 ) { 
+	    	return date; 
+	  } else if ( dateLength == 2 ) {
+	    	dia=moment(date, "MM-YYYY").lang('es').format('dddd');
+		return dia.charAt(0).toUpperCase() + dia.slice(1);
+	  } else {
+	    	dia=moment(date, "DD-MM-YYYY").lang('es').format('dddd');
+		return dia.charAt(0).toUpperCase() + dia.slice(1);
+	  }
+	});
 	
 	swig.setFilter('edad', function(input) {
 	  var date = input;
