@@ -1,11 +1,12 @@
 var moment = require('moment');
 var _ = require('underscore.string');
-var __=require('lodash');
 var cheerio = require('cheerio');
 
 module.exports= function(swig){
 	/***** SWIG FILTERS *****/
 	swig.setFilter('length', function (input, idx) {
+		var __ = require('lodash');
+		
 		if ( __.isString(input) ){
 			return __.size(input);
 		} else if( __.isArray(input) ){
@@ -19,6 +20,7 @@ module.exports= function(swig){
 	});
 	
 	swig.setFilter('pluck', function (input, key) {
+		var __ = require('lodash');
 	  	return __.pluck(input, key);
 	});
 
@@ -149,6 +151,7 @@ module.exports= function(swig){
 	});
 
 	swig.setFilter("cargos_ord",function(input){
+	   var __=require('lodash');
 	   var ordenado=[];
 	   var tiposcargo= ["P","VP","VP1","VP2","VP3","VP4","S","S1","S2","S3",
 		"S4","PO","POT","POS","POA","V","VS","A"];
@@ -163,6 +166,7 @@ module.exports= function(swig){
 	});
 
 	swig.setFilter("poda_con",function(input,field,val){
+	   var __=require('lodash');
 	   var anew=[];
 	   if(arguments.length!=3){
 	      __.each(input,function(elem){
@@ -186,6 +190,7 @@ module.exports= function(swig){
 
 
 	swig.setFilter("poda_sin",function(input,field,val){
+	   var __=require('lodash');
 	   var anew=[];
 	   var inside;
 	   if(arguments.length!=3){
@@ -211,6 +216,7 @@ module.exports= function(swig){
 	});
 
 	swig.setFilter("dipusorg",function(input,idorg){
+	   var __=require('lodash');
 	   var dipusorg=[];
 	   var temp,fila;
 	   __.each(input,function(dipu){
@@ -231,26 +237,6 @@ module.exports= function(swig){
 		});
 	   });
 	   return dipusorg;
-	});
-
-	swig.setFilter("groupBy",function(input, key) {
-	  if (!__.isArray(input)) {
-	    return input;
-	  }
-	  var out = {};
-	  __.each(input, function (value) {
-	    if (!value.hasOwnProperty(key)) {
-	      return;
-	    }
-	    var keyname = value[key],
-	      newVal = __.extend({}, value);
-	    delete value[key];
-	    if (!out[keyname]) {
-	      out[keyname] = [];
-	    }
-	    out[keyname].push(value);
-	  });
-	  return out;
 	});
 	/****END SWIG FILTERS *****/
 }
