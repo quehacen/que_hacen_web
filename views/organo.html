@@ -1,6 +1,55 @@
 {% extends 'layout.html' %}
 {% block content %}
 
+{% macro lista_eventos(eventos,tipo)%}
+{%spaceless%}
+{% if tipo=="próximos"%}{%set txtsin="No hay ningún evento próximo programado para este órgano."%}
+{%else%}{%set txtsin="No se han encontrado eventos asociados a este órgano."%}
+{%endif%}
+{%endspaceless%}
+{% if eventos[0] %}
+	{%for evento in eventos%}
+	{%spaceless%}
+	{%if evento.organo.tipo == "DP" or evento.organo.tipo =="JP" or evento.organo.tipo=="SC"%}
+		{%set titulo= evento.titulo + " (sesión nº" + evento.organo.n_evento + ")"%}
+	{%elif evento.organo.tipo=="C" and evento.organo.tipo_evento=="N"%}
+		{%set titulo= evento.titulo + " (sesión nº" + evento.organo.n_evento_tipo + ")"%}
+	{%else%}
+		{% set titulo = evento.titulo%}
+	{%endif%}
+	{%endspaceless%}
+	<div class="evento">
+		<div class="info">
+			<span>{{evento.fecha | diaSemana}} {{evento.fecha | fecha}} - {{evento.hora}}</span>
+			<span style="color:black">{{evento.lugar}}{%if evento.puerta_cerrada %} <i class="fa fa-lock" title="Evento a puerta cerrada"> </i>{%endif%}</span>
+		</div>
+		<div class="tituloEvento">
+			{%if evento.url%}
+			<a href="{{evento.url}}">{{titulo}}</a>
+			{#<a href="{{evento.url}}">Sesión nº {{evento.organo.n_evento_tipo}}</a>#}
+			{%else%}
+			<span>{{titulo}}</span>
+			{#<span>Sesión nº {{evento.organo.n_evento_tipo}}</a>#}
+			{%endif%}
+		</div>
+		<div class="info od">
+		{%if evento.orden_del_dia%}
+			<span>Orden del dia:<span>
+			<span>{{evento.orden_del_dia}}.</span>
+		{%endif%}
+		</div>
+	</div>
+	{%endfor%}
+	{#{%if eventos|length > 5%}
+	<div id="maseventos"><a href="javascript:masEventos();">Cargar más eventos</a></div>
+	{%endif%}#}
+{%else%}
+	<div class="evento">
+		<span class="sineventos">{{txtsin}}</span>
+	</div>
+{%endif%}
+{%endmacro%}
+
 {% spaceless %}
 {% if organo.tipo == "C" %}
 	{% set t_org = "Comisión"%}
@@ -55,13 +104,13 @@
 			{%elif organo.tipo=="SC" %}
 			<span class='volverlistado volverlistadoDesp'><i class='fa fa-chevron-left'></i><a href='/subcomisiones'>Ir al listado de subcomisiones</a></span>
 			{%endif%}
-		</div>
+	</div>
     </div>
 
-	<div class="row container organos">
+ 	<div class="row container organos">
 		<div class="large-12 columns">
 			<span class="encabezadoMod">{{t_org }} {{n_org }}</span>
-            <span class="subTitle2"><strong>{{ndipus}} diputados</strong></span>
+            		<span class="subTitle2"><strong>{{ndipus}} diputados</strong></span>
 		{% if organo.tipo=="C" or organo.tipo=="SC" %}
 			<span class="subTitle2 sub">Tipo: {{legisnom}} {{permnom}} {{mixtanom}}</span>
 			{% if organo.tipo == "SC"%}
@@ -94,9 +143,55 @@
 		{% endif %}
 			<span class="subTitle2 date">Fecha de constitución: {{organo.constituida|fecha}}</span>
 		</div>
-		<div class="large-12 columns mod-organos">
+	</div>
+	<div class="row container organos" style="background-color:#F2F2F2;border:none">	
+		<div class="columns mod-organos" style="width:64%;background-color:white;border:1px solid #C3C3C3;border-radius: 2px;">
                         <!--<span class="subTitle">Nº diputados históricos: {{ndipushist}}</span>-->
                         <!--#include virtual="/modules/organo/{{organo.id}}/diputados" -->
+                </div>
+		<div class="columns mod-organos" style="width:34%">
+		{% if organo.tipo !== "C" or organo.tipo == "C" and organo.legis == 1%}
+                        <div class="actividad container" style="margin-top:0px;">
+	                        <div class="header">Actividad</div>
+        		                <dl class="tabs" data-tab>
+                        		  <dd class="active"><a href="#proximos">Próximos eventos</a></dd>
+                          		  <dd><a href="#ultimos">Últimos eventos</a></dd>
+                        		</dl>
+                        	<div class="tabs-content">
+                          	   <div class="content active" id="proximos">
+					<div class="eventos">
+					{{ lista_eventos(proximos,"próximos")}}
+					</div>
+                          	    </div>
+                          	    <div class="content" id="ultimos">
+					<div class="eventos">
+					{{ lista_eventos(siguientes,"siguientes")}}
+					</div>
+                             	    </div>
+                        	</div>
+                	</div>
+		{%else%}
+                        <div class="actividad container" style="margin-top:0px;">
+	                        <div class="header">Próximos eventos</div>
+                        	<div class="tabs-content">
+                          	   <div class="content active">
+					<div class="eventos">
+					{{ lista_eventos(proximos,"próximos")}}
+					</div>
+                          	    </div>
+				</div>
+			</div>
+                        <div class="actividad container">
+	                        <div class="header" style="">Últimos eventos</div>
+                        	<div class="tabs-content">
+                          	    <div class="content active">
+					<div class="eventos">
+					{{ lista_eventos(siguientes,"siguientes")}}
+					</div>
+                             	    </div>
+                        	</div>
+			</div>
+		{%endif%}
                 </div>
 </div>
 {% endblock %}
@@ -112,4 +207,8 @@
 
 {% block scripts %}
 	{% parent %}
+	<script src="/javascripts/vendors/foundation.min.js"></script>
+        <script>
+          $(document).foundation();
+        </script>
 {% endblock %}
