@@ -1,20 +1,16 @@
 {% extends 'layout.html' %}
 {% block title %}
-Diputados del Congreso
+Exdiputados del Congreso
 {%endblock%}
 {% block content %}
 	<div class="row container">
 		<div class="diputadosTotal">
-			<h2>Diputados del Congreso</h2>
-			<span style='font-size:14px;position:absolute;top:10px;left:15px;'><a href="/exdiputados">Ver exdiputados</span>
+			<h2>Exdiputados del Congreso</h2>
+			<span style='font-size:14px;position:absolute;top:10px;left:15px;'><a href="/diputados">Ver diputados</span>
 		</div>
 		<div class="large-9 small-12 columns">
-			<h3 class="title" style="text-align:center">Diputados</h3>
-			<!--<div class="filter">
-				{#{% include "./partials/filtroDiputados.html" %}#}
-			</div>-->
-			{% include "./modules/diputados.html" %}
-			<!-- #include virtual="/modules/diputados" -->
+			<h3 class="title" style="text-align:center">{{diputados | length}} exdiputados</h3>
+			{% include "./modules/exdiputados.html" %}
 		</div>
 		<div class="filtros large-3 small-12 columns">
 			<span style="text-align:center">[Filtros] Coming <i>/suun/</i></span>
@@ -33,6 +29,6 @@ Diputados del Congreso
 	{% parent %}
         <script src="/javascripts/vendors/mustache.js"></script>
 	<!--<script src="/javascripts/diputadosMain.js"></script>-->
-	<script src="/javascripts/diputados.js"></script>
+	<!--<script src="/javascripts/diputados.js"></script>-->
 {% endblock %}
 

@@ -16,16 +16,25 @@ exports.index = function(req, res){
 
 exports.diputados = function(req, res){
 	console.log('Diputados');
-	var viewObject = {'pageActive':"diputados"};
+	var viewObject = { "originalURL" : req.originalUrl, 'pageActive':"diputados"};
   request( APIUrl+'/diputados?q={"activo":1}&only=["id","nombre","apellidos","normalized","grupo","partido"]', function(error, response, body) {
     viewObject.diputados = JSON.parse(body);
     res.render('diputados', viewObject ); 
   });
 };
 
+exports.exdiputados = function(req, res){
+	console.log('Exdiputados');
+	var viewObject = { "originalURL" : req.originalUrl, 'pageActive':"diputados"};
+  request( APIUrl+'/diputados?q={"activo":0}&only=["id","nombre","apellidos","normalized","grupo","partido","fecha_baja"]', function(error, response, body) {
+    viewObject.diputados = JSON.parse(body);
+    res.render('exdiputados', viewObject ); 
+  });
+};
+
 exports.diputado = function(req, res){
   console.log('Diputado', req.params);
-  var viewObject = {'pageActive':"diputados"};
+  var viewObject = { "originalURL" : req.originalUrl, 'pageActive':"diputados"};
   var subPageActive = req.params.tipo || "actividad";
   
   switch(subPageActive) {
@@ -77,7 +86,7 @@ exports.diputado = function(req, res){
 };
 
 exports.grupos = function(req, res){
-  var viewObject = {'pageActive':"grupos"};
+  var viewObject = { "originalURL" : req.originalUrl, 'pageActive':"grupos"};
   /* Descomentar cuando haya una portada de grupos parlamentarios
     request( APIUrl+"/grupos", function(error, response, body) {
     viewObject.grupos = JSON.parse(body);
@@ -90,7 +99,7 @@ exports.grupos = function(req, res){
 };
 
 exports.grupo = function(req, res){
-  var viewObject = {'pageActive':"grupos"};
+  var viewObject = { "originalURL" : req.originalUrl, 'pageActive':"grupos"};
   if( !isNaN(req.params.id) ){
     // es por id
     request( APIUrl+"/grupo/"+req.params.id, function(error, response, body) {
@@ -108,7 +117,7 @@ exports.grupo = function(req, res){
 };
 
 exports.circunscripciones = function(req, res){
-  var viewObject = {'pageActive':"circunscripciones"};
+  var viewObject = { "originalURL" : req.originalUrl, 'pageActive':"circunscripciones"};
   request( APIUrl+"/circunscripciones", function(error, response, body) {
     viewObject.circunscripciones = JSON.parse(body);
     res.render('circunscripciones', viewObject ); 
@@ -116,7 +125,7 @@ exports.circunscripciones = function(req, res){
 };
 
 exports.circunscripcion = function(req, res){
-  var viewObject = {'pageActive':"circunscripciones"};
+  var viewObject = { "originalURL" : req.originalUrl, 'pageActive':"circunscripciones"};
   if( !isNaN(req.params.id) ){
     // es por id
     request( APIUrl+"/circunscripcion/"+req.params.id, function(error, response, body) {
@@ -134,7 +143,7 @@ exports.circunscripcion = function(req, res){
 };
 
 exports.circunscripcion = function(req, res){
-  var viewObject = {'pageActive':"circunscripciones"};
+  var viewObject = { "originalURL" : req.originalUrl, 'pageActive':"circunscripciones"};
   if( !isNaN(req.params.id) ){
     // es por id
     request( APIUrl+"/circunscripcion/"+req.params.id, function(error, response, body) {
@@ -152,17 +161,17 @@ exports.circunscripcion = function(req, res){
 };
 
 exports.organos= function(req, res){
-  var viewObject = {'pageActive':"organos"};
+  var viewObject = { "originalURL" : req.originalUrl, 'pageActive':"organos"};
   var ahora=parseInt(Date.now()/1000);
-    request( APIUrl+'/organos?q={"normalized.url":"mesa-del-congreso"}', function(error, response, body) {
+  request( APIUrl+'/organos?q={"normalized.url":"mesa-del-congreso"}', function(error, response, body) {
      request( APIUrl+'/organos', function(error2, response2, body2) {
-	var organo=JSON.parse(body)[0];
-	var idorg=organo.id;
+	       var organo=JSON.parse(body)[0];
+	      var idorg=organo.id;
         request( APIUrl+'/diputados?q={"cargos_congreso.idOrgano":'+idorg+'}&only=["id","nombre","apellidos","grupo","sexo","cargos_congreso"]', function(error3, response3, body3) {
            request( APIUrl+'/eventos?q={"organo.id":'+idorg+',"fechahorats":{"$gte":'+ahora+'}}&order={"fechahorats":1}&limit=5', function(error4, response4, body4) {
               request( APIUrl+'/eventos?q={"organo.id":'+idorg+',"fechahorats":{"$lt":'+ahora+'}}&order={"fechahorats":-1}&limit=5', function(error5, response5, body5) {
     	   	viewObject.organo = JSON.parse(body)[0];
-	   	viewObject.organos= JSON.parse(body2);
+	   	    viewObject.organos= JSON.parse(body2);
     	   	viewObject.diputados=JSON.parse(body3);
     	   	viewObject.proximos=JSON.parse(body4);
     	   	viewObject.siguientes=JSON.parse(body5);
@@ -175,7 +184,7 @@ exports.organos= function(req, res){
 };
 
 exports.organo= function(req, res){
-  var viewObject = {'pageActive':"organos"};
+  var viewObject = { "originalURL" : req.originalUrl, 'pageActive':"organos"};
   var ahora=parseInt(Date.now()/1000);
   if( !isNaN(req.params.id) ){
     // es por id
@@ -220,7 +229,7 @@ exports.organo= function(req, res){
 
 
 exports.comisiones = function(req, res){
-  var viewObject = {'pageActive':"organos"};
+  var viewObject = { "originalURL" : req.originalUrl, 'pageActive':"organos"};
     request( APIUrl+'/organos?q={"tipo":"^C"}&order={"nombre":1}', function(error, response, body) {
     viewObject.comisiones = JSON.parse(body);
       res.render('comisiones', viewObject ); 
@@ -228,7 +237,7 @@ exports.comisiones = function(req, res){
 };
 
 exports.subcomisiones = function(req, res){
-  var viewObject = {'pageActive':"organos"};
+  var viewObject = { "originalURL" : req.originalUrl, 'pageActive':"organos"};
     request( APIUrl+'/organos?q={"tipo":"^S"}&order={"nombre":1}', function(error, response, body) {
     viewObject.subcomisiones = JSON.parse(body);
       res.render('subcomisiones', viewObject ); 
