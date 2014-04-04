@@ -2,37 +2,117 @@
 {% block title %}
 Diputados del Congreso
 {%endblock%}
+
+{% block styles %}
+<!--<link rel="stylesheet" href="/javascripts/vendors/select2/select2.css" />-->
+{%endblock%}
+
 {% block content %}
 	<div class="row container">
 		<div class="diputadosTotal">
-			<h2>Diputados del Congreso</h2>
-			<span style='font-size:14px;position:absolute;top:10px;left:15px;'><a href="/exdiputados">Ver exdiputados</span>
+			<h2 id="arriba">Diputados del Congreso</h2>
+			<span style='font-size:14px;position:absolute;top:10px;left:15px;'><a href="/exdiputados">Ver exdiputados</a></span>
 		</div>
 		<div class="large-9 small-12 columns">
+			<!--<div id="ordenaciones">
+				<ul>
+					<li><a href=''></a></li>
+					<li><a href=''></a></li>
+					<li><a href=''></a></li>
+					<li><a href=''></a></li>
+					<li><a href=''></a></li>
+					<li><a href=''></a></li>
+					<li><a href=''></a></li>	
+				</ul>
+			</div>-->
 			<h3 class="title" style="text-align:center">Diputados</h3>
+			<div id="filtrosActivos"></div>
 			<!--<div class="filter">
 				{#{% include "./partials/filtroDiputados.html" %}#}
 			</div>-->
+			<div id="dipusdiv" style="display:none">
 			{% include "./modules/diputados.html" %}
+				<span id="volverarriba" style="display:block;padding:15px;text-align:center"><a style="display:none;font-size:11pt;" href="javascript:$('html')[0].scrollIntoView( true );">Volver arriba</a></span>
+			</div>
 			<!-- #include virtual="/modules/diputados" -->
 		</div>
 		<div class="filtros large-3 small-12 columns">
-			<span style="text-align:center">[Filtros] Coming <i>/suun/</i></span>
-			<!--<input type="search" placeholder="Buscar diputado por nombre">
-			<input type="button" value="Buscar">
-
-			<form id="gruposParlamentarios">
-				{% for grupo in grupos %}
-				<input type="radio" name="grupoParlamentario" value="{{grupo}}"><label for="grupoParlamentario">Grupo Parlamentario {{grupo}}</label>
+		   <div class="filtrosContainer">	
+			<span class="title">Ordenaciones</span>
+			<select class="selectFiltro" id="ordenes">
+				<option value="nombre">Alfabética (A --&gt; Z)</option>
+				<option value="nombreR">Alfabética (Z --&gt; A)</option>
+				<option value="edad">Por edad (ascendente)</option>
+				<option value="edadR">Por edad (descendente)</option>
+				<option value="nlegis">Por nº de legislaturas (ascendente)</option>
+				<option value="nlegisR">Por nº de legislaturas (descendente)</option>
+				<option value="inic">Por nº de iniciativas (ascendente)</option>
+				<option value="inicR">Por nº de iniciativas (descendente)</option>
+				<option value="interv">Por nº de intervenciones (ascendente)</option>
+				<option value="intervR">Por nº de intervenciones (descendente)</option>
+				<option value="salario">Por salario estimado (ascendente)</option>
+				<option value="salarioR">Por salario estimado (descendente)</option>
+			</select>
+		   </div>
+		   <div class="filtrosContainer">	
+			<span class="title">Filtros</span>
+			<select class="selectFiltro filtro" id="grupo">
+				<option class="titleSelect" disabled selected value="no">Grupo parlamentario</option>
+				{% for grupo in grupos%}
+				<option value="grupo-{{grupo.nombre | slugify}}">{{grupo.nombre}}</option>
 				{% endfor %}
-			</form>-->
+			</select>
+			<select class="selectFiltro filtro" id="circuns">
+				<option class="titleSelect" disabled selected value="no">Circunscripciones</option>
+				{% for c in circunscripciones%}
+				<option value="circuns-{{c.nombre | slugify}}">{{c.nombre}}</option>
+				{% endfor %}	
+			</select>
+			<select class="selectFiltro filtro" id="sexo">
+				<option class="titleSelect" disabled selected value="no">Sexo</option>
+				<option value="hombres">Hombres</option>
+				<option value="mujeres">Mujeres</option>
+			</select>
+
+			<!--<select class="selectFiltro" id="actividad">
+			</select>-->
+			<select class="selectFiltro filtro" id="cargo">
+				<option class="titleSelect" disabled selected value="no">Cargos en el Congreso</option>
+				<option value="cargo-P">Presidente</option>
+				<option value="cargo-VP">Vicepresidente</option>
+				<option value="cargo-S">Secretario</option>
+				<option value="cargo-PO">Portavoz</option>
+				<option value="cargo-POT">Portavoz Titular</option>
+				<option value="cargo-POA">Portavoz Adjunto</option>
+				<option value="cargo-POS">Portavoz Suplente</option>
+				<option value="cargo-V">Vocal</option>
+				<option value="cargo-VS">Vocal Suplente</option>
+				<option value="cargo-A">Adscrito</option>	
+			</select>
+			<select class="selectFiltro filtro" id="email">
+				<option class="titleSelect" disabled selected value="no">Correo electrónico</option>
+				<option value="concorreo">Con correo electrónico</option>
+				<option value="sincorreo">Sin correo electrónico</option>
+			</select>
+			<select class="selectFiltro filtro" id="tw">
+				<option class="titleSelect" disabled selected value="no">Twitter</option>
+				<option value="contw">Con twitter</option>
+				<option value="sintw">Sin twitter</option>
+			</select>
+			<select class="selectFiltro filtro" id="fb">
+				<option class="titleSelect" disabled selected value="no">Facebook</option>
+				<option value="confb">Con facebook</option>
+				<option value="sinfb">Sin facebook</option>
+			</select>
+			<!--<input type="search" placeholder="Buscar diputado por nombre">-->
+			<!--<input type="search" placeholder="Buscar diputado por nombre">-->
 		</div>
 	</div>
 {% endblock %}
 {% block scripts %}
 	{% parent %}
         <script src="/javascripts/vendors/mustache.js"></script>
-	<!--<script src="/javascripts/diputadosMain.js"></script>-->
+	<!--<script src="/javascripts/vendors/select2/select2.min.js"></script>-->
 	<script src="/javascripts/diputados.js"></script>
 {% endblock %}
 

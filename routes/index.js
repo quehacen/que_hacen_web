@@ -17,9 +17,15 @@ exports.index = function(req, res){
 exports.diputados = function(req, res){
 	console.log('Diputados');
 	var viewObject = { "originalURL" : req.originalUrl, 'pageActive':"diputados"};
-  request( APIUrl+'/diputados?q={"activo":1}&only=["id","nombre","apellidos","normalized","grupo","partido"]', function(error, response, body) {
-    viewObject.diputados = JSON.parse(body);
-    res.render('diputados', viewObject ); 
+  request( APIUrl+'/diputados?only=["id","nombre","apellidos","normalized","grupo","partido"]', function(error, response, body) {
+     request( APIUrl+'/grupos?&only=["nombre"]', function(error2, response2, body2) {
+        request( APIUrl+'/circunscripciones?only=["nombre"]', function(error3, response3, body3) {
+           viewObject.diputados = JSON.parse(body);
+           viewObject.grupos = JSON.parse(body2);
+           viewObject.circunscripciones = JSON.parse(body3);
+           res.render('diputados', viewObject ); 
+         });
+      });
   });
 };
 
@@ -185,14 +191,15 @@ exports.organos= function(req, res){
 
 exports.organo= function(req, res){
   var viewObject = { "originalURL" : req.originalUrl, 'pageActive':"organos"};
-  var ahora=parseInt(Date.now()/1000);
+  //var ahora=parseInt(Date.now()/1000);
+  var ahora=new Date(Date.now()).toISOString();
   if( !isNaN(req.params.id) ){
     // es por id
     request( APIUrl+'/organos?q={"id":'+req.params.id+'}', function(error, response, body) {
      request( APIUrl+'/organos', function(error2, response2, body2) {    
         request( APIUrl+'/diputados?q={"cargos_congreso.idOrgano":'+req.params.id+'}&only=["id","nombre","apellidos","grupo","sexo","cargos_congreso"]', function(error3, response3, body3) {
-           request( APIUrl+'/eventos?q={"organo.id":'+req.params.id+',"fechahorats":{"$gte":'+ahora+'}}&order={"fechahorats":1}&limit=5', function(error4, response4, body4) {
-              request( APIUrl+'/eventos?q={"organo.id":'+req.params.id+',"fechahorats":{"$lt":'+ahora+'}}&order={"fechahorats":-1}&limit=5', function(error5, response5, body5) {
+           request( APIUrl+'/eventos?q={"organo.id":'+req.params.id+',"fechahoraJS":{"$gte":"'+ahora+'"}}&order={"fechahoraJS":1}&limit=5', function(error4, response4, body4) {
+              request( APIUrl+'/eventos?q={"organo.id":'+req.params.id+',"fechahoraJS":{"$lt":"'+ahora+'"}}&order={"fechahoraJS":-1}&limit=5', function(error5, response5, body5) {
     	   	viewObject.organo = JSON.parse(body)[0];
 	   	viewObject.organos= JSON.parse(body2);
     	   	viewObject.diputados=JSON.parse(body3);
@@ -211,8 +218,8 @@ exports.organo= function(req, res){
 	var organo=JSON.parse(body)[0];
 	var idorg=organo.id;
         request( APIUrl+'/diputados?q={"cargos_congreso.idOrgano":'+idorg+'}&only=["id","nombre","apellidos","grupo","sexo","cargos_congreso"]', function(error3, response3, body3) {
-           request( APIUrl+'/eventos?q={"organo.id":'+idorg+',"fechahorats":{"$gte":'+ahora+'}}&order={"fechahorats":1}&limit=5', function(error4, response4, body4) {
-              request( APIUrl+'/eventos?q={"organo.id":'+idorg+',"fechahorats":{"$lt":'+ahora+'}}&order={"fechahorats":-1}&limit=5', function(error5, response5, body5) {
+           request( APIUrl+'/eventos?q={"organo.id":'+idorg+',"fechahoraJS":{"$gte":"'+ahora+'"}}&order={"fechahoraJS":1}&limit=5', function(error4, response4, body4) {
+              request( APIUrl+'/eventos?q={"organo.id":'+idorg+',"fechahoraJS":{"$lt":"'+ahora+'"}}&order={"fechahoraJS":-1}&limit=5', function(error5, response5, body5) {
     	   	viewObject.organo = JSON.parse(body)[0];
 	   	viewObject.organos= JSON.parse(body2);
     	   	viewObject.diputados=JSON.parse(body3);

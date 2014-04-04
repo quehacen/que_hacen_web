@@ -126,6 +126,10 @@ span.volverlistado i{color:#fe5339;margin-right:5px;}
 .diputadosTotal + span {text-align: left; padding: .5em 1em !important; font-size: 20px; line-height:2em; color: #665; }
 .diputadosTotal span.volverlistado{position:absolute; top:25px; left:15px;margin:0;font-size:14px;}
 .diputadosTotal span.volverlistado i{color:#fe5339;margin-right:5px;}
+.diputadosTotal h2{color:#555;font-size:15pt !important;}
+.diputadosTotal .subTitle2{text-align: center; line-height:1.5em; display: block;font-weight: normal;color: #555;font-size: 11pt;margin-top: -.8em;margin-bottom: 1em;}
+
+h3.title{font-size: 12pt}
 
 ul.diputados li a span {line-height:100%;}
 
@@ -385,3 +389,63 @@ table#vidalaboral {
   color: #6a6a6a;
 }
 
+/* TABLA COMISIONES */ 
+
+.containerComisiones th{
+  font-size:9pt;
+}
+
+.containerComisiones td{
+  font-size:10pt;
+}
+
+/* FILTROS */
+.filtrosContainer{
+  margin-top:10px;
+  margin-bottom:20px;
+}
+
+.filtrosContainer .title{
+  font-size:12pt;
+  font-weight:bold;
+}
+
+.filtrosContainer *{
+   display:block;
+   margin-bottom:10px;
+}
+
+.selectFiltro{
+  width:200px;
+}
+
+.selectFiltro option{
+  padding:5px;
+  margin:0;
+}
+
+.selectFiltro .titleSelect{
+  /*display:none;*/
+}
+
+#filtrosActivos{
+   margin:12px 40px;
+}
+
+#filtrosActivos span{
+   display:inline-block;
+   margin:7px 7px;
+   padding:7px;
+   color:black;
+   font-size:10pt;
+   background-color:#EEF3F7;
+   border:1px solid #CCCCCC;
+}
+
+#filtrosActivos span i{
+   padding:3px;
+}
+
+/*#filtros span i:hover{
+   color:#FF6956
+}*/
