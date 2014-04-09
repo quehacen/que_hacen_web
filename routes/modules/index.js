@@ -155,6 +155,11 @@ exports.diputados = function(req, res){
 	  res.render('modules/diputados',{'diputados':JSON.parse(body)}); 
 	});
 }
+exports.exdiputados = function(req, res){
+	request( APIUrl+'/diputados', function(error, response, body) {
+	  res.render('modules/exdiputados',{'diputados':JSON.parse(body)}); 
+	});
+}
 exports.diputados_circunscripcion = function(req, res){
 	request( APIUrl+'/circunscripcion/'+req.params.id+'/diputados', function(error, response, body) {
 	  res.render('modules/diputados',{'diputados':JSON.parse(body)}); 

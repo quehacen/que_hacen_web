@@ -1,0 +1,17 @@
+<ol class="diputados">
+{% for diputado in diputados %}
+<li class="diputado grupo-{{diputado.grupo | slugify }} partido-{{diputado.partido | slugify}}">
+	<a href="/diputado/{{diputado.normalized.url}}" title="Ver ficha de {{diputado.nombre}} {{diputado.apellidos}}">
+		{{diputado.url}}
+		<span class="fotoimg">
+			<img src="/img/imagenesDipus/{{diputado.id}}.jpg" alt="Fotografía de {{diputado.nombre}} {{diputado.apellidos}}">
+		</span>
+		<span class="nombre"><b>{{diputado.apellidos}}</b>, {{diputado.nombre}}</span>
+		<img class="partidoimg" src="/img/miniaturasPartidos/{{diputado.partido }}.png" alt="logotipo del partido {{diputado.partido}}">
+	</a>
+	<a href="#">
+		<span class="grupo">Baja: {{diputado.fecha_baja}}</span>
+	</a>
+</li>
+{% endfor %}
+</ol>
