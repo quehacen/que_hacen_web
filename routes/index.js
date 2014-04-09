@@ -22,15 +22,15 @@ exports.diputados = function(req, res) {
         "originalURL": req.originalUrl,
         'pageActive': "diputados"
     };
-    request(APIUrl + '/diputados?only=["id","nombre","apellidos","normalized","grupo","partido"]', function(error, response, body) { << << << < HEAD === === =
-            request(APIUrl + '/grupos?&only=["nombre"]', function(error2, response2, body2) {
-                request(APIUrl + '/circunscripciones?only=["nombre"]', function(error3, response3, body3) {
-                    viewObject.diputados = JSON.parse(body);
-                    viewObject.grupos = JSON.parse(body2);
-                    viewObject.circunscripciones = JSON.parse(body3);
-                    res.render('diputados', viewObject);
-                });
+    request(APIUrl + '/diputados?only=["id","nombre","apellidos","normalized","grupo","partido"]', function(error, response, body) {
+        request(APIUrl + '/grupos?&only=["nombre"]', function(error2, response2, body2) {
+            request(APIUrl + '/circunscripciones?only=["nombre"]', function(error3, response3, body3) {
+                viewObject.diputados = JSON.parse(body);
+                viewObject.grupos = JSON.parse(body2);
+                viewObject.circunscripciones = JSON.parse(body3);
+                res.render('diputados', viewObject);
             });
+        });
     });
 };
 
@@ -40,7 +40,7 @@ exports.exdiputados = function(req, res) {
         "originalURL": req.originalUrl,
         'pageActive': "diputados"
     };
-    request(APIUrl + '/diputados?q={"activo":0}&only=["id","nombre","apellidos","normalized","grupo","partido","fecha_baja"]', function(error, response, body) { >>> >>> > FETCH_HEAD
+    request(APIUrl + '/diputados?q={"activo":0}&only=["id","nombre","apellidos","normalized","grupo","partido","fecha_baja"]', function(error, response, body) {
         viewObject.diputados = JSON.parse(body);
         res.render('exdiputados', viewObject);
     });

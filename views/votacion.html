@@ -1,0 +1,78 @@
+{% extends 'layout.html' %}
+{% block content %}
+	<div class="row container">
+		<div class="diputadosTotal">
+			<span>Votaciones en el pleno del Congreso</span>
+			<span>Legislatura {{ votacion.legislatura }}</span>
+			<form action="/search">
+				<input type="text" placeholder="Buscar" />
+				<input type="submit" value="Buscar">
+			</form>	
+		</div>
+		<div id="infoVotacion" class="infoVotacion large-12 small-1 columns">
+			<span class="info">Sesion {{ votacion.xml.resultado.informacion.sesion }} - Votacion {{ votacion.xml.resultado.informacion.numerovotacion }} - {{ votacion.xml.resultado.informacion.fecha }}</span>
+			<h2><a href="{{votacion.url}}" target="_blank">{{ votacion.xml.resultado.informacion.titulo }}</a></h2>
+			{% if votacion.xml.resultado.totales.afavor > votacion.xml.resultado.totales.encontra %}
+			<span class="resultado aprobada">Aprobada</span>
+			{% else %}
+			<span class="resultado noaprobada">Rechazada</span>
+			{% endif %}
+			<div class="descVotacion">
+				<span class="descripcion">{{votacion.xml.resultado.informacion.textoexpediente}}</span>
+				{% if votacion.xml.resultado.informacion.titulosubgrupo %}
+				<span class="subgrupo">{{votacion.xml.resultado.informacion.titulosubgrupo}}</span>
+				<span class="subgrupo">{{votacion.xml.resultado.informacion.textosubgrupo}}</span>
+				{% endif %}
+			</div> 
+			<div class="resultadoVotacion large-8 columns">
+				<span><b>Resultado de la votacion:</b></span>
+				<ul class="resultado">
+					{% for result in votacion.xml.resultado.totales %}
+					<li id="{{loop.key}}" class="{{loop.key}}">
+						<span class="tipo">{% if loop.key=='novotan' %}Ausentes{% else %}{{loop.key}}{% endif %}</span>
+						<span class="result">{{result}}</span>
+						{% if loop.key!='asentimiento' %}
+						<span class="votoemitido"><b>{{ result | percentBy(votacion.xml.resultado.totales.presentes) }}%</b> sobre voto emitido</span>
+						<span class="votoemitido"><b>{{ result | percentBy(votacion.xml.resultado.diputadosTotal) }}%</b> sobre composicion ({{ votacion.xml.resultado.diputadosTotal }})</span>
+						{% endif %}
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+			<div class="ultVotaciones large-12 columns">
+				<span><b>Últimas Votaciones</b></span>
+				<ol class="ultimasvotaciones ">
+					{% for _votacion in ultimasVotaciones %}
+					<li class="votacion">
+						<span class="info">Sesion {{ _votacion.xml.resultado.informacion.sesion }} - Votacion {{_votacion.xml.resultado.informacion.numerovotacion}} - {{_votacion.xml.resultado.informacion.fecha}}</span>
+						<h2><a href="{{_votacion.url}}" target="_blank">{{_votacion.xml.resultado.informacion.titulo}}</a></h2>
+						{% if _votacion.xml.resultado.totales.asentimiento=='no' %}
+						<span class="resultado aprobada">Aprobada</span>
+						{% else %}
+						<span class="resultado noaprobada">Rechazada</span>
+						{% endif %}
+						<span class="descripcion">{{_votacion.xml.resultado.informacion.textoexpediente}}</span>
+						{% if _votacion.xml.resultado.informacion.titulosubgrupo %}
+						<span class="subgrupo">{{_votacion.xml.resultado.informacion.titulosubgrupo}}</span>
+						<span class="subgrupo">{{_votacion.xml.resultado.informacion.textosubgrupo}}</span>
+						{% endif %}
+						<span><b>Resultado de la votacion:</b></span>
+						<ul class="resultado">
+							{% for result in _votacion.xml.resultado.totales %}
+							<li id="{{loop.key}}" class="{{loop.key}}">
+								<span class="tipo"><i class="mark">&nbsp;</i>{% if loop.key=='novotan' %}Ausentes{% else %}{{loop.key}}{% endif %}</span>
+								<span class="result">{{result}}</span>
+							</li>
+							{% endfor %}
+						</ul>
+					</li>
+					{% endfor %}
+				</ol>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+{% block scripts %}
+	{% parent %}
+{% endblock %}
+

@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+{% block content %}
+	<div class="row container">
+		<ul class="votaciones">
+			{% for votacion in votaciones %}
+				<li>
+					<input type="checkbox" name="{{votacion.fecha | url_encode}}_{{votacion.sesion}}" id="{{votacion.fecha | url_encode}}_{{votacion.sesion}}">
+					<label for="{votacion.fecha | url_encode}}_{{votacion.sesion}}"><span class="sesion">Sesion: {{votacion.sesion}}</span>
+					<span class="fecha">Fecha: {{votacion.fecha}}</span></label>
+					<ul class="votacionesPorSesion">
+						{% for vot in votacion.votaciones %}
+						<li>
+							<a href="/votacion/{{votacion.sesion}}/{{loop.index}}">
+								<span class="titulo">{{vot.titulo}}</span>
+							</a>
+						</li>
+						{% endfor %}
+					</ul>
+					
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+{% endblock %}
+{% block scripts %}
+	{% parent %}
+{% endblock %}
