@@ -17,7 +17,7 @@ exports.index = function(req, res){
 exports.diputados = function(req, res){
 	console.log('Diputados');
 	var viewObject = { "originalURL" : req.originalUrl, 'pageActive':"diputados"};
-  request( APIUrl+'/diputados?q={"activo":1}&only=["id","nombre","apellidos","normalized","grupo","partido"]', function(error, response, body) {
+  request( APIUrl+'/diputados?only=["id","nombre","apellidos","normalized","grupo","partido"]', function(error, response, body) {
     viewObject.diputados = JSON.parse(body);
     res.render('diputados', viewObject ); 
   });

@@ -2,10 +2,15 @@
 	{% for post in posts %}
 	<li>
 		<div class="post">
-			<h1><a href="{{post.link}}">{{post.title}}</a></h1>
-			<span class="date"><i class="fa fa-calendar"></i>{{ post.pubDate | dateFromNow }}</span>
-			<img src="{{post.description|post_img_src}}" alt="{{post.description|post_img_alt}}" />
-			<div class="summary">{{post.summary|raw}}</div>
+			<div class="imgT">
+				<img src="{{post.description|post_img_src}}" alt="{{post.description|post_img_alt}}" />
+			</div>
+			<h1 class="titular"><a href="{{post.link}}">{{post.title}}</a></h1>
+			<div class="entradilla">
+				<span class="date"><i class="fa fa-calendar"></i>{{ post.pubDate | dateFromNow }}</span>
+				<div class="summary">{{post.summary|raw}}</div>	
+			</div>
+			
 		</div>
 	</li>
 	{% endfor %}

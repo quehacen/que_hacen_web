@@ -239,5 +239,26 @@ module.exports= function(swig){
 	   });
 	   return dipusorg;
 	});
+
+	
+	swig.setFilter("groupBy",function(input, key) {
+	  if (!__.isArray(input)) {
+	    return input;
+	  }
+	  var out = {};
+	  __.each(input, function (value) {
+	    if (!value.hasOwnProperty(key)) {
+	      return;
+	    }
+	    var keyname = value[key],
+	      newVal = __.extend({}, value);
+	    delete value[key];
+	    if (!out[keyname]) {
+	      out[keyname] = [];
+	    }
+	    out[keyname].push(value);
+	  });
+	  return out;
+	});
 	/****END SWIG FILTERS *****/
 }

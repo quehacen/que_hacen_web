@@ -228,11 +228,8 @@ ul.diputadosList li a:hover span { color:white; }
 .infoVotacion .ultimasvotaciones ul.resultado li.abstenciones .tipo i { background-color: #ecbc02;}
 .infoVotacion .ultimasvotaciones ul.resultado li.novotan .tipo i    { background-color: #333;}
 
-<<<<<<< HEAD
 table{margin:1em 0; /*border-bottom:1px solid #fe5339;*/}
-=======
-table{margin:1em 0;/* border-bottom:1px solid #fe5339;*/}
->>>>>>> FETCH_HEAD
+
 table td,table th {border-bottom:1px solid #e4e4e4;}
 table tr:last-child td,table tr:last-child th {border-bottom:none;}
 table thead th {border-bottom:1px solid #999;}
@@ -265,7 +262,6 @@ a {color: #fe5339; text-decoration: none;}
 }
 
 /* */
-.post h1 {font-size: 120%;}
 
 .related h1 {margin: 0 20px 10px 20px;font-size: 1.4em}
 .related ul {margin: 20px}
@@ -280,45 +276,6 @@ table#vidalaboral {
 
 .latestPost {
     -webkit-transform: translate3d(0,0,0);
-}
-.latestPost .post {
-    float: left;
-    border-bottom: 1px dashed #c3c3c3;
-}
-.latestPost .post img {
-    float: left;
-    display:block;
-    max-width:50%;
-    max-height:100px;
-    margin: 0 1em 1em 0;
-}
-.latestPost .summary {
-    font-size: 80%;
-    line-height: 1.2em;
-    display:block;
-    padding: 0.5em 0;
-}
-.latestPost .summary .links > a, 
-.latestPost .summary .links > span {
-    display: block;
-    float: left;
-    line-height: 2em;
-    padding: 0;
-    margin: 1em 0;
-    min-width: 1.4em;
-    text-align: center;
-}
-.latestPost .summary .links > a:first-child{
-    background-color:#fe5339; 
-    color:white;
-    padding: 0 5px;
-}
-.latestPost .post .date {
-    color: #44474c;
-    font-size: .8em;
-}
-.latestPost .post .date i{
-    margin-right: 1em;
 }
 
 
