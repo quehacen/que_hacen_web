@@ -29,13 +29,13 @@
 		display:inline-block; 
 		padding:.5em .5em;
 		width:19.6%;
+		border-radius: 5px;
 
 		&.active {
 		    background-color: $mainRed;
-		    border-radius: 5px;
-
 		    a{ color: white; }
 		}
+		&:hover { background-color: #eee; } 
 
 		a { color:black; font-weight:bold; font-size:8pt; text-transform:uppercase;}
 	}

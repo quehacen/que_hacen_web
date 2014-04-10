@@ -386,6 +386,7 @@ table#vidalaboral {
 
 #filtrosActivos{
    margin:12px 40px;
+   text-align: center;
 }
 
 #filtrosActivos span{
@@ -545,6 +546,7 @@ height:50%;
 .list.box a{
   text-decoration:none;
   display: block;
+  border-bottom: none;
 }
 
 .list.box a span{
