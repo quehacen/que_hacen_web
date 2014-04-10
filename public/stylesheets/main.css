@@ -429,22 +429,36 @@ table#vidalaboral {
   margin-top:0 !important;
 }
 
- .mod-grupo-iniciativas .mod-iniciativas-parlamentarias .list {
-  background-color: #f2f2f2;
-  display: block;
-  padding: 10px;
-  width:95%;
-  margin:auto;
-  -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.2);
-  -moz-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.2);
-  box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.2);
+.mod-grupo-iniciativas .mod-iniciativas-parlamentarias .list li{
+}
+.mod-grupo-iniciativas .mod-iniciativas-parlamentarias .list .data, 
+.mod-grupo-iniciativas .mod-iniciativas-parlamentarias .list .desc {
+display: table;
+vertical-align:middle;
+width: 100%;
+text-align: center;
+height:50%;
+}
+.mod-grupo-iniciativas .mod-iniciativas-parlamentarias .list span.data {
+  font-size: 30pt;
+  font-weight: bold;
+  line-height: 1.4em;
+  border-bottom: 1px solid #dadada !important;
+}
+.mod-grupo-iniciativas .mod-iniciativas-parlamentarias .list .desc {
+  color: #6a6a6a;
+  background-color: white;
+  line-height: 1.2em;
+  font-size: .9em;
+  padding:1em;
 }
 .mod-grupo-iniciativas .mod-iniciativas-parlamentarias li {
-  width: 24.5%;
-  min-height: 70px;
+  width: 30%;
   display: inline-block;
-  vertical-align: top;
-  color: #6a6a6a;
+  float: left;
+  border: 1px solid #dadada;
+  margin: 1%;
+  background-color: #f2f2f2;
 }
 .mod-grupo-iniciativas .mod-iniciativas-parlamentarias span {
   display: block;
@@ -471,21 +485,21 @@ table#vidalaboral {
 }
 
 #iniciativasdiv span{
-	display:block;
-	color:#6A6A6A;
+  display:block;
+  color:#6A6A6A;
 }
 
 #iniciativasdiv i{
-	color:#FE5339;
+  color:#FE5339;
 }
 
 #iniciativasdiv a{
-	color:black;
-   	text-decoration:underline;
+  color:black;
+    text-decoration:underline;
 }
 
 #iniciativasdiv a:hover{
-	color:#FE5339;
+  color:#FE5339;
 }
 
 #iniciativasdiv .tituloInic{
@@ -494,89 +508,122 @@ table#vidalaboral {
 }
 
 #iniciativasdiv #cargarmas{
-	/*display:inline-block;
-	margin:auto;*/
-	text-align:center;
-	margin-bottom:30px;
-	margin-top:30px;
+  /*display:inline-block;
+  margin:auto;*/
+  text-align:center;
+  margin-bottom:30px;
+  margin-top:30px;
 }
 
 #iniciativasdiv #cargarmas a{
-	padding:10px;
-	border:1px solid lightgrey;
-	color:#FE5339;
-	font-size:11pt;
+  padding:10px;
+  border:1px solid lightgrey;
+  color:#FE5339;
+  font-size:11pt;
 }
 
 #iniciativasdiv #cargarmas a:hover{
-	color:white;
-	background-color:#FE5339
+  color:white;
+  background-color:#FE5339
 }
 #iniciativasdiv #volverarriba{
-	position:absolute;
-	display:inline-block !important;
-	right:10px;
+  position:absolute;
+  display:inline-block !important;
+  right:10px;
 }
 
 #iniciativasdiv #volverarriba a{
-	color:#FE5339;
+  color:#FE5339;
 }
 
 #iniciativasdiv img{
-	display:block;
-	margin:auto;
+  display:block;
+  margin:auto;
 }
 
 /* ENLACES INICIATIVAS PÁGINAS GRUPO - DIPUTADOS */
 
 .list.box a{
-	text-decoration:none;
+  text-decoration:none;
+  display: block;
 }
 
 .list.box a span{
-	color:#6A6A6A;
+  color:#6A6A6A;
 }
 
 .list.box a .total{
-	color:#6FC354;
+  color:#6FC354;
 }
 
 .list.box a .desc{
-	color:#6A6A6A;
+  color:#6A6A6A;
 }
 
 .list.box a:hover span{
-	color:#FE5339 !important;
+  color:#FE5339 !important;
 }
 
 .tiposUltimasInic{
-	margin:auto;
+  margin:auto;
 }
 
 .tiposUltimasInic ul{
-	white-space:nowrap;
-	text-align:center;
+  white-space:nowrap;
+  text-align:center;
 }
 
 
 .tiposUltimasInic li{
-	display:inline-block;
-	padding:15px 0px;
-	padding-top:0px;
+  display:inline-block;
+  padding:15px 0px;
+  padding-top:0px;
 }
 
 .tiposUltimasInic li a{
-	display:inline-block;
-	padding: 0px 15px;
-	text-decoration:underline;
-	border-right:1px solid #FE5339;
-	font-size:11pt;
+  display:inline-block;
+  padding: 0px 15px;
+  text-decoration:underline;
+  border-right:1px solid #FE5339;
+  font-size:11pt;
 }
 
 .tiposUltimasInic li a.sinBordeDer{
-	border-right:none;
+  border-right:none;
 }
 
-.tiposUltimasInic li a.active{	
-	font-weight:bold;
+.tiposUltimasInic li a.active{  
+  font-weight:bold;
 }
+
+.popUp {
+  position:absolute;
+  max-width:150px;
+  display: block;
+  width: 100%;
+}
+.popUp span{
+  position: absolute;
+  background-color: #FE5339;
+  color:white;
+  padding: 1em;
+  bottom:10px;
+  left: -50%;
+  display: block;
+  width: 100%;
+  font-size: .8em;
+  text-align: center;
+}
+.popUp span:before{
+  content:"";
+  position:absolute;
+  left:50%; bottom:-5px;
+  width:15px; height:15px;
+  display: block;
+  -webkit-transform: translateX(-7.5px) rotateZ(45deg);
+  -moz-transform: translateX(-7.5px) rotateZ(45deg);
+  -ms-transform: translateX(-7.5px) rotateZ(45deg);
+  transform: translateX(-7.5px) rotateZ(45deg);
+  background-color:#FE5339;
+}
+

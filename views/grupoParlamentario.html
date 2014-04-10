@@ -23,85 +23,88 @@
 			<span class="subTitle">Formado por:{{formadoPor(grupo.formaciones)}} {{ grupo.num_diputados }} diputados</span>
 		</div>
 		<div class="large-12 columns mod-grupo-iniciativas">
-                	<span class="encabezadoMod">Iniciativas Parlamentarias</span>
-	 		<div class="container large-12 mark mod-iniciativas-parlamentarias">
-                		<ul class="list box">
-                        		<li>	
-						{%if grupo.iniciativas.total != 0%}
-						<a href="/iniciativas#filter/grupo={{grupo.id}}">
-						{%endif%}
-                                		<span class="data total">{{grupo.iniciativas.total}}</span>
-                                		<span class="desc">Total</span>
-						{%if grupo.iniciativas.total != 0%}
-						</a>
-						{%endif%}
-                        		</li>
-                        		<li>
-						{%if grupo.iniciativas.propos_no_de_ley != 0%}
-						<a href="/iniciativas#filter/grupo={{grupo.id}}&tipoCat=PNL">
-						{%endif%}
-                                		<span class="data">{{grupo.iniciativas.propos_no_de_ley}}</span>
-                                		<span class="desc">Proposiciones no de ley</span>
-						{%if grupo.iniciativas.propos_no_de_ley != 0%}
-						</a>
-						{%endif%}
-                        		</li>
-                        		<li>
-						{%if grupo.iniciativas.propos_de_ley != 0%}
-						<a href="/iniciativas#filter/grupo={{grupo.id}}&tipoCat=PL">
-						{%endif%}
-                                		<span class="data">{{grupo.iniciativas.propos_de_ley}}</span>
-                                		<span class="desc">Proposiciones de ley</span>
-						{%if grupo.iniciativas.propos_de_ley != 0%}
-						</a>
-						{%endif%}
-                        		</li>
-                        		<li>
-						{%if grupo.iniciativas.interpelaciones != 0%}
-						<a href="/iniciativas#filter/grupo={{grupo.id}}&tipoCat=INTERP">
-						{%endif%}
-                                		<span class="data">{{grupo.iniciativas.interpelaciones}}</span>
-                                		<span class="desc">Interpelaciones</span>
-						{%if grupo.iniciativas.interpelaciones != 0%}
-						</a>
-						{%endif%}
-                        		</li>
-                        		<li>
-						{%if grupo.iniciativas.mociones != 0%}
-						<a href="/iniciativas#filter/grupo={{grupo.id}}&tipoCat=MOC">
-						{%endif%}
-                                		<span class="data">{{grupo.iniciativas.mociones}}</span>
-                                		<span class="desc">Mociones</span>
-						{%if grupo.iniciativas.mociones != 0%}
-						</a>
-						{%endif%}
-                        		</li>
-                        		<li>
-						{%if grupo.iniciativas.solicitudes != 0%}
-						<a href="/iniciativas#filter/grupo={{grupo.id}}&tipoCat=SOLIC">
-						{%endif%}
-                                		<span class="data">{{grupo.iniciativas.solicitudes}}</span>
-                                		<span class="desc">Solicitudes (comparecencia, informes, órganos, etc)</span>
-						{%if grupo.iniciativas.solicitudes != 0%}
-						</a>
-						{%endif%}
-                        		</li>
-                        		<li>
-						{%if grupo.iniciativas.otros != 0%}
-						<a href="/iniciativas#filter/grupo={{grupo.id}}&tipoCat=OTROS">
-						{%endif%}
-                                		<span class="data">{{grupo.iniciativas.otros}}</span>
-                                		<span class="desc">Otras</span>
-						{%if grupo.iniciativas.otros != 0%}
-						</a>
-						{%endif%}
-                        		</li>
-                		</ul>
-        		</div>
+            <span class="encabezadoMod">Iniciativas Parlamentarias</span>    	
+	 		<div class="container large-6 columns mark mod-iniciativas-parlamentarias">
+        		<ul class="list box">
+                		<li>	
+				{%if grupo.iniciativas.total != 0%}
+				<a href="/iniciativas#filter/grupo={{grupo.id}}">
+				{%endif%}
+                        		<span class="data total">{{grupo.iniciativas.total}}</span>
+                        		<span class="desc">Total</span>
+				{%if grupo.iniciativas.total != 0%}
+				</a>
+				{%endif%}
+                		</li>
+                		<li>
+				{%if grupo.iniciativas.propos_no_de_ley != 0%}
+				<a href="/iniciativas#filter/grupo={{grupo.id}}&tipoCat=PNL">
+				{%endif%}
+                        		<span class="data">{{grupo.iniciativas.propos_no_de_ley}}</span>
+                        		<span class="desc">Proposiciones no de ley</span>
+				{%if grupo.iniciativas.propos_no_de_ley != 0%}
+				</a>
+				{%endif%}
+                		</li>
+                		<li>
+				{%if grupo.iniciativas.propos_de_ley != 0%}
+				<a href="/iniciativas#filter/grupo={{grupo.id}}&tipoCat=PL">
+				{%endif%}
+                        		<span class="data">{{grupo.iniciativas.propos_de_ley}}</span>
+                        		<span class="desc">Proposiciones de ley</span>
+				{%if grupo.iniciativas.propos_de_ley != 0%}
+				</a>
+				{%endif%}
+                		</li>
+                		<li>
+				{%if grupo.iniciativas.interpelaciones != 0%}
+				<a href="/iniciativas#filter/grupo={{grupo.id}}&tipoCat=INTERP">
+				{%endif%}
+                        		<span class="data">{{grupo.iniciativas.interpelaciones}}</span>
+                        		<span class="desc">Interpelaciones</span>
+				{%if grupo.iniciativas.interpelaciones != 0%}
+				</a>
+				{%endif%}
+                		</li>
+                		<li>
+				{%if grupo.iniciativas.mociones != 0%}
+				<a href="/iniciativas#filter/grupo={{grupo.id}}&tipoCat=MOC">
+				{%endif%}
+                        		<span class="data">{{grupo.iniciativas.mociones}}</span>
+                        		<span class="desc">Mociones</span>
+				{%if grupo.iniciativas.mociones != 0%}
+				</a>
+				{%endif%}
+                		</li>
+                		<li>
+				{%if grupo.iniciativas.solicitudes != 0%}
+				<a href="/iniciativas#filter/grupo={{grupo.id}}&tipoCat=SOLIC">
+				{%endif%}
+                        		<span class="data">{{grupo.iniciativas.solicitudes}}</span>
+                        		<span class="desc">Solicitudes (comparecencia, informes, órganos, etc)</span>
+				{%if grupo.iniciativas.solicitudes != 0%}
+				</a>
+				{%endif%}
+                		</li>
+                		<li>
+				{%if grupo.iniciativas.otros != 0%}
+				<a href="/iniciativas#filter/grupo={{grupo.id}}&tipoCat=OTROS">
+				{%endif%}
+                        		<span class="data">{{grupo.iniciativas.otros}}</span>
+                        		<span class="desc">Otras</span>
+				{%if grupo.iniciativas.otros != 0%}
+				</a>
+				{%endif%}
+                		</li>
+        		</ul>
+        	</div>
 
+        	<div class="large-6 columns mark">
+        		<div id="hemiciclo" data-grupo-parlamentario="{{ grupo.id }}"></div>
+        	</div>
 
-			<span class="encabezadoMod nobordertop">Últimas iniciativas parlamentarias</span>
-			<div class="tiposUltimasInic">
+			<div class="tiposUltimasInic large-12 columns">
+				<span class="encabezadoMod nobordertop">Últimas iniciativas parlamentarias</span>
 			   <ul>
 				<li><a id="TODASi" class="active" href="javascript:ultimasInicGrupo({{grupo.id}},'TODAS')">Todas</a></li>
 				<li><a id="PNLi" href="javascript:ultimasInicGrupo({{grupo.id}},'PNL')">Proposiciones no de Ley</a></li>
@@ -111,7 +114,7 @@
 				<li><a id="OTROSi" class="sinBordeDer" href="javascript:ultimasInicGrupo({{grupo.id}},'OTROS')">Otros</a></li>
 			   </ul>
 			</div>
-			<div id="iniciativasGrupo" class="content-iniciativas mark">
+			<div id="iniciativasGrupo" class="large-12 columns content-iniciativas mark">
 			<!--#include virtual="/modules/grupo/{{grupo.id}}/iniciativas/3" -->
 			</div>
 		</div>
@@ -133,5 +136,12 @@
 {% endblock %}
 {% block scripts %}
 	{% parent %}
-        <script src="/javascripts/grupoParl.js"></script>
+        <!--script src="/javascripts/grupoParl.js"></script-->
+        <script src="/javascripts/vendors/raphael-min.js"></script>
+        <script src="/javascripts/hemiciclo.js"></script>
+        <script>
+        	$(function(){ 
+        		var hemiciclo = new HemicicloGrupoView(); 
+        	});
+        </script>
 {% endblock %}
