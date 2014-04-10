@@ -78,7 +78,7 @@ i.social.youtube    { background-position: 0 -44px; }
 .menuNosotros li a:hover span,
 .menuNosotros li.active span { color:#fe5339; }
 .insideContent { font-size: .8em; }
-.insideContent p { line-height: 1.3em; }
+.insideContent p, .insideContent ul li { line-height: 1.4em; font-size: 14px; }
 .insideContent ul { padding-left: 2em; }
 .insideContent ul li { list-style-type: disc; padding:.2em 0em; }
 h2.marked { color: black; }
@@ -153,12 +153,10 @@ ul.diputados li a span {line-height:100%;}
 
 /** Modulo listadoGrupos **/
 .grupos { display:block; background-color:white; border:1px solid #c3c3c3; padding: .3em 1em; border-radius: 5px; margin-top: 1em;}
-.grupos .grupo { display:inline-block; padding:.5em .5em;}
-.grupos .grupo.active {
-    background-color: #fe5339;
-    border-radius: 5px;
-}
+.grupos .grupo { display:inline-block; padding:.5em .5em; border-radius: 5px;}
+.grupos .grupo.active { background-color: #fe5339; }
 .grupos .grupo a { color:black; font-weight:bold; font-size:8pt; text-transform:uppercase;}
+.grupos .grupo:hover { background-color: #eee; } 
 .grupos .grupo.active a{color: white;}
 
 .encabezadoMod {text-align: center; padding: 1em 0; border-top: 1px solid #c3c3c3; display: block;font-weight: bold;color: #555;font-size: 15pt;line-height: 1em;}
@@ -373,7 +371,8 @@ table#vidalaboral {
 }
 
 .selectFiltro{
-  width:200px;
+  width: 100%;
+  max-width: 200px;
 }
 
 .selectFiltro option{
