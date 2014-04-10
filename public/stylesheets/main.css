@@ -4,11 +4,11 @@
 }
 .header h1 {
     width: 60%;
-    height: 85px;
+    height: 93px;
     display: inline-block;
     overflow: hidden;
     text-indent: -100%;
-    background-image: url(/images/logo.jpg);
+    background-image: url(/images/qhbeta.jpg);
     background-repeat: no-repeat;
     background-position: left center;
     padding: 0;
@@ -349,11 +349,11 @@ table#vidalaboral {
 /* TABLA COMISIONES */ 
 
 .containerComisiones th{
-  font-size:9pt;
+  font-size:10pt;
 }
 
 .containerComisiones td{
-  font-size:10pt;
+  font-size:11pt;
 }
 
 /* FILTROS */
@@ -406,3 +406,177 @@ table#vidalaboral {
 /*#filtros span i:hover{
    color:#FF6956
 }*/
+
+
+/*  INICIATIVAS GRUPOS */
+
+ .mod-grupo-iniciativas span{
+   border-bottom: none !important;
+ }
+
+ .mod-grupo-iniciativas .nobordertop{
+  border-top: none !important;
+}
+ 
+ .mod-grupo-iniciativas .content-iniciativas{
+  padding:10px 20px !important;
+}
+
+ .mod-grupo-iniciativas .mod-iniciativas-parlamentarias{
+  border:none !important;
+  padding:10px 20px!important;
+  padding-top:0 !important;
+  margin-top:0 !important;
+}
+
+ .mod-grupo-iniciativas .mod-iniciativas-parlamentarias .list {
+  background-color: #f2f2f2;
+  display: block;
+  padding: 10px;
+  width:95%;
+  margin:auto;
+  -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.2);
+}
+.mod-grupo-iniciativas .mod-iniciativas-parlamentarias li {
+  width: 24.5%;
+  min-height: 70px;
+  display: inline-block;
+  vertical-align: top;
+  color: #6a6a6a;
+}
+.mod-grupo-iniciativas .mod-iniciativas-parlamentarias span {
+  display: block;
+  text-align: center;
+}
+.mod-grupo-iniciativas .mod-iniciativas-parlamentarias li .data {
+  font-size: 32px;
+  font-weight: bold;
+  line-height: 1.2em;
+}
+.mod-grupo-iniciativas .mod-iniciativas-parlamentarias li .data.total {
+  color: #6fc354;
+}
+.mod-grupo-iniciativas .mod-iniciativas-parlamentarias li .desc {
+  line-height: 1.2em;
+  font-size: 12px;
+}
+
+/* PÁGINA INICIATIVAS */
+
+#iniciativasdiv {
+  padding: 10px 30px;
+  min-height: 500px;
+}
+
+#iniciativasdiv span{
+	display:block;
+	color:#6A6A6A;
+}
+
+#iniciativasdiv i{
+	color:#FE5339;
+}
+
+#iniciativasdiv a{
+	color:black;
+   	text-decoration:underline;
+}
+
+#iniciativasdiv a:hover{
+	color:#FE5339;
+}
+
+#iniciativasdiv .tituloInic{
+   color:black;
+   font-size:11pt !important;
+}
+
+#iniciativasdiv #cargarmas{
+	/*display:inline-block;
+	margin:auto;*/
+	text-align:center;
+	margin-bottom:30px;
+	margin-top:30px;
+}
+
+#iniciativasdiv #cargarmas a{
+	padding:10px;
+	border:1px solid lightgrey;
+	color:#FE5339;
+	font-size:11pt;
+}
+
+#iniciativasdiv #cargarmas a:hover{
+	color:white;
+	background-color:#FE5339
+}
+#iniciativasdiv #volverarriba{
+	position:absolute;
+	display:inline-block !important;
+	right:10px;
+}
+
+#iniciativasdiv #volverarriba a{
+	color:#FE5339;
+}
+
+#iniciativasdiv img{
+	display:block;
+	margin:auto;
+}
+
+/* ENLACES INICIATIVAS PÁGINAS GRUPO - DIPUTADOS */
+
+.list.box a{
+	text-decoration:none;
+}
+
+.list.box a span{
+	color:#6A6A6A;
+}
+
+.list.box a .total{
+	color:#6FC354;
+}
+
+.list.box a .desc{
+	color:#6A6A6A;
+}
+
+.list.box a:hover span{
+	color:#FE5339 !important;
+}
+
+.tiposUltimasInic{
+	margin:auto;
+}
+
+.tiposUltimasInic ul{
+	white-space:nowrap;
+	text-align:center;
+}
+
+
+.tiposUltimasInic li{
+	display:inline-block;
+	padding:15px 0px;
+	padding-top:0px;
+}
+
+.tiposUltimasInic li a{
+	display:inline-block;
+	padding: 0px 15px;
+	text-decoration:underline;
+	border-right:1px solid #FE5339;
+	font-size:11pt;
+}
+
+.tiposUltimasInic li a.sinBordeDer{
+	border-right:none;
+}
+
+.tiposUltimasInic li a.active{	
+	font-weight:bold;
+}

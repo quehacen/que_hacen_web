@@ -20,6 +20,7 @@ $(document).ready(function(){
 			$( this ).css("text-decoration","none");
 	});
 });*/
+
 function mayusFirst(string){
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
@@ -35,8 +36,8 @@ $(document).ready(function(){
 function templateComisiones(sel){
 	// Cabecera de la tabla
 	var template = '<table><tbody><tr>';
-        var hrefs= ["nombre","numDipus","fechaConst","legislativa","permanente","mixta"];  
-        var titulos= ["Nombre","Nº diputados","Fecha constitución","Legislativa","Permanente","Mixta"];
+        var hrefs= ["nombre","fechaConst","numDipus","numSesiones","legislativa","permanente","mixta"];  
+        var titulos= ["Nombre","Constitución","Diputados","Sesiones","Legislativa","Permanente","Mixta"];
 	var claseSel, iconSel;
 	
 	//if($('#'+sel+'col a').hasClass('sel') ){
@@ -50,18 +51,21 @@ function templateComisiones(sel){
 		iconSel="fa fa-chevron-down";
 	}
 
-        for(var i=0;i<6;i++){
+	var estiloCol='';
+        for(var i=0;i<7;i++){
+		//if(i==0){ estiloCol='style="width:40%"'; }
+		//else{ estiloCol="";}
                 if(hrefs[i]==sel){
-                        template+='<th id="'+hrefs[i]+'col"><a class="'+claseSel+'" style="text-decoration:underline" href="#'+hrefSel+'">'+titulos[i]+'</a> <i style="color:#FE5339;" class="'+iconSel+'"></i></th>';
+                        template+='<th id="'+hrefs[i]+'col" '+estiloCol+'><a class="'+claseSel+'" style="text-decoration:underline" href="#'+hrefSel+'">'+titulos[i]+'</a> <i style="color:#FE5339;" class="'+iconSel+'"></i></th>';
                 }else{
-                        template+='<th id="'+hrefs[i]+'col"><a href="#'+hrefs[i]+'">'+titulos[i]+'</a></th>';
+                        template+='<th id="'+hrefs[i]+'col" '+estiloCol+'><a href="#'+hrefs[i]+'">'+titulos[i]+'</a></th>';
                 }
         }
 	template+='</tr>';
 	
 	
 	//Fila de cada comisión
-	template+='{{#data}}<tr><td><a href="/organo/{{normalized.url}}">{{nombre}}</a></td><td>{{numDiputados}}</td><td>{{constituida}}</td><td>{{legistxt}}</td><td>{{permtxt}}</td><td>{{mixtatxt}}</td></tr>{{/data}} </tbody></table>';
+	template+='{{#data}}<tr><td><a href="/organo/{{normalized.url}}">{{nombre}}</a></td><td>{{constituida}}</td><td>{{n_diputados}}</td><td>{{numSesiones}}</td><td>{{legistxt}}</td><td>{{permtxt}}</td><td>{{mixtatxt}}</td></tr>{{/data}} </tbody></table>';
 	return template;
 }
 
@@ -71,8 +75,9 @@ $(function(){
 		listo:null,
 		initialize: function(){
 			$.when(
-				$.ajax('http://api.quehacenlosdiputados.net/organos?q={"tipo":"^C"}&order:{"nombre":1}'),
-				$.ajax('http://api.quehacenlosdiputados.net/diputados?q={"cargos_congreso.tipoOrgano":"^C"}&only:["cargos_congreso"}')
+				$.ajax('http://api.quehacenlosdiputados.net/organos?q={"tipo":"^C"}&order={"nombre":1}&limit=100'),
+				//$.ajax('http://api.quehacenlosdiputados.net/diputados?q={"cargos_congreso.tipoOrgano":"^C"}&only=["cargos_congreso"]')
+				$.ajax('http://api.quehacenlosdiputados.net/eventos?q={"organo.tipo":"^C","organo.tipo_evento":"N"}&only=["organo","fecha"]')
 			).done(function(_data,_data2){
 				// Añadimos campos que harán falta	
 				comisiones=_data[0];
@@ -88,20 +93,15 @@ $(function(){
 					}else{ com.mixtatxt="No";}
                         	});
 
-				// Añadimos nº de diputados
+				// Añadimos nº de sesiones y última sesión
 				_.each(comisiones,function(com){
 					var num=0;
-                   			_.each(_data2[0],function(dipu){
-						var tiene=false;
-						_.each(dipu.cargos_congreso, function(cargo){
-							//mejorar: con break
-							if (cargo.idOrgano == com.id && typeof(cargo.baja) == "undefined"){
-                       						tiene=true;
-                    					}
-						});
-						if(tiene==true) num++;
-					});
-					com.numDiputados=num;
+					var eventos_com = _.filter(_data2[0], function(evento){ 
+						return evento.organo.id == com.id; });
+					var ultimo = _.max(eventos_com, function(evento){ 
+						return evento.organo.n_evento_tipo; });
+					com.numSesiones=ultimo.organo.n_evento_tipo;
+					com.ultimaSesion=ultimo.fecha;
               			});
 			}).done(function(){
 				listo=1;
@@ -122,7 +122,11 @@ $(function(){
 			'numDipus':'numDipusHandler',
 			'numDipusR':'numDipusHandler',
 			'fechaConst':'fechaConstHandler',
-			'fechaConstR':'fechaConstHandler'
+			'fechaConstR':'fechaConstHandler',
+			'numSesiones':'numSesionesHandler',
+			'numSesionesR':'numSesionesHandler',
+			'ultimaSesion':'ultimaSesionHandler',
+			'ultimaSesionR':'ultimaSesionHandler'
 		},
 
 		nombreHandler: function(){
@@ -202,7 +206,7 @@ $(function(){
 				return;
 			}
 			var datos = [];
-			datos.data=_.sortBy(this.comisiones, function(com){ return com.numDiputados; });
+			datos.data=_.sortBy(this.comisiones, function(com){ return com.n_diputados; });
 			if(Backbone.history.fragment == "numDipusR"){
 				datos.data.reverse();
 			}
@@ -232,6 +236,42 @@ $(function(){
 			$('.containerComisiones').html( Mustache.render(template, datos) );
 		},
 
+		numSesionesHandler: function(){
+			if(!this.listo){
+				setTimeout(this.numSesionesHandler,1000);
+				return;
+			}
+			var datos = [];
+			datos.data=_.sortBy(this.comisiones, function(com){ return com.numSesiones; });
+			if(Backbone.history.fragment == "numSesionesR"){
+				datos.data.reverse();
+			}
+			console.log(datos.data);
+			var template = templateComisiones('numSesiones');
+			$('.containerComisiones').html( Mustache.render(template, datos) );
+		},
+
+		ultimaSesionHandler:function(){	
+			if(!this.listo){
+				setTimeout(this.ultimaSesionHandler,1000);
+				return;
+			}
+		
+			var datos=[];
+			datos.data=_.sortBy(this.comisiones, function(com){
+				var nums=com.ultimaSesion.split('/');
+				var fecha= new Date(nums[2],nums[1],nums[0]);  
+				var time=fecha.getTime();
+				return time;
+			});
+			if(Backbone.history.fragment == "ultimaSesionR"){
+				datos.data.reverse();
+			}
+
+			var template = templateComisiones('ultimaSesion');
+			$('.containerComisiones').html( Mustache.render(template, datos) );
+		},
+
 		apiCall: function(col, _data, callback){
 			$.ajax({
 				url:'http://api.quehacenlosdiputados.net/'+col,
@@ -241,8 +281,6 @@ $(function(){
 			});
 		}
 	});
-
 	var router = new Router();
 	Backbone.history.start();
-
 });

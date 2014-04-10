@@ -35,8 +35,8 @@ $(document).ready(function(){
 function templateComisiones(sel){
 	// Cabecera de la tabla
 	var template = '<table><tbody><tr>';
-        var hrefs= ["nombre","numDipus","fechaConst","legislativa","permanente","mixta"];  
-        var titulos= ["Nombre","Nº diputados","Fecha constitución","Legislativa","Permanente","Mixta"];
+        var hrefs= ["nombre","fechaConst","numDipus","numSesiones","legislativa","permanente","mixta"];
+        var titulos= ["Nombre","Constitución","Diputados","Sesiones","Legislativa","Permanente","Mixta"];
 	var claseSel, iconSel;
 	
 	//if($('#'+sel+'col a').hasClass('sel') ){
@@ -50,7 +50,7 @@ function templateComisiones(sel){
 		iconSel="fa fa-chevron-down";
 	}
 
-        for(var i=0;i<6;i++){
+        for(var i=0;i<7;i++){
                 if(hrefs[i]==sel){
                         template+='<th id="'+hrefs[i]+'col"><a class="'+claseSel+'" style="text-decoration:underline" href="#'+hrefSel+'">'+titulos[i]+'</a> <i style="color:#FE5339;" class="'+iconSel+'"></i></th>';
                 }else{
@@ -61,7 +61,7 @@ function templateComisiones(sel){
 	
 	
 	//Fila de cada subcomisión
-	template+='{{#data}}<tr><td><a href="/organo/{{normalized.url}}">{{nombre}}</a></td><td>{{numDiputados}}</td><td>{{constituida}}</td><td>{{legistxt}}</td><td>{{permtxt}}</td><td>{{mixtatxt}}</td></tr>{{/data}} </tbody></table>';
+        template+='{{#data}}<tr><td><a href="/organo/{{normalized.url}}">{{nombre}}</a></td><td>{{constituida}}</td><td>{{n_diputados}}</td><td>{{numSesiones}}</td><td>{{legistxt}}</td><td>{{permtxt}}</td><td>{{mixtatxt}}</td></tr>{{/data}} </tbody></table>';
 	return template;
 }
 
@@ -72,7 +72,7 @@ $(function(){
 		initialize: function(){
 			$.when(
 				$.ajax('http://api.quehacenlosdiputados.net/organos?q={"tipo":"^SC"}&order:{"nombre":1}'),
-				$.ajax('http://api.quehacenlosdiputados.net/diputados?q={"cargos_congreso.tipoOrgano":"^SC"}&only:["cargos_congreso"}')
+				$.ajax('http://api.quehacenlosdiputados.net/eventos?q={"organo.tipo":"^SC"}&only=["organo","fecha"]')
 			).done(function(_data,_data2){
 				// Añadimos campos que harán falta	
 				subcomisiones=_data[0];
@@ -91,17 +91,12 @@ $(function(){
 				// Añadimos nº de diputados
 				_.each(subcomisiones,function(com){
 					var num=0;
-                   			_.each(_data2[0],function(dipu){
-						var tiene=false;
-						_.each(dipu.cargos_congreso, function(cargo){
-							//mejorar: con break
-							if (cargo.idOrgano == com.id && typeof(cargo.baja) == "undefined"){
-                       						tiene=true;
-                    					}
-						});
-						if(tiene==true) num++;
-					});
-					com.numDiputados=num;
+                                        var eventos_com = _.filter(_data2[0], function(evento){
+                                                return evento.organo.id == com.id; });
+                                        var ultimo = _.max(eventos_com, function(evento){
+                                                return evento.organo.n_evento; });
+                                        com.numSesiones=ultimo.organo.n_evento;
+                                        com.ultimaSesion=ultimo.fecha;
               			});
 			}).done(function(){
 				listo=1;
@@ -121,7 +116,9 @@ $(function(){
 			'numDipus':'numDipusHandler',
 			'numDipusR':'numDipusHandler',
 			'fechaConst':'fechaConstHandler',
-			'fechaConstR':'fechaConstHandler'
+			'fechaConstR':'fechaConstHandler',
+                        'numSesiones':'numSesionesHandler',
+                        'numSesionesR':'numSesionesHandler'
 		},
 
 		nombreHandler: function(){
@@ -224,7 +221,7 @@ $(function(){
 				return;
 			}
 			var datos = [];
-			datos.data=_.sortBy(this.subcomisiones, function(com){ return com.numDiputados; });
+			datos.data=_.sortBy(this.subcomisiones, function(com){ return com.n_diputados; });
 			if(Backbone.history.fragment == "numDipusR"){
 				datos.data.reverse();
 			}
@@ -253,6 +250,21 @@ $(function(){
 			var template = templateComisiones('fechaConst');
 			$('.containerSubComisiones').html( Mustache.render(template, datos) );
 		},
+
+                numSesionesHandler: function(){
+                        if(!this.listo){
+                                setTimeout(this.numSesionesHandler,1000);
+                                return;
+                        }
+                        var datos = [];
+                        datos.data=_.sortBy(this.subcomisiones, function(com){ return com.numSesiones; });
+                        if(Backbone.history.fragment == "numSesionesR"){
+                                datos.data.reverse();
+                        }
+                        console.log(datos.data);
+                        var template = templateComisiones('numSesiones');
+                        $('.containerSubComisiones').html( Mustache.render(template, datos) );
+                },
 
 		apiCall: function(col, _data, callback){
 			$.ajax({

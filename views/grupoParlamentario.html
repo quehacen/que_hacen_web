@@ -22,14 +22,102 @@
 			<span class="encabezadoMod">Grupo Parlamentario {{ grupo.nombre }}</span>
 			<span class="subTitle">Formado por:{{formadoPor(grupo.formaciones)}} {{ grupo.num_diputados }} diputados</span>
 		</div>
-		<div class="large-12 columns mod-grupo-iniciciativas">
-			<span class="encabezadoMod">Últimas iniciativas parlamentarias</span>
-			<div class="content-iniciativas mark">
+		<div class="large-12 columns mod-grupo-iniciativas">
+                	<span class="encabezadoMod">Iniciativas Parlamentarias</span>
+	 		<div class="container large-12 mark mod-iniciativas-parlamentarias">
+                		<ul class="list box">
+                        		<li>	
+						{%if grupo.iniciativas.total != 0%}
+						<a href="/iniciativas#filter/grupo={{grupo.id}}">
+						{%endif%}
+                                		<span class="data total">{{grupo.iniciativas.total}}</span>
+                                		<span class="desc">Total</span>
+						{%if grupo.iniciativas.total != 0%}
+						</a>
+						{%endif%}
+                        		</li>
+                        		<li>
+						{%if grupo.iniciativas.propos_no_de_ley != 0%}
+						<a href="/iniciativas#filter/grupo={{grupo.id}}&tipoCat=PNL">
+						{%endif%}
+                                		<span class="data">{{grupo.iniciativas.propos_no_de_ley}}</span>
+                                		<span class="desc">Proposiciones no de ley</span>
+						{%if grupo.iniciativas.propos_no_de_ley != 0%}
+						</a>
+						{%endif%}
+                        		</li>
+                        		<li>
+						{%if grupo.iniciativas.propos_de_ley != 0%}
+						<a href="/iniciativas#filter/grupo={{grupo.id}}&tipoCat=PL">
+						{%endif%}
+                                		<span class="data">{{grupo.iniciativas.propos_de_ley}}</span>
+                                		<span class="desc">Proposiciones de ley</span>
+						{%if grupo.iniciativas.propos_de_ley != 0%}
+						</a>
+						{%endif%}
+                        		</li>
+                        		<li>
+						{%if grupo.iniciativas.interpelaciones != 0%}
+						<a href="/iniciativas#filter/grupo={{grupo.id}}&tipoCat=INTERP">
+						{%endif%}
+                                		<span class="data">{{grupo.iniciativas.interpelaciones}}</span>
+                                		<span class="desc">Interpelaciones</span>
+						{%if grupo.iniciativas.interpelaciones != 0%}
+						</a>
+						{%endif%}
+                        		</li>
+                        		<li>
+						{%if grupo.iniciativas.mociones != 0%}
+						<a href="/iniciativas#filter/grupo={{grupo.id}}&tipoCat=MOC">
+						{%endif%}
+                                		<span class="data">{{grupo.iniciativas.mociones}}</span>
+                                		<span class="desc">Mociones</span>
+						{%if grupo.iniciativas.mociones != 0%}
+						</a>
+						{%endif%}
+                        		</li>
+                        		<li>
+						{%if grupo.iniciativas.solicitudes != 0%}
+						<a href="/iniciativas#filter/grupo={{grupo.id}}&tipoCat=SOLIC">
+						{%endif%}
+                                		<span class="data">{{grupo.iniciativas.solicitudes}}</span>
+                                		<span class="desc">Solicitudes (comparecencia, informes, órganos, etc)</span>
+						{%if grupo.iniciativas.solicitudes != 0%}
+						</a>
+						{%endif%}
+                        		</li>
+                        		<li>
+						{%if grupo.iniciativas.otros != 0%}
+						<a href="/iniciativas#filter/grupo={{grupo.id}}&tipoCat=OTROS">
+						{%endif%}
+                                		<span class="data">{{grupo.iniciativas.otros}}</span>
+                                		<span class="desc">Otras</span>
+						{%if grupo.iniciativas.otros != 0%}
+						</a>
+						{%endif%}
+                        		</li>
+                		</ul>
+        		</div>
+
+
+			<span class="encabezadoMod nobordertop">Últimas iniciativas parlamentarias</span>
+			<div class="tiposUltimasInic">
+			   <ul>
+				<li><a id="TODASi" class="active" href="javascript:ultimasInicGrupo({{grupo.id}},'TODAS')">Todas</a></li>
+				<li><a id="PNLi" href="javascript:ultimasInicGrupo({{grupo.id}},'PNL')">Proposiciones no de Ley</a></li>
+				<li><a id="PLi" href="javascript:ultimasInicGrupo({{grupo.id}},'PL')">Proposiciones de Ley</a></li>
+				<li><a id="SOLICi"  href="javascript:ultimasInicGrupo({{grupo.id}},'SOLIC')">Solicitudes</a></li>
+				<li><a id="INTERPi" href="javascript:ultimasInicGrupo({{grupo.id}},'INTERP')">Interpelaciones</a></li>
+				<li><a id="OTROSi" class="sinBordeDer" href="javascript:ultimasInicGrupo({{grupo.id}},'OTROS')">Otros</a></li>
+			   </ul>
+			</div>
+			<div id="iniciativasGrupo" class="content-iniciativas mark">
 			<!--#include virtual="/modules/grupo/{{grupo.id}}/iniciativas/3" -->
 			</div>
 		</div>
 		
 		<div class="large-12 columns mod-grupo-diputados">
+			<span class="volverlistado" style="top:25px;"><i class="fa fa-chevron-left"></i><a href="/diputados#filter/grupo={{grupo.nombre | slugify}}">Aplicar filtros a estos diputados</a></span>
 			<span class="encabezadoMod">Diputados</span>
 			<!--#include virtual="/modules/grupo/{{grupo.id}}/diputados" -->
 		</div>
@@ -45,4 +133,5 @@
 {% endblock %}
 {% block scripts %}
 	{% parent %}
+        <script src="/javascripts/grupoParl.js"></script>
 {% endblock %}
