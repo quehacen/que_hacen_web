@@ -103,6 +103,7 @@ li.network{font-size:1.5em;}
 .tabs li { display: inline-block; padding: .5em 0;margin-left: 5px}
 .tabs li.active a { background-color: #fe5339; background-image: linear-gradient(to bottom, rgba(255,255,255,.2) 50%,transparent 55%); border-radius: 4px; color: white;}
 .tabs li a { text-decoration: none; color: #333; text-transform: uppercase; padding: 1em; display: block;}
+.tabs li a:hover { background: #333; color: white; border-radius: 4px;}
 
 table { width: 100%;}
 table td {}

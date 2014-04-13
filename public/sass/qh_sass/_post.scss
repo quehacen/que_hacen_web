@@ -1,7 +1,7 @@
 .post {
 
     float: left;
-    border-bottom: 1px dashed #c3c3c3;
+    //border-bottom: 1px dashed #c3c3c3;
     width:100%;
     padding:1em;
 
@@ -98,7 +98,7 @@
 		}
 		&:last-child {
 			.post{
-				border-bottom:none;
+				//border-bottom:none;
 			}
 		}
 	}

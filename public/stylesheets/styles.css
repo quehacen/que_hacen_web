@@ -179,7 +179,6 @@ a:hover {
 
 .post {
   float: left;
-  border-bottom: 1px dashed #c3c3c3;
   width: 100%;
   padding: 1em;
 }
@@ -257,9 +256,6 @@ a:hover {
 }
 .latestPost li:first-child .post .entradilla {
   padding: 1em;
-}
-.latestPost li:last-child .post {
-  border-bottom: none;
 }
 
 .post {
