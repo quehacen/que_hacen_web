@@ -3,28 +3,64 @@
 		<h3>Iniciativas Parlamentarias</h3>
 		<ul class="list box">
 			<li>
+				{%if actividad.iniciativas.total != 0%}
+				<a href="/iniciativas#filter/diputado={{diputado.id}}">
+				{%endif%}
 				<span class="data total">{{actividad.iniciativas.total}}</span>
 				<span class="desc">Total</span>
+				{%if actividad.iniciativas.total != 0%}
+				</a>
+				{%endif%}
 			</li>
 			<li>
+				{%if actividad.iniciativas.preg_orales != 0%}
+				<a href="/iniciativas#filter/diputado={{diputado.id}}&tipoCat=PORAL">
+				{%endif%}
 				<span class="data">{{actividad.iniciativas.preg_orales}}</span>
 				<span class="desc">Preguntas orales</span>
+				{%if actividad.iniciativas.preg_orales != 0%}
+				</a>
+				{%endif%}
 			</li>
 			<li>
+				{%if actividad.iniciativas.preg_escritas != 0%}
+				<a href="/iniciativas#filter/diputado={{diputado.id}}&tipoCat=PESC">
+				{%endif%}
 				<span class="data">{{actividad.iniciativas.preg_escritas}}</span>
 				<span class="desc">Preguntas escritas</span>
+				{%if actividad.iniciativas.preg_escritas != 0%}
+				</a>
+				{%endif%}
 			</li>
 			<li>
+				{%if actividad.iniciativas.solicit_comparecencias != 0%}
+				<a href="/iniciativas#filter/diputado={{diputado.id}}&tipoCat=SOLIC_COMP">
+				{%endif%}
 				<span class="data">{{actividad.iniciativas.solicit_comparecencias}}</span>
 				<span class="desc">Solicitud de comparecencias</span>
+				{%if actividad.iniciativas.solicit_comparecencias != 0%}
+				</a>
+				{%endif%}
 			</li>
 			<li>
+				{%if actividad.iniciativas.solicit_informes != 0%}
+				<a href="/iniciativas#filter/diputado={{diputado.id}}&tipoCat=SOLIC_INF">
+				{%endif%}
 				<span class="data">{{actividad.iniciativas.solicit_informes}}</span>
 				<span class="desc">Solicitud de informes</span>
+				{%if actividad.iniciativas.solicit_informes != 0%}
+				</a>
+				{%endif%}
 			</li>
 			<li>
+				{%if actividad.iniciativas.solicit_nuevo_organo != 0%}
+				<a href="/iniciativas#filter/diputado={{diputado.id}}&tipoCat=SOLIC_NO">
+				{%endif%}
 				<span class="data">{{actividad.iniciativas.solicit_nuevo_organo}}</span>
 				<span class="desc">Solicitud de nuevo órgano</span>
+				{%if actividad.iniciativas.solicit_nuevo_organo != 0%}
+				</a>
+				{%endif%}
 			</li>				
 		</ul>
 	</div>
@@ -32,53 +68,129 @@
 		<h3>Intervenciones Parlamentarias</h3>
 		<ul class="list box">
 			<li>
+				{%if actividad.intervenciones.total != 0%}
+				<a href="javascript:alert('Próximamente')">
+				{%endif%}
 				<span class="data total">{{actividad.intervenciones.total}}</span>
 				<span class="desc">Total</span>
+				{%if actividad.intervenciones.total != 0%}
+				</a>
+				{%endif%}
 			</li>
 			<li>
+				{%if actividad.intervenciones.pleno != 0%}
+				<a href="javascript:alert('Próximamente')">
+				{%endif%}
 				<span class="data">{{actividad.intervenciones.pleno}}</span>
 				<span class="desc">Pleno</span>
+				{%if actividad.intervenciones.pleno != 0%}
+				</a>
+				{%endif%}
 			</li>
 			<li>
+				{%if actividad.intervenciones.comision != 0%}
+				<a href="javascript:alert('Próximamente')">
+				{%endif%}
 				<span class="data">{{actividad.intervenciones.comision}}</span>
 				<span class="desc">Comisión</span>
+				{%if actividad.intervenciones.comision != 0%}
+				</a>
+				{%endif%}
 			</li>
 			<li>
+				{%if actividad.intervenciones.dipuPerm != 0%}
+				<a href="javascript:alert('Próximamente')">
+				{%endif%}
 				<span class="data">{{actividad.intervenciones.dipuPerm}}</span>
 				<span class="desc">Diputación permanente</span>
+				{%if actividad.intervenciones.dipuPerm != 0%}
+				</a>
+				{%endif%}
 			</li>
 			<li>
+				{%if actividad.intervenciones.otras != 0%}
+				<a href="javascript:alert('Próximamente')">
+				{%endif%}
 				<span class="data">{{actividad.intervenciones.otras}}</span>
 				<span class="desc">Otras</span>
+				{%if actividad.intervenciones.otras != 0%}
+				</a>
+				{%endif%}
 			</li>
 		</ul>
 	</div>
+	{% if actividad.iniciativas.total > 0%}
+	<div id="ultimasInicDipu" class="large-12 columns container">
+            <h3>Últimas iniciativas parlamentarias</h3>
+            <div class="large-12 columns list">
+            	<ul class="tabs tiposUltimasInic">
+                <li class="active"><a id="TODASi" href="javascript:ultimasInicDipu({{diputado.id}},'TODAS')">Todas</a></li>
+                <li class=><a id="PORALi" href="javascript:ultimasInicDipu({{diputado.id}},'PORAL')">Preguntas orales</a></li>
+                <li><a id="PESCi" href="javascript:ultimasInicDipu({{diputado.id}},'PESC')">Preguntas escritas</a></li>
+                <li><a id="SOLIC_COMPi" href="javascript:ultimasInicDipu({{diputado.id}},'SOLIC_COMP')">Solicitud comparecencias</a></li>
+                <li><a id="SOLIC_INFi" href="javascript:ultimasInicDipu({{diputado.id}},'SOLIC_INF')">Solicitud informes</a></li>
+                <li><a id="SOLIC_NOi" href="javascript:ultimasInicDipu({{diputado.id}},'SOLIC_NO')">Solicitud nuevos órganos</a></li>
+                </ul>
+       	    </div>
+	   <div id="iniciativasGrupo" class="large-12 columns content-iniciativas mark">
+           	<!--#include virtual="/modules/diputado/{{diputado.id}}/iniciativas/3" -->
+           </div>
+	</div>
+	{% endif %}
 	<div class="columns container large-12 mark mod-votaciones">
 		<h3>Votaciones en el Pleno del Congreso</h3>
-            <ul class="votaciones-pleno clearfix">
+	    <ul class="votaciones-pleno clearfix">
             	<li class="resultpleno diasnovotados">
+            	    {%if votaciones%}
                     <span class="data">{{votaciones.dias_no_vota}}</span>
-                    <span class="desc">Días que no ha votado</span>
+                    {%else %}
+                    <span class="data">0</span>
+		    {% endif%}
+		    <span class="desc">Días que no ha votado</span>
                 </li>
                 <li class="resultpleno afavor">
+            	    {%if votaciones%}
                     <span class="data">{{votaciones.si}}</span>
+                    {%else %}
+                    <span class="data">0</span>
+		    {% endif%}
                     <span class="desc">Votos a favor</span>
                 </li>
                 <li class="resultpleno encontra">
+            	    {%if votaciones%}
                     <span class="data">{{votaciones.no}}</span>
+                    {%else %}
+                    <span class="data">0</span>
+		    {% endif%}
                     <span class="desc">Votos en contra</span>
                 </li>
                 <li class="resultpleno abstenciones">
+            	    {%if votaciones%}
                     <span class="data">{{votaciones.abs}}</span>
+                    {%else %}
+                    <span class="data">0</span>
+		    {% endif%}
                     <span class="desc">Abstenciones</span>
                 </li>
                 <li class="resultpleno novota">
+            	    {%if votaciones%}
                     <span class="data">{{votaciones.no_vota}}</span>
+                    {%else %}
+                    <span class="data">0</span>
+		    {% endif%}
                     <span class="desc">No votos</span>
                 </li>
             </ul>
-
+            {%if votaciones%}
 		<h3>Últimas votaciones</h3>
 		<!--#include virtual="/modules/diputado/{{diputado.id}}/votaciones" -->
+	    {%endif%}
 	</div>
 </div>
+
+{% block scripts %}
+        {% parent %}
+        <script type="text/javascript" src="/javascripts/ultimasInic.js"></script>
+{% endblock %}
+
+

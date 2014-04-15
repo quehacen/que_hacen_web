@@ -9,10 +9,17 @@ exports.ultimas_iniciativas = function(req, res){
 	if(!req.params.limit || isNaN(req.params.limit)){
 		req.params.limit = 2;
 	}
-	request( APIUrl+"/iniciativas?limit="+ parseInt(req.params.limit), function(error, response, body) {
-	  res.render('modules/ultimas-iniciativas',{'iniciativas':JSON.parse(body)}); 
+	request( APIUrl+"/iniciativas?limit="+ parseInt(req.params.limit)+'&order={"presentadoJS2":-1}', function(error, response, body) {
+	  res.render('modules/ultimas-iniciativas-portada',{'iniciativas':JSON.parse(body)});
 	});
 };
+
+
+/*exports.iniciativas = function(req, res){
+	request( APIUrl+'/iniciativas?limit=30&order={"presentadoJS2":"-1"}', function(error, response, body) {
+	  res.render('modules/iniciativas',{'iniciativas':JSON.parse(body)}); 
+	});
+}*/
 
 exports.ultimas_votaciones = function(req, res){ 
 	if(!req.params.limit || isNaN(req.params.limit) ){
@@ -43,16 +50,16 @@ exports.mas_iniciativas = function(req, res){
 	if(!req.params.limit || isNaN(req.params.limit)){
 		req.params.limit = 10;
 	}
-	request( APIUrl+'/diputados?limit='+ parseInt(req.params.limit) +'&order={"actividad.iniciativas.total":-1}', function(error, response, body) {
-	  res.render('modules/diputados',{'diputados':JSON.parse(body)}); 
+	request( APIUrl+'/diputados?limit='+ parseInt(req.params.limit) +'&order={"actividad.iniciativas.total":-1}&only=["id","nombre","apellidos","partido","actividad.iniciativas.total"]', function(error, response, body) {
+	  res.render('modules/mas-iniciativas',{'diputados':JSON.parse(body)}); 
 	});
 }
 exports.menos_iniciativas = function(req, res){
 	if(!req.params.limit || isNaN(req.params.limit)){
 		req.params.limit = 10;
 	}
-	request( APIUrl+'/diputados?limit='+ parseInt(req.params.limit) +'&order={"actividad.iniciativas.total":1}', function(error, response, body) {
-	  res.render('modules/diputados',{'diputados':JSON.parse(body)}); 
+	request( APIUrl+'/diputados?limit='+ parseInt(req.params.limit) +'&order={"actividad.iniciativas.total":1}&only=["id","nombre","apellidos","partido","actividad.iniciativas.total"]', function(error, response, body) {
+	  res.render('modules/menos-iniciativas',{'diputados':JSON.parse(body)}); 
 	});
 }
 exports.diputado_web_tags = function(req, res){
@@ -150,6 +157,11 @@ exports.diputado_votaciones = function(req, res){
 	  res.render('modules/diputado-votaciones',{'votaciones':JSON.parse(body)}); 
 	});
 }
+exports.iniciativas_diputado = function(req, res){
+	request( APIUrl+'/diputado/'+req.params.id+'/iniciativas?limit='+req.params.limit+'&order={"presentadoJS2":"-1"}', function(error, response, body) {
+	  res.render('modules/ultimas-iniciativas',{'iniciativas':JSON.parse(body)}); 
+	});
+}
 exports.diputados = function(req, res){
 	request( APIUrl+'/diputados', function(error, response, body) {
 	  res.render('modules/diputados',{'diputados':JSON.parse(body)}); 
@@ -183,8 +195,8 @@ exports.diputados_grupo = function(req, res){
 	});
 }
 exports.iniciativas_grupo = function(req, res){
-	request( APIUrl+'/grupo/'+req.params.id+'/iniciativas?limit='+req.params.limit, function(error, response, body) {
-	  res.render('modules/iniciativas',{'iniciativas':JSON.parse(body)}); 
+	request( APIUrl+'/grupo/'+req.params.id+'/iniciativas?limit='+req.params.limit+'&order={"presentadoJS2":"-1"}', function(error, response, body) {
+	  res.render('modules/ultimas-iniciativas',{'iniciativas':JSON.parse(body)}); 
 	});
 }
 exports.formaciones_grupo = function(req, res){
