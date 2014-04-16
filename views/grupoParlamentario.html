@@ -103,16 +103,19 @@
         		<div id="hemiciclo" data-grupo-parlamentario="{{ grupo.id }}"></div>
         	</div>
 
-			<div class="tiposUltimasInic large-12 columns">
+			<div class="large-12 columns">
 				<span class="encabezadoMod nobordertop">Últimas iniciativas parlamentarias</span>
-			   <ul>
-				<li><a id="TODASi" class="active" href="javascript:ultimasInicGrupo({{grupo.id}},'TODAS')">Todas</a></li>
+			<div class="large-12 columns list">
+			   <ul class="tabs tiposUltimasInic">
+				<li class="active"><a id="TODASi" href="javascript:ultimasInicGrupo({{grupo.id}},'TODAS')">Todas</a></li>
 				<li><a id="PNLi" href="javascript:ultimasInicGrupo({{grupo.id}},'PNL')">Proposiciones no de Ley</a></li>
 				<li><a id="PLi" href="javascript:ultimasInicGrupo({{grupo.id}},'PL')">Proposiciones de Ley</a></li>
-				<li><a id="SOLICi"  href="javascript:ultimasInicGrupo({{grupo.id}},'SOLIC')">Solicitudes</a></li>
+				<li><a id="SOLICi" href="javascript:ultimasInicGrupo({{grupo.id}},'SOLIC')">Solicitudes</a></li>
 				<li><a id="INTERPi" href="javascript:ultimasInicGrupo({{grupo.id}},'INTERP')">Interpelaciones</a></li>
-				<li><a id="OTROSi" class="sinBordeDer" href="javascript:ultimasInicGrupo({{grupo.id}},'OTROS')">Otros</a></li>
+				<li><a id="MOCi" href="javascript:ultimasInicGrupo({{grupo.id}},'MOC')">Mociones</a></li>
+				<li><a id="OTROSi" href="javascript:ultimasInicGrupo({{grupo.id}},'OTROS')">Otros</a></li>
 			   </ul>
+			</div>
 			</div>
 			<div id="iniciativasGrupo" class="large-12 columns content-iniciativas mark">
 			<!--#include virtual="/modules/grupo/{{grupo.id}}/iniciativas/3" -->
@@ -136,7 +139,7 @@
 {% endblock %}
 {% block scripts %}
 	{% parent %}
-        <script src="/javascripts/grupoParl.js"></script>
+        <script src="/javascripts/ultimasInic.js"></script>
         <script src="/javascripts/vendors/raphael-min.js"></script>
         <script src="/javascripts/hemiciclo.js"></script>
         <script>

@@ -72,6 +72,7 @@ app.get('/organos', routes.organos);
 app.get('/organo/:id', routes.organo);
 app.get('/comisiones', routes.comisiones);
 app.get('/subcomisiones', routes.subcomisiones);
+app.get('/iniciativas', routes.iniciativas);
 
 /** nosotros **/
 app.get('/quienes-somos', routes.nosotros);
@@ -106,6 +107,7 @@ app.get('/modules/diputado/:id/actividad', modules.diputado_actividad);
 app.get('/modules/diputado/:id/vida-laboral', modules.diputado_vida_laboral);
 app.get('/modules/diputado/:id/cargos-congreso', modules.diputado_cargos_congreso);
 app.get('/modules/diputado/:id/salario', modules.diputado_salario);
+app.get('/modules/diputado/:id/iniciativas/:limit', modules.iniciativas_diputado);
 app.get('/modules/diputado/:id/votaciones', modules.diputado_votaciones);
 app.get('/modules/circunscripcion/:id/diputados', modules.diputados_circunscripcion);
 app.get('/modules/grupos/list', modules.grupos_list);
@@ -114,6 +116,7 @@ app.get('/modules/grupo/:id/iniciativas/:limit', modules.iniciativas_grupo);
 app.get('/modules/formaciones',modules.formaciones_grupo);
 app.get('/modules/organo/:id/diputados',modules.diputados_organo);
 app.get('/modules/organos/list',modules.organos_list);
+//app.get('/modules/iniciativas/:limit',modules.iniciativas);
 
 /*function(req,res){
   GrupoDAO.listado(function( result ){
