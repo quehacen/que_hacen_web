@@ -110,6 +110,7 @@ var HemicicloViewBase = Backbone.View.extend({
 
 var HemicicloGrupoView = HemicicloViewBase.extend({
     grupoID: null,
+    popUpTemplate: '<div class="popUpDip"><span class="fotoimg"> <img src="/img/imagenesDipus/<%= diputado.id %>.jpg" alt="Fotografía de <%=diputado.nombre%> <%=diputado.apellidos%>"></span><div class="name"><%=diputado.nombre%> <%=diputado.apellidos%></div></div>',
     initialize: function(opts) {
         HemicicloGrupoView.__super__.initialize.apply(this, arguments);
         this.grupoID = (opts && opts.grupo) ? opts.grupo : this.$el.attr('data-grupo-parlamentario');
@@ -141,7 +142,8 @@ var HemicicloGrupoView = HemicicloViewBase.extend({
                 escano.diputado = diputado;
                 escano.attr({
                     fill: self.colors[grupo].normal,
-                    cursor: "pointer"
+                    cursor: "pointer",
+                    href: "/diputado/" + diputado.normalized.url
                 }).hover(function() {
                     //console.log(this.diputado.nombre, this.diputado.apellidos);
                     console.log($(this.node).offset(), this.getBBox().width);
@@ -154,7 +156,10 @@ var HemicicloGrupoView = HemicicloViewBase.extend({
                         "top": $(this.node).offset().top + 'px',
                         "left": $(this.node).offset().left + (this.getBBox().width * 0.5) + 'px',
                     });
-                    self.popUp.html('<span>' + this.diputado.nombre + ' ' + this.diputado.apellidos + '</span>');
+                    var template = _.template(self.popUpTemplate)
+                    self.popUp.html(template({
+                        "diputado": this.diputado
+                    }));
                     $("body").append(self.popUp);
 
                     this.attr({
