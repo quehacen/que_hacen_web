@@ -73,6 +73,7 @@ app.get('/organo/:id', routes.organo);
 app.get('/comisiones', routes.comisiones);
 app.get('/subcomisiones', routes.subcomisiones);
 app.get('/iniciativas', routes.iniciativas);
+app.get('/iniciativas_', routes.iniciativas_);
 
 /** nosotros **/
 app.get('/quienes-somos', routes.nosotros);
