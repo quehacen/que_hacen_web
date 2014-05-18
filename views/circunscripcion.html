@@ -1,13 +1,20 @@
 {% extends 'layout.html' %}
 {% block title %} Circunscripción de {{ circunscripcion.nombre }} {%endblock%}
 {% block content %}
+	<div class="row">
+		<!--<div class="columns large-2 large-offset-10 small-6 small-offset-6 sharer mark">-->
+		<div class="columns large-12 mark">
+		<span class='volverlistado volverlistadoDesp'><i class='fa fa-chevron-left'></i><a href='/circunscripciones'>Ir al mapa de circunscripciones</a></span>
+		</div>
+	</div>
 	<div class="row container">
 		<div class="diputadosTotal">
 			<span>Circunscripción de {{ circunscripcion.nombre }}</span>
 			<span>{{ circunscripcion.total_escanos }} escaños</span>
-			<span class='volverlistado'><i class='fa fa-chevron-left'></i><a href='/circunscripciones'>Ir al mapa de circunscripciones</a></span>
+			<!--<span class='volverlistado'><i class='fa fa-chevron-left'></i><a href='/circunscripciones'>Ir al mapa de circunscripciones</a></span>-->
 		</div>
 		<div class="large-7 columns mark">
+			<span class='volverlistado' style='position:static;display:block;margin-top:5px;margin-bottom:5px;left:5px;'><i class='fa fa-chevron-left'></i><a href='/diputados#filter/circuns={{circunscripcion.normalized.url}}'>Aplicar filtros a estos diputados</a></span>
 			<!--#include virtual="/modules/circunscripcion/{{circunscripcion.id}}/diputados" -->
 		</div>
 		<div class="large-5 columns mark">

@@ -1,14 +1,17 @@
-<ul class="diputados">
+<ol class="diputados">
 {% for diputado in diputados %}
-<li class="diputado {{diputado.grupo}} {{diputado.partido}}">
-	<a href="/diputado/{{diputado.id}}" title="Ver ficha de {{diputado.nombre}} {{diputado.apellidos}}">
-		{{diputado.url}}
-		<img class="fotoimg" src="/img/imagenesDipus/{{diputado.id}}.jpg" alt="Fotografía de {{diputado.nombre}} {{diputado.apellidos}}">
-		<span class="nombre"><b>{{diputado.apellidos}}</b>, {{diputado.nombre}}</span>
-		<img class="partidoimg" src="/img/logosPartidos/{{diputado.partido | url_decode}}.png" alt="logotipo del partido {{diputado.partido}}">
-		<span class="grupo">{{diputado.grupo}}</span>
-		<!--<span class="partido">{{diputado.partido}}</span>-->
-	</a>
+<li class="diputado grupo-{{diputado.grupo | slugify }} partido-{{diputado.partido | slugify}}">
+        <a href="/diputado/{{diputado.id}}" title="Ver ficha de {{diputado.nombre}} {{diputado.apellidos}}">
+                <span class="fotoimg">
+                        <img src="/img/imagenesDipus/{{diputado.id}}.jpg" alt="Fotografía de {{diputado.nombre}} {{diputado.apellidos}}">
+                </span>
+                <span class="nombre"><b>{{diputado.apellidos}}</b>, {{diputado.nombre}}</span>
+                <img class="partidoimg" src="/img/miniaturasPartidos/{{diputado.partido }}.png" alt="logotipo del partido {{diputado.partido}}">
+        </a>
+        <a href="/iniciativas#filter/diputado={{diputado.id}}">
+		<span class="grupo">{{diputado.actividad.iniciativas.total}} iniciativas</span>
+        </a>
 </li>
 {% endfor %}
-</ul>
+</ol>
+

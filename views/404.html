@@ -1,8 +1,18 @@
 {% extends 'layout.html' %}
 {% block content %}
-<div class="row">
-	<div class="large12 columns">
-		la página que buscas no se ha encontrado
+<div class="row container">
+	<div class="diputadosTotal large12" style="border-bottom:1px solid #C3C3C3;">
+		<h3 style="text-align:center;color:black;font-size:15pt;">Se ha producido un error</h3>
+		<span class="subTitle" style="text-align:center;color:red;font-size:15pt;">Error 404</h4>
+	</div>
+	<div class="large12 columns" style="padding:27px;min-height:400px;">
+		<p>Lo sentimos, no hemos podido encontrar esa página.</p>
+		<p>La página no existe, puede intentar:</p>
+		<p>
+		<ul>
+			<li>Buscar erratas en caso de haber copiado la dirección.</li>
+			<li>Buscar en la web <a href="/">quehacenlosdiputados.net</a> para encontrar lo que busca.</li>
+		</p>
 	</div>
 </div>
 {% endblock %}

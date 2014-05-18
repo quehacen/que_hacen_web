@@ -1,48 +1,60 @@
-
 /**
  * Module dependencies.
  */
 
-var express = require('express')
-  , routes = require('./routes')
-  , modules = require('./routes/modules')
-  , http = require('http')
-  , path = require('path')
-  , consolidate = require('consolidate')
-  , swig = require('swig')
-  , filters = require('./swig_filters')(swig);
+var express = require('express'),
+    routes = require('./routes'),
+    modules = require('./routes/modules'),
+    http = require('http'),
+    path = require('path'),
+    consolidate = require('consolidate'),
+    swig = require('swig'),
+    filters = require('./swig_filters')(swig);
 
 var app = express();
 
-app.configure(function(){
-  app.set('port', process.env.PORT || 3001);
-  /** SWIG Config **/
-  app.engine('html', consolidate.swig);
-  app.set('view engine', 'html');
-  app.set('views', __dirname + '/views');
-  app.set('view options', { layout: false });
-  app.set('view cache', false);
-  /** **/
-  app.use(express.favicon());
-  app.use(express.logger('dev'));
-  //app.use(express.bodyParser());
-  app.use(express.json());
-  app.use(express.urlencoded());
-  app.use(express.methodOverride());
-  app.use(app.router);
-  app.use(express.static(path.join(__dirname, 'public')));
+app.configure(function() {
+    app.set('port', process.env.PORT || 3001);
+    /** SWIG Config **/
+    app.engine('html', consolidate.swig);
+    app.set('view engine', 'html');
+    app.set('views', __dirname + '/views');
+    app.set('view options', {
+        layout: false
+    });
+    app.set('view cache', false);
+    /** **/
+    app.use(express.favicon());
+    app.use(express.logger('dev'));
+    //app.use(express.bodyParser());
+    app.use(express.json());
+    app.use(express.urlencoded());
+    app.use(express.methodOverride());
+    app.use(app.router);
+    app.use(express.static(path.join(__dirname, 'public')));
 
-  app.use(function(req, res, next){
-    if (res.status(404)) {
-      res.redirect('/404');
+    app.use(function(req, res, next) {
+        if (res.status(404)) {
+            res.redirect('/404');
+            return;
+        }
+        next();
+    });
+
+
+    /*app.use(function(req, res, next){
+    if (res.status(500) || res.status(501) || res.status(503) || res.status(502) || res.status(505) || res.status(506)) {
+      res.redirect('/5xx');
       return;
     }
     next();
-  });
+  });*/
 
 });
 
-swig.setDefaults({ cache: false });
+swig.setDefaults({
+    cache: false
+});
 
 /*
 app.use(function(req, res, next){
@@ -53,19 +65,20 @@ app.use(function(req, res, next){
 });
 */
 
-app.configure('development', function(){
-  app.use(express.errorHandler());
+app.configure('development', function() {
+    app.use(express.errorHandler());
 });
 
 app.get('/', routes.index);
-app.get('/blog', routes.index );
+app.get('/blog', routes.index);
 app.get('/diputados', routes.diputados);
 app.get('/exdiputados', routes.exdiputados);
 app.get('/diputado/:id', routes.diputado);
 app.get('/diputado/:id/:tipo', routes.diputado);
 app.get('/grupos-parlamentarios', routes.grupos);
 app.get('/grupo-parlamentario/:id', routes.grupo);
-app.get('/votaciones', routes.votaciones);
+app.get('/votaciones/:page?', routes.votaciones);
+app.get('/votacion/sesion/:sesion/votacion/:votacion', routes.votacion);
 app.get('/circunscripciones', routes.circunscripciones);
 app.get('/circunscripcion/:id', routes.circunscripcion);
 app.get('/organos', routes.organos);
@@ -74,6 +87,7 @@ app.get('/comisiones', routes.comisiones);
 app.get('/subcomisiones', routes.subcomisiones);
 app.get('/iniciativas', routes.iniciativas);
 app.get('/iniciativas_', routes.iniciativas_);
+app.get('/intervenciones', routes.intervenciones);
 
 /** nosotros **/
 app.get('/quienes-somos', routes.nosotros);
@@ -90,8 +104,10 @@ app.get('/colaboradores', routes.colaboradores);
 app.get('/mas-informacion-diputados', routes.mas_informacion_diputados);
 
 /*** notFound **************************************************************/
-app.get('/404', function(req, res){
-  res.render('404', { url: req.url });
+app.get('/404', function(req, res) {
+    res.render('404', {
+        url: req.url
+    });
 });
 
 /*** Modules **************************************************************/
@@ -114,9 +130,9 @@ app.get('/modules/circunscripcion/:id/diputados', modules.diputados_circunscripc
 app.get('/modules/grupos/list', modules.grupos_list);
 app.get('/modules/grupo/:id/diputados', modules.diputados_grupo);
 app.get('/modules/grupo/:id/iniciativas/:limit', modules.iniciativas_grupo);
-app.get('/modules/formaciones',modules.formaciones_grupo);
-app.get('/modules/organo/:id/diputados',modules.diputados_organo);
-app.get('/modules/organos/list',modules.organos_list);
+app.get('/modules/formaciones', modules.formaciones_grupo);
+app.get('/modules/organo/:id/diputados', modules.diputados_organo);
+app.get('/modules/organos/list', modules.organos_list);
 //app.get('/modules/iniciativas/:limit',modules.iniciativas);
 
 /*function(req,res){
@@ -130,6 +146,6 @@ app.get('/modules/organos/list',modules.organos_list);
 /*** ******************************************************************** **/
 
 
-http.createServer(app).listen(app.get('port'), function(){
-  console.log("Express server listening on port " + app.get('port'), process.env.PORT);
+http.createServer(app).listen(app.get('port'), function() {
+    console.log("Express server listening on port " + app.get('port'), process.env.PORT);
 });

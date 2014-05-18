@@ -6,15 +6,40 @@
 			<span class="numerovotacion">Votación {{votacion.xml.resultado.informacion.numerovotacion}} - </span>
 			<span class="fecha">{{votacion.xml.resultado.informacion.fecha | fecha}}</span>
 		</div>
-		<div class="tituloVotacion"><a href="{{votacion.url}}" target="_blank">{{votacion.xml.resultado.informacion.titulo}}</a></div>
+		<div class="tituloVotacion"><a href="/votacion/{{votacion.xml.resultado.informacion.sesion}}/{{votacion.xml.resultado.informacion.numerovotacion}}">{{votacion.xml.resultado.informacion.titulo}}</a></div>
 {%spaceless%}
+
+{%set tipoVot = votacion.numExpediente | tipoInic %}
 {% if votacion.xml.resultado.totales.asentimiento == "Sí"%}
 	{% set txtResul="Aprobada por asentimiento"%}{%set iresul="thumbs-up"%}{% set votog="sí"%}
-{% elif votacion.xml.resultado.totales.afavor > votacion.xml.resultado.totales.encontra %}
-	{% set txtResul="Aprobada"%}{%set iresul="thumbs-up"%}{%set votog="sí"%}
-{% elif votacion.xml.resultado.totales.afavor == votacion.xml.resultado.totales.encontra %}
-	{% set txtResul="Empate"%}{%set iresul="minus-square-o"%}{%set votog="no"%}
-{% else %}{% set txtResul="Rechazada" %}{% set iresul="thumbs-down"%}{%set votog="no"%}
+
+{%else %}
+	{# Votación constitucional #}
+	{%if tipoVot==100%}
+		{% if votacion.xml.resultado.totales.afavor > 210 %}
+			{% set txtResul="Aprobada"%}{%set iresul="thumbs-up"%}{%set votog="sí"%}
+		{% else %}
+			{% set txtResul="Rechazada" %}{% set iresul="thumbs-down"%}{%set votog="no"%}
+		{% endif %}
+
+	{# Estatuto de autonomía o reforma del reglamento #}
+	{%elif tipoVot==127 or tipoVot==410 %}
+		{% if votacion.xml.resultado.totales.afavor > 176 %}
+			{% set txtResul="Aprobada"%}{%set iresul="thumbs-up"%}{%set votog="sí"%}
+		{% else %}
+			{% set txtResul="Rechazada" %}{% set iresul="thumbs-down"%}{%set votog="no"%}
+		{% endif %}
+	
+	{# Iniciativa ordinaria #}
+	{%else%}
+		{% if votacion.xml.resultado.totales.afavor > votacion.xml.resultado.totales.encontra %}
+			{% set txtResul="Aprobada"%}{%set iresul="thumbs-up"%}{%set votog="sí"%}
+		{% elif votacion.xml.resultado.totales.afavor == votacion.xml.resultado.totales.encontra %}
+			{% set txtResul="Empate"%}{%set iresul="minus-square-o"%}{%set votog="no"%}
+		{% else %}
+			{% set txtResul="Rechazada" %}{% set iresul="thumbs-down"%}{%set votog="no"%}
+		{% endif %}
+	{%endif%}
 {% endif %}
 
 {% set _votacion = votacion.xml.resultado.votaciones.votacion|first %}

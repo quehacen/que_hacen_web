@@ -1,11 +1,54 @@
 <ul class="iniciativas">
+{#{%spaceless%}
+{% set diputadosC = diputados%}
+{% set gruposC = grupos%}
+{% set dipusOrd = diputados|groupBy('id')%}
+{% set gruposOrd = grupos|groupBy('id')%}
+{%endspaceless%}#}
+
 {% for iniciativa in iniciativas %}
+
+{#{%spaceless%}
+{% if iniciativa.autores|length != 1 %}
+	{% set solouno=0 %}
+{%else%}
+	{% set solouno=1 %}
+	{%if iniciativa.tipo_autor=="Grupo"%}	
+		{%set preautor="G.P. "%}
+		{%set autortxt = gruposOrd[iniciativa.autores[0]][0].nombre%}
+		{%set autorenlace = "/grupo-parlamentario/"+iniciativa.autores[0]%}
+	{%else%}
+		{%set preautor=""%}
+		{%set autortxt = dipusOrd[iniciativa.autores[0]][0].nombre+" "+dipusOrd[iniciativa.autores[0]][0].apellidos%}
+		{%set autorenlace = "/diputado/"+iniciativa.autores[0]%}
+	{%endif%}
+{% endif%}
+{%endspaceless%}#}
+
 <li class="iniciativa">
-	<a href="#">
-		<i class="fa fa-circle"></i> 
-		<span>{{iniciativa.titulo}}</span>
-	</a>
-	<span>Presentado el {{iniciativa.presentado |fecha }}, calificado el {{iniciativa.calificado |fecha }}</span>
+	<a class="tituloInic" href="#"><i class="fa fa-circle"></i> {{iniciativa.titulo}}</a>
+	<span>Presentada el {{iniciativa.presentado |fecha }}, calificada el {{iniciativa.calificado |fecha }}</span>
+	{#{%if solouno==1%}
+	<span>Autor: <a href="{{autorenlace}}">{{preautor}}{{autortxt}}</a></span>
+	{%else%}
+	<span>Autores ({{iniciativa.autores.length}}): 
+		{%if iniciativa.tipo_autor=="Diputado"%}
+		{%for autor in iniciativa.autores%}
+			{%set autortxt = dipusOrd[autor][0].nombre+" "+dipusOrd[autor][0].apellidos%}
+			{%set autorenlace = "/diputado/"+autor%}
+			<a href="{{autorenlace}}">{{autortxt}}</a>  
+		{%endfor%}
+		{%else%}
+		{%for autor in iniciativa.autores%}
+			{%set autortxt = gruposOrd[autor][0].nombre%}
+			{%set autorenlace = "/grupo-parlamentario/"+iniciativa.autores[0]%}
+			<a href="{{autorenlace}}">{{autortxt}}</a>  
+		{%endfor%}
+		{%endif%}
+	{%endif%}#}
+	{%if iniciativa.resultado_tramitacion%}<span>Estado: {{iniciativa.resultado_tramitacion}}</span>
+	{%else%}<span>Estado: En tramitación</span>
+	{%endif%}
 </li>
 {% endfor %}
 </ul>

@@ -6,13 +6,14 @@ Exdiputados del Congreso
 	<div class="row container">
 		<div class="diputadosTotal">
 			<h2>Exdiputados del Congreso</h2>
-			<span style='font-size:14px;position:absolute;top:10px;left:15px;'><a href="/diputados">Ver diputados</span>
+			<span class="subTitle2 desc">X Legislatura (2011-Actualidad)</span>
+			<span style='font-size:14px;position:absolute;top:10px;left:15px;'><a href="/diputados">Ver diputados</a></span>
 		</div>
-		<div class="large-9 small-12 columns">
+		<div class="large-12 small-12 columns">
 			<h3 class="title" style="text-align:center">{{diputados | length}} exdiputados</h3>
 			{% include "./modules/exdiputados.html" %}
 		</div>
-		<div class="filtros large-3 small-12 columns">
+		{#<div class="filtros large-3 small-12 columns">
 			<span style="text-align:center">[Filtros] Coming <i>/suun/</i></span>
 			<!--<input type="search" placeholder="Buscar diputado por nombre">
 			<input type="button" value="Buscar">
@@ -22,7 +23,7 @@ Exdiputados del Congreso
 				<input type="radio" name="grupoParlamentario" value="{{grupo}}"><label for="grupoParlamentario">Grupo Parlamentario {{grupo}}</label>
 				{% endfor %}
 			</form>-->
-		</div>
+		</div>#}
 	</div>
 {% endblock %}
 {% block scripts %}

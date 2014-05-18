@@ -254,7 +254,7 @@ function anadirFiltroUrl(filtro,tipoFiltro){
 				// (1)
 				if(_.contains(arrayFiltrosTipo,filtroSinPre) == true){
 					alert('Ese filtro ya está seleccionado');
-					$('#'+tipoFiltro+' option[value="no"]').attr("selected","selected");
+					$('#'+tipoFiltro+' option[value="no"]').prop("selected","selected");
 					return false;
 				// (2)
 				}else{
@@ -280,7 +280,7 @@ function dibujaFiltrosActivos(){
 	var html='';
 	filtrosCad=filtrosURL(urlBB);
 	if(filtrosCad==''){
-		html='<p >Sin filtros añadidos. A la derecha los tienes ;)</p>';
+		html='';
 	}else{
 		filtros=filtrosCad.substr(7).split('&');
 		var tipos=[];
@@ -406,7 +406,7 @@ $(document).ready(function(){
 	//$('body').append(loading);
 	//var img="<img style='height:90px;' src='http://www.memeteca.com/fichas_img/4493_rajoy-gangham-style.gif' alt='cargando contenido'/>";
 	
-	var img="<img style='height:70px' src='http://r20.imgfast.net/users/2011/47/97/95/smiles/1546016546.gif' alt='cargando contenido' />";
+	var img="<img style='height:70px;display:inline-block;margin:auto !important' src='http://www.mo-experts.com/images/loading.gif' alt='cargando contenido' />";
 	$('.diputados').html(img);
 	$('#dipusdiv').show();
 });
@@ -460,7 +460,7 @@ $(function(){
 		basicaHandler: function(){
 			//alert('sin parámetros');
 			if(!this.diputados || !this.grupos || !this.circunscripciones){
-				setTimeout(this.basicaHandler,2000);
+				setTimeout(this.basicaHandler,2700);
 				return;
 			}
 			var datos=[];
@@ -480,7 +480,7 @@ $(function(){
 			//console.log(ord+" "+fil);
 			//$('.diputados').hide();
 			if(!this.diputados || !this.grupos || !this.circunscripciones){
-				setTimeout(this.dipusHandler,2000,ord,fil);
+				setTimeout(this.dipusHandler,2700,ord,fil);
 				return;
 			}
 
@@ -581,13 +581,14 @@ $(function(){
 
 			if(filtros != null){
 			   var filtros=fil.split('&');
-			   var temp=[], dipusG=[], dipusC=[], dipusCarg=[];
+
 			   _.each(filtros,function(filtro){
 	
 			   // Filtros para GP
 			   if(filtro.indexOf('grupo=')==0){
 				var gruposf=filtro.substr(6).split('+');
 				var grupo;
+				var dipusG=[];
 				_.each(gruposf,function(grupof){
 					grupo = _.find(this.grupos, function(g){ 
 						return grupof == toSlug(g.nombre); });
@@ -602,6 +603,7 @@ $(function(){
 			   else if(filtro.indexOf('circuns=')==0){
 				var circunsf=filtro.substr(8).split('+');
 				var circuns;
+				var dipusC=[];
 				_.each(circunsf,function(circunf){
 					//alert();
 					circuns = _.find(this.circunscripciones, function(c){ 
@@ -610,16 +612,59 @@ $(function(){
 						return dipu.circunscripcion==circuns.nombre;});
 					dipusC=_.union(dipusC,temp);
 				});
+				if(circunsf.length > 1) sub='circuns';
+				dipus=dipusC;
+			   }
+			   
+			   // Filtros para formaciones
+			   else if(filtro.indexOf('form=')==0){
+				var formsf=filtro.substr(5).split('+');
+				var form;
+				var dipusF=[];
+				_.each(formsf,function(formf){
+					//form = _.find(this.formaciones, function(c){ 
+					//	return formf == form.url; });
+					form = formf;
+				   	temp=_.filter(dipus, function(dipu){ 
+						return dipu.partido==form;});
+					dipusF=_.union(dipusF,temp);
+				});
 				//if(dipusC.length > 0) 
 				if(circunsf.length > 1) sub='circuns';
 				dipus=dipusC;
 			   }
+			   
+			   // Filtros para cargos en el congreso
+			   else if(filtro.indexOf('organo=')==0){
+				var cargosf=filtro.substr(7).split('+');
+				var dipuscargo;
+				var dipusOrg=[];
+				_.each(organosf,function(organof){
+					//alert();
+					dipuscargo=[];
+					_.each(this.diputados, function(dipu){
+						var esta=false;
+						_.each(dipu.cargos_congreso,function(c){
+							   if(typeof(c.baja) == "undefined" && organof== c.id_organo)
+								tiene=true;
+						});
+						if(tiene==true){
+							dipuscargo.push(dipu.id);
+						}
+					});
 
-			   // Filtros para cargos en el congreso	
+				   	temp=_.filter(dipus, function(dipu){ 
+						return _.contains(dipuscargo,dipu.id)==true && _.contains(temp,dipu.id)==false});
+					dipusCarg=_.union(dipusOrg,temp);
+				});
+				dipus=dipusCarg;
+			   }
+
+			   // Filtros para cargos en el congreso
 			   else if(filtro.indexOf('cargo=')==0){
 				var cargosf=filtro.substr(6).split('+');
 				var dipuscargo;
-				// Si no está cargos_dipus, lo añadimos
+				var dipusCarg=[];
 				_.each(cargosf,function(cargof){
 					//alert();
 					dipuscargo=[];
@@ -639,12 +684,10 @@ $(function(){
 						}
 					});
 
-				   	temp=_.filter(dipus, function(dipu){ 
+				   	var temp=_.filter(dipus, function(dipu){ 
 						return _.contains(dipuscargo,dipu.id)==true && _.contains(temp,dipu.id)==false});
 					dipusCarg=_.union(dipusCarg,temp);
 				});
-				//if(dipusC.length > 0) 
-				//if(circunsf.length > 1) sub='circuns';
 				dipus=dipusCarg;
 			   }
 
@@ -761,7 +804,7 @@ $(function(){
 			$('h3.title').text(numDipus+' diputados');
 			$('.diputados').html( Mustache.render(template, datos) );
 			$('#filtrosActivos').html(dibujaFiltrosActivos());
-			$('.filtro option[value="no"]').attr("selected","selected");
+			$('.filtro option[value="no"]').prop('selected', true);
 			
 			$('#ordenes option[value="'+ord+'"]').attr("selected","selected");
 			$('.diputados').show();

@@ -14,8 +14,8 @@
 #wrapper #map #tabsCirc dd:hover{cursor:pointer;}
 #wrapper #map #tabsCirc dd.active{color:white;background-color:#fe5339;}
 
-#wrapper #map #tabsCont{border-top: solid 2px #fdfdfd;width:100%; overflow-y: auto; overflow-x: hidden; height: 490px;}
-
+#wrapper #map #tabsCont{border-top: solid 2px #fdfdfd;width:100%; overflow: auto; height: 490px;}
+#wrapper #map #tabsCont p {text-align: center;font-size:13px;margin:15px 0px;}
 
 #wrapper #map #info #datos_elecciones{margin:0;padding:0;}
 #wrapper #map #info table { width: 100%; font-size: 14px; padding-bottom: 15px; margin: 0 auto;}
@@ -48,4 +48,3 @@
 #wrapper #map #diputados_ ol .diputado .partidoimg img {}
 #wrapper #map #diputados_ ol .diputado .partido {float: left;width: 100%;text-align: center;}
 #wrapper #map #diputados_ ol .diputado .grupo {float: left;width: 100%;text-align: center;font-size:12px;}
-#wrapper #map #diputados_ p {text-align: center;font-size:13px;padding:3px;margin:3px}

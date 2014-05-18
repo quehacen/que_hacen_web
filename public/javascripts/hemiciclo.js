@@ -177,3 +177,114 @@ var HemicicloGrupoView = HemicicloViewBase.extend({
         return defer.promise();
     }
 });
+var HemicicloVotacionView = HemicicloViewBase.extend({
+    votaciones: null,
+    colors: {
+        "no": {
+            "normal": "#f70504",
+            "hover": "#f70504",
+            "out": "#f70504"
+        },
+        "si": {
+            "normal": "#6fc354",
+            "hover": "#6fc354",
+            "out": "#6fc354"
+        },
+        "no-vota": {
+            "normal": "#333333",
+            "hover": "#333333",
+            "out": "#333333"
+        },
+        "abstencion": {
+            "normal": "#ecbc02",
+            "hover": "#ecbc02",
+            "out": "#ecbc02"
+        }
+    },
+    popUpTemplate: '<div class="popUpDip"><span class="fotoimg"> <img src="/img/imagenesDipus/<%= diputado.id %>.jpg" alt="Fotografía de <%=diputado.nombre%> <%=diputado.apellidos%>"></span><div class="name"><%=diputado.nombre%> <%=diputado.apellidos%></div></div>',
+    initialize: function(opts) {
+        HemicicloGrupoView.__super__.initialize.apply(this, arguments);
+        this.grupoID = (opts && opts.grupo) ? opts.grupo : this.$el.attr('data-grupo-parlamentario');
+        this.diputadosUrl = 'http://api.quehacenlosdiputados.net/diputados?q={"nombre":{"$exists":true}}&only=["escano_actual","id","apellidos","nombre","normalized","grupo"]';
+        this.votaciones = opts.votaciones;
+        this.render();
+    },
+    render: function() {
+        var self = this;
+        var defer = $.Deferred();
+        //HemicicloViewBase.__super__.render.call();
+        HemicicloGrupoView.__super__.render.apply(this, arguments)
+            .then(function() {
+                return self.cargaDiputados();
+            })
+            .done(function() {
+                defer.resolve();
+            });
+        return defer.promise();
+    },
+    cargaDiputados: function() {
+        var defer = $.Deferred();
+        var self = this;
+        var votos_telematicos = 0;
+        $.get(this.diputadosUrl, function(diputados) {
+            _.each(self.votaciones, function(voto) {
+                var escano = self.escanos[voto.asiento] || {};
+                var sentido_voto = self.string_to_slug(voto.voto);
+                //console.log(diputado.grupo, grupo);
+                escano.diputado = _.findWhere(diputados, {
+                    "apellidos": voto.diputado.split(',')[0],
+                    "nombre": voto.diputado.split(',')[1].substr(1)
+                });
+                //console.log(voto.diputado, escano.diputado, sentido_voto);
+                if (voto.asiento == -1) {
+                    console.log("asiento -1 del diputado " + voto.diputado, voto);
+                    return;
+                }
+                if (!escano.diputado) {
+                    escano.diputado = {
+                        "apellidos": voto.diputado.split(',')[0],
+                        "nombre": voto.diputado.split(',')[1].substr(1),
+                        "normalized": {
+                            "url": '#'
+                        }
+
+                    }
+                    console.log("no se ha encontrado al diputado " + voto.diputado, voto);
+                    //return;
+                }
+                escano.attr({
+                    fill: self.colors[sentido_voto].normal,
+                    cursor: "pointer",
+                    href: "/diputado/" + escano.diputado.normalized.url
+                }).hover(function() {
+                    //console.log(this.diputado.nombre, this.diputado.apellidos);
+                    //console.log($(this.node).offset(), this.getBBox().width);
+                    self.popUp = $('<div>', {
+                        id: "hemi_popup",
+                        class: 'popUp'
+                    });
+                    self.popUp.css({
+                        "position": "absolute",
+                        "top": $(this.node).offset().top + 'px',
+                        "left": $(this.node).offset().left + (this.getBBox().width * 0.5) + 'px',
+                    });
+                    var template = _.template(self.popUpTemplate)
+                    self.popUp.html(template({
+                        "diputado": this.diputado
+                    }));
+                    $("body").append(self.popUp);
+                    this.attr({
+                        fill: self.colors[sentido_voto].hover
+                    });
+                }, function() {
+                    self.popUp.remove();
+                    this.attr({
+                        fill: self.colors[sentido_voto].out
+                    });
+                });
+            });
+            defer.resolve();
+        });
+        return defer.promise();
+    }
+});

@@ -3,14 +3,13 @@
 	line-height: $textLineHeight + 0.2;
 	margin: 0;
 	font-size: .9em;
-	/*padding: 20px;*/
+	padding: 20px;
 
 	&.detailed {
 		
 		@include box-shadow(inset 0 0 2px rgba(black,.2));
 		background-color: $lightGray;
 		@include border-radius(4px);
-		font-size: 14px;
 		
 		li {
 			padding: {

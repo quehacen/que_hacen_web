@@ -1,6 +1,40 @@
 {% extends 'layout.html' %}
 {% block content %}
-	<div class="row container">
+	{%spaceless%}
+
+{%set tipoVot = votacion.numExpediente | tipoInic %}
+{% if votacion.xml.resultado.totales.asentimiento == "Sí"%}
+	{% set txtResul="Aprobada por asentimiento"%}{%set iresul="thumbs-up"%}{% set votog="sí"%}
+{%else %}
+	{# Votación constitucional #}
+	{%if tipoVot==100%}
+		{% if votacion.xml.resultado.totales.afavor > 210 %}
+			{% set txtResul="Aprobada"%}{%set iresul="thumbs-up"%}{%set votog="sí"%}
+		{% else %}
+			{% set txtResul="Rechazada" %}{% set iresul="thumbs-down"%}{%set votog="no"%}
+		{% endif %}
+
+	{# Estatuto de autonomía o reforma del reglamento #}
+	{%elif tipoVot==127 or tipoVot==410 %}
+		{% if votacion.xml.resultado.totales.afavor > 176 %}
+			{% set txtResul="Aprobada"%}{%set iresul="thumbs-up"%}{%set votog="sí"%}
+		{% else %}
+			{% set txtResul="Rechazada" %}{% set iresul="thumbs-down"%}{%set votog="no"%}
+		{% endif %}
+	
+	{# Iniciativa ordinaria #}
+	{%else%}
+		{% if votacion.xml.resultado.totales.afavor > votacion.xml.resultado.totales.encontra %}
+			{% set txtResul="Aprobada"%}{%set iresul="thumbs-up"%}{%set votog="sí"%}
+		{% elif votacion.xml.resultado.totales.afavor == votacion.xml.resultado.totales.encontra %}
+			{% set txtResul="Empate"%}{%set iresul="minus-square-o"%}{%set votog="no"%}
+		{% else %}
+			{% set txtResul="Rechazada" %}{% set iresul="thumbs-down"%}{%set votog="no"%}
+		{% endif %}
+	{%endif%}
+{% endif %}
+{%endspaceless%}
+	<div class="row container infoVotacion">
 		<div class="diputadosTotal">
 			<span>Votaciones en el pleno del Congreso</span>
 			<span>Legislatura {{ votacion.legislatura }}</span>
@@ -9,17 +43,13 @@
 				<input type="submit" value="Buscar">
 			</form>	
 		</div>
-		<div id="infoVotacion" class="infoVotacion large-12 small-1 columns">
+		<div id="infoVotacion" class="large-12 small-1 columns">
 			<span class="info">Sesion {{ votacion.xml.resultado.informacion.sesion }} - Votacion {{ votacion.xml.resultado.informacion.numerovotacion }} - {{ votacion.xml.resultado.informacion.fecha }}</span>
 			<h2><a href="{{votacion.url}}" target="_blank">{{ votacion.xml.resultado.informacion.titulo }}</a></h2>
-			{% if votacion.xml.resultado.totales.afavor > votacion.xml.resultado.totales.encontra %}
-			<span class="resultado aprobada">Aprobada</span>
-			{% else %}
-			<span class="resultado noaprobada">Rechazada</span>
-			{% endif %}
+			<span class="resultado voto {{votog | slugify}}"><i class="fa fa-{{iresul}}"></i> {{txtResul}}</span>
 			<div class="descVotacion">
 				<span class="descripcion">{{votacion.xml.resultado.informacion.textoexpediente}}</span>
-				{% if votacion.xml.resultado.informacion.titulosubgrupo %}
+				{% if votacion.xml.resultado.informacion.titulosubgrupo.length > 0 %}
 				<span class="subgrupo">{{votacion.xml.resultado.informacion.titulosubgrupo}}</span>
 				<span class="subgrupo">{{votacion.xml.resultado.informacion.textosubgrupo}}</span>
 				{% endif %}
@@ -29,50 +59,50 @@
 				<ul class="resultado">
 					{% for result in votacion.xml.resultado.totales %}
 					<li id="{{loop.key}}" class="{{loop.key}}">
-						<span class="tipo">{% if loop.key=='novotan' %}Ausentes{% else %}{{loop.key}}{% endif %}</span>
+						<span class="tipo">
+							{% if loop.key=='novotan' %}Ausentes
+							{% elseif loop.key=='afavor' %}A favor
+							{% elseif loop.key=='encontra' %}En contra
+							{% elseif loop.key=='presentes' %}Presentes
+							{% elseif loop.key=='abstenciones' %}Abstenciones
+							{% else %}{{loop.key}}{% endif %}</span>
 						<span class="result">{{result}}</span>
 						{% if loop.key!='asentimiento' %}
 						<span class="votoemitido"><b>{{ result | percentBy(votacion.xml.resultado.totales.presentes) }}%</b> sobre voto emitido</span>
-						<span class="votoemitido"><b>{{ result | percentBy(votacion.xml.resultado.diputadosTotal) }}%</b> sobre composicion ({{ votacion.xml.resultado.diputadosTotal }})</span>
+						<span class="votoemitido"><b>{{ result | percentBy(350) }}%</b> sobre composicion (350)</span>
 						{% endif %}
 					</li>
 					{% endfor %}
 				</ul>
 			</div>
-			<div class="ultVotaciones large-12 columns">
-				<span><b>Últimas Votaciones</b></span>
-				<ol class="ultimasvotaciones ">
-					{% for _votacion in ultimasVotaciones %}
-					<li class="votacion">
-						<span class="info">Sesion {{ _votacion.xml.resultado.informacion.sesion }} - Votacion {{_votacion.xml.resultado.informacion.numerovotacion}} - {{_votacion.xml.resultado.informacion.fecha}}</span>
-						<h2><a href="{{_votacion.url}}" target="_blank">{{_votacion.xml.resultado.informacion.titulo}}</a></h2>
-						{% if _votacion.xml.resultado.totales.asentimiento=='no' %}
-						<span class="resultado aprobada">Aprobada</span>
-						{% else %}
-						<span class="resultado noaprobada">Rechazada</span>
-						{% endif %}
-						<span class="descripcion">{{_votacion.xml.resultado.informacion.textoexpediente}}</span>
-						{% if _votacion.xml.resultado.informacion.titulosubgrupo %}
-						<span class="subgrupo">{{_votacion.xml.resultado.informacion.titulosubgrupo}}</span>
-						<span class="subgrupo">{{_votacion.xml.resultado.informacion.textosubgrupo}}</span>
-						{% endif %}
-						<span><b>Resultado de la votacion:</b></span>
-						<ul class="resultado">
-							{% for result in _votacion.xml.resultado.totales %}
-							<li id="{{loop.key}}" class="{{loop.key}}">
-								<span class="tipo"><i class="mark">&nbsp;</i>{% if loop.key=='novotan' %}Ausentes{% else %}{{loop.key}}{% endif %}</span>
-								<span class="result">{{result}}</span>
-							</li>
-							{% endfor %}
-						</ul>
-					</li>
-					{% endfor %}
-				</ol>
+			<div class="large-4 columns">
+        		<div id="hemiciclo" class="large-12 columns"></div>
+        		<div class="large-12 columns">
+        			<ul class="summary">
+						<li class="presentes"><span class="tipo"><i>&nbsp;</i>Presentes {{votacion.xml.resultado.totales.presentes}}</span></li>
+						<li class="abstenciones"><span class="tipo"><i>&nbsp;</i>Abstenciones {{votacion.xml.resultado.totales.abstenciones}}</span></li>
+						<li class="afavor"><span class="tipo"><i>&nbsp;</i>A favor {{votacion.xml.resultado.totales.afavor}}</span></li>
+						<li class="novotan"><span class="tipo"><i>&nbsp;</i>No votan {{votacion.xml.resultado.totales.novotan}}</span></li>
+						<li class="encontra"><span class="tipo"><i>&nbsp;</i>En contra {{votacion.xml.resultado.totales.encontra}}</span></li>
+					</ul>
+        		</div>
 			</div>
+		</div>
+		<div class="large-12 columns ultimasvotaciones">
+			<span class="encabezadoMod">Ultimas votaciones <a href="/votaciones">Ver todas</a></span>
+			<!--#include virtual="/modules/portada/ultimas-votaciones/2" -->
 		</div>
 	</div>
 {% endblock %}
 {% block scripts %}
 	{% parent %}
+        <script src="/javascripts/ultimasInic.js"></script>
+        <script src="/javascripts/vendors/raphael-min.js"></script>
+        <script src="/javascripts/hemiciclo.js"></script>
+        <script>
+        	$(function(){ 
+        		var hemiciclo = new HemicicloVotacionView({votaciones: {{votacion.xml.resultado.votaciones.votacion|json|raw}} }); 
+        	});
+        </script>
 {% endblock %}
 

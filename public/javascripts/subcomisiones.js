@@ -26,7 +26,7 @@ function mayusFirst(string){
 
 $(document).ready(function(){
 	$().html('');
-	var srcImg="http://www.movidamovil.com/descargas/images/cmobile/loading.gif";
+	var srcImg="http://www.mo-experts.com/images/loading.gif";
         var img="<img src='"+srcImg+"' alt='cargando contenido'/>";
         var div="<div style='min-height:400px;padding:50px 200px;width:100%'><p style='text-align:center'>"+img+"</p></div>";
 	$('.containerSubComisiones').html(div);

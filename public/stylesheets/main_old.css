@@ -1,16 +1,11 @@
-a:active, a:focus, input , select, option{
-    outline: 0 !important;
-    outline-style:none !important;
-    outline-width:0 !important;
-}
-
 .header {
     background-color: black;
     color: white;
 }
 .header h1 {
-    width: 60%;
+    width: 20%;
     height: 93px;
+    color:transparent;
     display: inline-block;
     overflow: hidden;
     text-indent: -100%;
@@ -109,7 +104,6 @@ li.network{font-size:1.5em;}
 .tabs li { display: inline-block; padding: .5em 0;margin-left: 5px}
 .tabs li.active a { background-color: #fe5339; background-image: linear-gradient(to bottom, rgba(255,255,255,.2) 50%,transparent 55%); border-radius: 4px; color: white;}
 .tabs li a { text-decoration: none; color: #333; text-transform: uppercase; padding: 1em; display: block;}
-.tabs li a:hover { background: #333; color: white; border-radius: 4px;}
 
 table { width: 100%;}
 table td {}
@@ -186,84 +180,57 @@ ul.diputadosList li a:hover span { color:white; }
  Votacion
 **/
 .infoVotacion       { padding: 1em !important;display:block; }
-.infoVotacion .info, .votacion .info { font-size: 9pt; color:#666;}
-.infoVotacion h2,.votacion h2    { font-size:12pt; margin: 0; padding: .5em 0;}
-.infoVotacion h2 a,.votacion h2 a  { 
-  color: #ff6956;
-  text-decoration: none;
-  border-bottom: 1px solid;
-  line-height: 1.3em;
-  padding: 2px 0;
-  margin-bottom: 2px;
- }
+.infoVotacion .info { font-size: 9pt; color:#666;}
+.infoVotacion h2    { font-size:12pt; margin: 0; padding: .7em 0;}
+.infoVotacion h2 a  { color: #fe5339; }
 .infoVotacion span  { display:block; }
-.infoVotacion span.resultado, .votacion span.resultado            { font-size:10pt; display:inline-block; padding: .4em;line-height:1.2em;color:white; font-weight: bold;}
-.infoVotacion span.resultado.si, .votacion span.resultado.si   { background-color:#6fc354;}
-.infoVotacion span.resultado.no, .votacion span.resultado.no { background-color:#e22b0b;}
+.infoVotacion span.resultado            { font-size:10pt; display:inline-block; padding: .4em;line-height:1.2em;color:white; font-weight: bold;}
+.infoVotacion span.resultado.aprobada   { background-color:#6fc354;}
+.infoVotacion span.resultado.noaprobada { background-color:#e22b0b;}
 .infoVotacion .descVotacion { padding:.4em 0;}
 .infoVotacion .descVotacion span { display:block;color:#666;font-size:11pt;line-height:1.2em; padding: 0;}
 .infoVotacion ul.resultado li               { display:inline-block; width: 30%; margin: .4em 0; height:auto;padding:.4em; background-color:#f2f2f2; border:1px solid #c3c3c3; text-align:center; padding-bottom: 3em; position:relative;}
 .infoVotacion ul.resultado li.asentimiento  { display:none;}
 .infoVotacion ul.resultado li span {}
-.infoVotacion ul.resultado li .tipo, ul.summary li .tipo         { position:absolute;bottom:0;width:100%;left:0; padding: .6em;border-top:1px solid #c3c3c3; line-height: 1em;}
-.infoVotacion ul.resultado li .result, ul.summary li .result       { font-size:30pt; font-weight:bold; line-height: 1.4em; text-shadow: 0 1px 0px white,0 -1px 0 #e4e4e4;}
-.infoVotacion ul.resultado li .votoemitido, ul.summary li .votoemitido   { font-size:8pt; color:#666; line-height: 1.5em;}
+.infoVotacion ul.resultado li .tipo         { position:absolute;bottom:0;width:100%;left:0; padding: .6em;border-top:1px solid #c3c3c3; line-height: 1em;}
+.infoVotacion ul.resultado li .result       { font-size:30pt; font-weight:bold; line-height: 1.4em; text-shadow: 0 1px 0px white,0 -1px 0 #e4e4e4;}
+.infoVotacion ul.resultado li .votoemitido  { font-size:8pt; color:#666; line-height: 1.5em;}
 
-.resultadoVotacion .resultado {text-align: center}
 /* colores */
-.infoVotacion ul.resultado li.afavor .result,
-ul.summary li.afavor .result{ color:#6fc354;}
-.infoVotacion ul.resultado li.encontra .result,
-ul.summary li.encontra .result{ color:#f70504;}
-.infoVotacion ul.resultado li.presentes .result,
-ul.summary li.presentes .result{ color:#1695fe;}
-.infoVotacion ul.resultado li.abstenciones .result,
-ul.summary li.abstenciones .result{ color:#ecbc02;}
-.infoVotacion ul.resultado li.novotan  .result,
-ul.summary li.novotan  .result{ color:#333;}
+.infoVotacion ul.resultado li.afavor .result        { color:#6fc354;}
+.infoVotacion ul.resultado li.encontra .result      { color:#f70504;}
+.infoVotacion ul.resultado li.presentes .result     { color:#1695fe;}
+.infoVotacion ul.resultado li.abstenciones .result  { color:#ecbc02;}
+.infoVotacion ul.resultado li.novotan  .result      { color:#333;}
 /************/
-.infoVotacion ul.resultado li.afavor .tipo,
-ul.summary li.afavor .tipo{ border-color:#6fc354;}
-.infoVotacion ul.resultado li.encontra .tipo,
-ul.summary li.encontra .tipo{ border-color:#f70504;}
-.infoVotacion ul.resultado li.presentes .tipo,
-ul.summary li.presentes .tipo{ border-color:#1695fe;}
-.infoVotacion ul.resultado li.abstenciones .tipo,
-ul.summary li.abstenciones .tipo{ border-color:#ecbc02;}
-.infoVotacion ul.resultado li.novotan  .tipo,
-ul.summary li.novotan .tipo{ border-color:#333;}
+.infoVotacion ul.resultado li.afavor .tipo          { border-color:#6fc354;}
+.infoVotacion ul.resultado li.encontra .tipo        { border-color:#f70504;}
+.infoVotacion ul.resultado li.presentes .tipo       { border-color:#1695fe;}
+.infoVotacion ul.resultado li.abstenciones .tipo    { border-color:#ecbc02;}
+.infoVotacion ul.resultado li.novotan  .tipo        { border-color:#333;}
 .infoVotacion ol {list-style:none; padding:0}
 
 /* ultimas votaciones */
-.ultimasvotaciones    {
+.infoVotacion .ultimasvotaciones    {
     padding: 1em;
 }
-.ultimasvotaciones li {
+.infoVotacion .ultimasvotaciones li {
     border-bottom: 1px solid #fe5339;
     padding: 1em 0;
 }
-.ultimasvotaciones ul.resultado li,
-ul.summary li {background: none; border: none;display: block;padding: 0;text-align: left;margin: 0;}
-.ultimasvotaciones ul.resultado li span,
-ul.summary li span{display: inline;font-size: 10pt;color: #333;}
-.ultimasvotaciones ul.resultado li .result { color: #333;}
-.ultimasvotaciones ul.resultado li .tipo, ul.summary li .tipo {position: relative;border: none;padding: 0;}
-.ultimasvotaciones ul.resultado li .tipo i, ul.summary li .tipo i{position:relative; width: 1em; height: 1em; background-color:red;border-radius:100%;display: inline-block;margin-right: .5em;}
+.infoVotacion .ultimasvotaciones ul.resultado li {background: none; border: none;display: block;padding: 0;text-align: left;margin: 0;}
+.infoVotacion .ultimasvotaciones ul.resultado li span {display: inline;font-size: 9pt;color: #333;}
+.infoVotacion .ultimasvotaciones ul.resultado li .result { color: #333;}
+.infoVotacion .ultimasvotaciones ul.resultado li .tipo {position: relative;border: none;padding: 0;}
+.infoVotacion .ultimasvotaciones ul.resultado li .tipo i{position:relative; width: 1em; height: 1em; background-color:red;border-radius:100%;display: inline-block;margin-right: .5em;}
 
-.ultimasvotaciones ul.resultado li.asentimiento {display: none;}
-.ultimasvotaciones ul.resultado li.afavor .tipo i,
- ul.summary li.afavor .tipo i{ background-color: #6fc354;}
-.ultimasvotaciones ul.resultado li.encontra .tipo i,
- ul.summary li.encontra .tipo i{ background-color: #f70504;}
-.ultimasvotaciones ul.resultado li.presentes .tipo i,
- ul.summary li.presentes .tipo i{ background-color: #1695fe;}
-.ultimasvotaciones ul.resultado li.abstenciones .tipo i,
- ul.summary li.abstenciones .tipo i{ background-color: #ecbc02;}
-.ultimasvotaciones ul.resultado li.novotan .tipo i,
- ul.summary li.novotan .tipo i{ background-color: #333;}
+.infoVotacion .ultimasvotaciones ul.resultado li.asentimiento {display: none;}
+.infoVotacion .ultimasvotaciones ul.resultado li.afavor .tipo i     { background-color: #6fc354;}
+.infoVotacion .ultimasvotaciones ul.resultado li.encontra .tipo i   { background-color: #f70504;}
+.infoVotacion .ultimasvotaciones ul.resultado li.presentes .tipo i  { background-color: #1695fe;}
+.infoVotacion .ultimasvotaciones ul.resultado li.abstenciones .tipo i { background-color: #ecbc02;}
+.infoVotacion .ultimasvotaciones ul.resultado li.novotan .tipo i    { background-color: #333;}
 
-.ultimasvotaciones h3 {text-align: center; display:inline-block;} 
-.ultimasvotaciones h3 a { color: #fe5339; } 
 table{margin:1em 0; /*border-bottom:1px solid #fe5339;*/}
 
 table td,table th {border-bottom:1px solid #e4e4e4;}
@@ -279,23 +246,6 @@ table td {padding:.3em; font-size:.8em}
 .votaciones .votacionesPorSesion li {padding:.2em .5em;}
 .votaciones .votacionesPorSesion span {font-size:9pt;}
 .votaciones .votacionesPorSesion li a {color:#fe5339; }
-
-ul.votaciones li.votacion { display:block; float:left; }
-ul.votaciones li.votacion span.result { color:#6a6a6a; font-size:10pt;  }
-ul.votaciones li.votacion .textoExpediente { 
-  font-size: 14px;
-  line-height: 1.3em;
-  color: #6a6a6a; 
-  padding: .4em 0;
-}
-ul.votaciones li.votacion ul.resultado,
-ul.summary {padding:0; margin:0; display:block;}
-
-ul.votaciones li.votacion ul.resultado li, 
-ul.summary li {display:inline-block; min-width:150px; width:auto; float:left; padding: 2px 0px;}
-
-ul.votaciones li.votacion ul.resultado li:nth-child(2n+1),
-ul.summary li:nth-child(2n+1) { clear:both; }
 
 
 input[type="checkbox"] { opacity: 0; position: absolute; }
@@ -414,7 +364,6 @@ table#vidalaboral {
 .filtrosContainer .title{
   font-size:12pt;
   font-weight:bold;
-  color:#555555;
 }
 
 .filtrosContainer *{
@@ -529,98 +478,37 @@ height:50%;
   font-size: 12px;
 }
 
+/* PÁGINA INICIATIVAS */
 
-/**** Modulo intervenciones ***/
-.intervenciones .intervencion {
-  display: block;
-  margin-left: 60px;
-  margin-bottom: 1.2em;
-  font-size: 11pt;
-  line-height: 1.2em;
-  position:relative;
-}
-
-.intervenciones .intervencion img{
-  display:inline-block;
-  vertical-align:middle;
-  border-radius:50% 50% 50% 50%;
-  border:2px solid lightgrey;
-  position:absolute;
-  left:-65px;
-}
-
-.intervenciones .intervencion > * {
-  display: block;
-}
-.intervenciones .intervencion a + span {
-  color: #44474c;
-}
-
-
-/* PÁGINA INICIATIVAS E INTERVENCIONES */
-
-#iniciativasdiv, #intervencionesdiv{
+#iniciativasdiv {
   padding: 10px 30px;
   min-height: 500px;
 }
 
-h3#totalInic, h3#totalInterv{
-  display:none;
-  color:#555555;
-}
-
-#iniciativasdiv span,#intervencionesdiv span{
+#iniciativasdiv span{
   display:block;
   color:#6A6A6A;
 }
 
-#iniciativasdiv i, #intervencionesdiv i{
+#iniciativasdiv i{
   color:#FE5339;
 }
 
-/*#iniciativasdiv a, #intervencionesdiv a{*/
 #iniciativasdiv a{
-    color:black;
+  color:black;
     text-decoration:underline;
 }
 
-/*#iniciativasdiv a:hover, #intervencionesdiv a:hover{*/
 #iniciativasdiv a:hover{
   color:#FE5339;
 }
 
-
-#iniciativasdiv a.enlaceExtIcon, #intervencionesdiv a.enlaceExtIcon{
-  display:inline-block;
-  font-size:11pt;
-}
-
-#iniciativasdiv a.enlaceExtIcon i, #intervencionesdiv a.enlaceExtIcon i{
-  padding:2px;
-}
-
-/* TEMPORALES PARA PROBAR OTRO DISEÑO EN INTERV*/
-/*#intervencionesdiv span.tituloInterv{
-   font-weight:bold;
-}*/
-
-#intervencionesdiv a{
-   color:#FE5339;
-}
-
-#intervencionesdiv a:hover{
-  text-decoration:underline;
-}
-
-/* FIN TEMPORALES*/
-
-#iniciativasdiv .tituloInic, #intervencionesdiv .tituloInterv{
+#iniciativasdiv .tituloInic{
    color:black;
    font-size:11pt !important;
 }
 
-
-#iniciativasdiv #cargarmas, #intervencionesdiv #cargarmas{
+#iniciativasdiv #cargarmas{
   /*display:inline-block;
   margin:auto;*/
   text-align:center;
@@ -628,110 +516,30 @@ h3#totalInic, h3#totalInterv{
   margin-top:30px;
 }
 
-#iniciativasdiv #cargarmas a, #intervencionesdiv #cargarmas a{
+#iniciativasdiv #cargarmas a{
   padding:10px;
   border:1px solid lightgrey;
   color:#FE5339;
   font-size:11pt;
 }
 
-#iniciativasdiv #cargarmas a:hover, #intervencionesdiv #cargarmas a:hover{
+#iniciativasdiv #cargarmas a:hover{
   color:white;
   background-color:#FE5339
 }
-#iniciativasdiv #volverarriba, #intervencionesdiv #volverarriba{
+#iniciativasdiv #volverarriba{
   position:absolute;
   display:inline-block !important;
   right:10px;
 }
 
-#iniciativasdiv #volverarriba a, #intervencionesdiv #volverarriba a{
+#iniciativasdiv #volverarriba a{
   color:#FE5339;
 }
 
-#iniciativasdiv img, #intervencionesdiv img{
+#iniciativasdiv img{
   display:block;
   margin:auto;
-}
-
-#intervencionesdiv .iniRel {
-  padding:10px;
-}
-
-#intervencionesdiv .iniRel li{
-  padding:5px;
-  font-size:11pt;
-}
-
-#intervencionesdiv .videoInterv object{
-  padding:10px;
-  /*display:block;
-  margin:auto;*/
-}
-
-.filtros span{
-  margin-bottom:10px;
-}
-
-.filtros .buscador{
-   height:40px;
-}
-
-.filtros form{
-        margin:15px 0px;
-}
-.filtros form input[type="search"]{
-    display: inline-block;
-    -webkit-border-radius: 2px 0 0 2px;
-    padding: .8em;
-    float: left;
-    border: none;
-    width: 65%;
-    font-size: .9em;
-    box-shadow: inset 0 0 20px rgba(0,0,0,.2),0px -1px 0px rgba(255,255,255,.4);
-}
-
-.filtros form input[type="submit"]{
-    color:white;
-    border: none;
-    display: inline-block;
-    padding: .93em;
-    float: left;
-    background-color: #fe5339; 
-    font-weight: bold;
-    text-transform: uppercase;
-    margin-left:2px;
-    font-size: .7em;
-    border-radius: 0 2px 2px 0;
-    border-color:#fe5339;
-    box-shadow: inset 0 0 20px rgba(0,0,0,.2),0px -1px 0px rgba(255,255,255,.3);
-}
-
-.filtros form input[type="submit"]:hover{
-   color:#44474c;
-   cursor: pointer;
-}
-
-.filtrosContainer select, .filtrosContainer span{
-   margin-left:20px;
-}
-
-.filtrosContainer span.catFiltros{
-   font-size:14px;
-}
-
-.filtrosContainer #selectFechas input{
-  max-width:200px !important;
-  margin-left:20px !important;
-}
-
-/* DATEPICKER */
-#ui-datepicker-div{
-  width:13em !important;
-}
-
-#ui-datepicker-div select{
-  font-size: 0.875rem !important; 
 }
 
 /* ENLACES INICIATIVAS PÁGINAS GRUPO - DIPUTADOS */
@@ -758,81 +566,70 @@ h3#totalInic, h3#totalInterv{
   color:#FE5339 !important;
 }
 
-
 .tiposUltimasInic{
-  width:85%;
   margin:auto;
-  text-align:center;
-  padding:0px 0px;
-  /*margin-bottom:20px;*/
-  background-color:white;
-  background-image:none !important;
-  
 }
+
+.tiposUltimasInic ul{
+  white-space:nowrap;
+  text-align:center;
+  list-style-type:none;
+  display:block;
+  margin:auto;
+  width:90%;
+}
+
 
 .tiposUltimasInic li{
-  margin:2px 5px;
-  padding:5px 0px;
-  line-height:1.6em;
+  display:inline-block;
+  padding:0px 10px;
+  padding-top:0px;
 }
 
-.tiposUltimasInic a{
-  background-image:none !important;
+.tiposUltimasInic li a{
+  display:inline-block;
+  padding: 0px 15px;
+  font-weight:bold;
+  text-transform:uppercase;
+  color: black;
+  /*font-weight:bold;*/
+  /*border-right:1px solid #FE5339;*/
+  font-size:8pt;
 }
 
-#iniciativasGrupo{
-  margin-top:15px;
+.tiposUltimasInic li a.sinBordeDer{
+  border-right:none;
 }
 
-#ultimasInicDipu a{
-  border-bottom:none;
+.tiposUltimasInic li a.active{ 
+  color:white; 
+  /*font-weight:bold;*/
+  /*text-decoration:underline;*/
 }
 
-#ultimasInicDipu .tiposUltimasInic,#ultimasInicDipu .iniciativas{
-  width:95%;
+.tiposUltimasInic li a:hover{
+   /*text-decoration:underline;*/
 }
-
-
 
 .popUp {
   position:absolute;
-  min-width:100px;
   max-width:150px;
   display: block;
+  width: 100%;
 }
-.popUp .popUpDip{
+.popUp span{
   position: absolute;
   background-color: #FE5339;
   color:white;
   padding: 1em;
   bottom:10px;
+  left: -50%;
   display: block;
+  width: 100%;
   font-size: .8em;
   text-align: center;
-  -webkit-transform: translateX(-50%);
-  -moz-transform: translateX(-50%);
-  -ms-transform: translateX(-50%);
-  transform: translateX(-50%);
 }
-.popUp .popUpDip span.fotoimg{
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  border: 4px solid #b6b6b6;
-  overflow: hidden;
-  padding: 0;
-  display: inline-block;
-  position: relative;
-}
-.popUp .popUpDip span.fotoimg img{
-  position:absolute;
-  top:50%; left:50%;
-  -webkit-transform: translateX(-50%) translateY(-50%);
-  -moz-transform: translateX(-50%) translateY(-50%);
-  -ms-transform: translateX(-50%) translateY(-50%);
-  transform: translateX(-50%) translateY(-50%);
-}
-.popUp .popUpDip:before{
+.popUp span:before{
   content:"";
   position:absolute;
   left:50%; bottom:-5px;

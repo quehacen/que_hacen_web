@@ -1,0 +1,42 @@
+<ul class="intervenciones">
+{% for interv in intervenciones %}
+{%spaceless%}
+{% set dipu=diputados|dipu_from_id(interv.autor)%}
+{% set comision=0%}
+
+{%if interv.lugar=="P"%}
+	{%set lugartxt = "en Pleno"%}
+{%elif interv.lugar=="DP"%}
+	{%set lugartxt="en Diputación Permanente"%}
+{%elif interv.lugar=="C"%}
+	{%set lugartxt="en Comisión"%}
+	{%set comision=1%}
+	{% set com=comisiones|organo_from_id(interv.id_comision)%}
+{%else%}
+	{%set lugartxt=""%}
+{%endif%}
+
+{%if interv.hora_inicio %}
+	{%set horastxt="("+interv.hora_inicio+" - "+interv.hora_fin+")" %}
+{%else%}
+	{%set horastxt=""%}
+{%endif%}
+{%endspaceless%}
+
+<li class="intervencion">
+	<span><i class="fa fa-circle"></i> Intervención de <a href='/diputado/{{dipu.id}}'>{{dipu.nombre}} {{dipu.apellidos}}</a> {{lugartxt}}</span>
+	<span>Fecha: {{interv.fecha | fecha}} {{horastxt}}</span>
+	{% if comision==1%}
+	<span>Comisión: <a href="/organo/{{com.id}}">{{com.nombre}}</a></span>
+	{%endif%}
+	<!--<span>Lugar: {{lugartxt}}</span>-->
+	<!--<span>Enlaces: {{}} {{}} {{}}</span>-->
+	{%if interv.iniciativas_rel|length > 1%}
+	<span>Iniciativas relacionadas ({{interv.iniciativas_rel | length}})</span>
+	{%else%}
+	<span>Iniciativa relacionada: {{interv.iniciativas_rel[0].titulo}} (nº expediente: {{interv.iniciativas_rel[0].numExp}})</span>
+	{%endif%}
+</li>
+
+{% endfor %}
+</ul>
