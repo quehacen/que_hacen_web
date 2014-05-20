@@ -1,6 +1,5 @@
 var moment = require('moment');
 var _ = require('underscore.string');
-var __=require('lodash');
 var cheerio = require('cheerio');
 
 module.exports= function(swig){
@@ -18,6 +17,10 @@ module.exports= function(swig){
 			return false;
 		}
 
+	});
+	
+	swig.setFilter('toInt', function (input) {
+	  	return parseInt(input);
 	});
 	
 	swig.setFilter('pluck', function (input, key) {
@@ -59,6 +62,7 @@ module.exports= function(swig){
 		return dia.charAt(0).toUpperCase() + dia.slice(1);
 	  }
 	});
+
 	
 	swig.setFilter('edad', function(input) {
 	  var date = input;
@@ -66,6 +70,11 @@ module.exports= function(swig){
 	  var nac= new Date(nums[2],nums[1],nums[0]);
 	  var hoy=new Date();
 	  return parseInt((hoy - nac)/365/24/60/60/1000);
+	});
+
+	// devuelve el tipo de iniciativa (int) a partir del nº expediente
+	swig.setFilter('tipoInic',function(input){
+	  return parseInt(input.substr(0,3));
 	});
 
 	swig.setFilter('dateFromNow', function(input){
@@ -85,6 +94,22 @@ module.exports= function(swig){
 	swig.setFilter('post_img_alt', function(input){
 	  var $ = cheerio.load(input);
 	  return $("img").attr('alt');
+	});
+
+	swig.setFilter('dipu_from_id',function(input,id_dipu){
+		var __ = require('lodash');
+		var dipu= __.find(input,function(d){
+			return d.id==id_dipu;
+		});
+		return dipu;
+	});
+
+	swig.setFilter('organo_from_id',function(input,id_org){
+		var __ = require('lodash');
+		var org= __.find(input,function(o){
+			return o.id==id_org;
+		});
+		return org;
 	});
 
 	swig.setFilter('cargo_friendly_h', function (input){
@@ -216,6 +241,33 @@ module.exports= function(swig){
 	   return anew;
 	});
 
+	swig.setFilter("getFuentes",function(input,cp){
+		var __=require('lodash');
+		var fuentes=[];
+		var fuentesTemp=[];
+		var f;
+		var i=1;
+		__.each(input,function(cargo){
+			if(__.contains(fuentesTemp,cargo.fuente.url) == false){
+				f=cargo.fuente;
+				f.num=i;
+				fuentesTemp.push(cargo.fuente.url);
+				fuentes.push(f);
+				i++;
+			}
+		});
+		__.each(cp,function(cargo){
+			if(__.contains(fuentesTemp,cargo.fuente.url) == false){
+				f=cargo.fuente;
+				f.num=i;
+				fuentesTemp.push(cargo.fuente.url);
+				fuentes.push(f);
+				i++;
+			}
+		});
+		return fuentes;
+	});
+
 	swig.setFilter("dipusorg",function(input,idorg){
 	   var __=require('lodash');
 	   var dipusorg=[];
@@ -238,27 +290,6 @@ module.exports= function(swig){
 		});
 	   });
 	   return dipusorg;
-	});
-
-	
-	swig.setFilter("groupBy",function(input, key) {
-	  if (!__.isArray(input)) {
-	    return input;
-	  }
-	  var out = {};
-	  __.each(input, function (value) {
-	    if (!value.hasOwnProperty(key)) {
-	      return;
-	    }
-	    var keyname = value[key],
-	      newVal = __.extend({}, value);
-	    delete value[key];
-	    if (!out[keyname]) {
-	      out[keyname] = [];
-	    }
-	    out[keyname].push(value);
-	  });
-	  return out;
 	});
 	/****END SWIG FILTERS *****/
 }
