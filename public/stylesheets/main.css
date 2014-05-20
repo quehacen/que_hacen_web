@@ -1,3 +1,9 @@
+a:active, a:focus, input , select, option{
+    outline: 0 !important;
+    outline-style:none !important;
+    outline-width:0 !important;
+}
+
 .header {
     background-color: black;
     color: white;
@@ -157,7 +163,8 @@ ul.diputados li a span {line-height:100%;}
 .grupos .grupo { display:inline-block; padding:.5em .5em; border-radius: 5px;}
 .grupos .grupo.active { background-color: #fe5339; }
 .grupos .grupo a { color:black; font-weight:bold; font-size:8pt; text-transform:uppercase;}
-.grupos .grupo:hover { background-color: #eee; } 
+.grupos .grupo:hover { background-color: #333333; } 
+.grupos .grupo:hover a{ color:white; }
 .grupos .grupo.active a{color: white;}
 
 .encabezadoMod {text-align: center; padding: 1em 0; border-top: 1px solid #c3c3c3; display: block;font-weight: bold;color: #555;font-size: 15pt;line-height: 1em;}
@@ -364,6 +371,7 @@ table#vidalaboral {
 .filtrosContainer .title{
   font-size:12pt;
   font-weight:bold;
+  color:#555555;
 }
 
 .filtrosContainer *{
@@ -478,41 +486,98 @@ height:50%;
   font-size: 12px;
 }
 
-/* PÁGINA INICIATIVAS */
 
-#iniciativasdiv {
+/**** Modulo intervenciones ***/
+.intervenciones .intervencion {
+  display: block;
+  margin-left: 60px;
+  margin-bottom: 1.2em;
+  font-size: 11pt;
+  line-height: 1.2em;
+  position:relative;
+}
+
+.intervenciones .intervencion img{
+  display:inline-block;
+  vertical-align:middle;
+  border-radius:50% 50% 50% 50%;
+  border:2px solid lightgrey;
+  position:absolute;
+  left:-65px;
+}
+
+.intervenciones .intervencion > * {
+  display: block;
+}
+.intervenciones .intervencion a + span {
+  color: #44474c;
+}
+
+
+/* PÁGINA INICIATIVAS E INTERVENCIONES */
+
+#iniciativasdiv, #intervencionesdiv{
   padding: 10px 30px;
   min-height: 500px;
 }
 
-h3#totalInic{
+h3#totalInic, h3#totalInterv{
   display:none;
+  color:#555555;
 }
 
-#iniciativasdiv span{
+#iniciativasdiv span,#intervencionesdiv span{
   display:block;
   color:#6A6A6A;
 }
 
-#iniciativasdiv i{
+#iniciativasdiv i, #intervencionesdiv i{
   color:#FE5339;
 }
 
+/*#iniciativasdiv a, #intervencionesdiv a{*/
 #iniciativasdiv a{
-  color:black;
-    text-decoration:underline;
+    color:#FE5339;
 }
 
+/*#iniciativasdiv a:hover, #intervencionesdiv a:hover{*/
 #iniciativasdiv a:hover{
   color:#FE5339;
+  text-decoration:underline;
 }
 
-#iniciativasdiv .tituloInic{
+
+#iniciativasdiv a.enlaceExtIcon, #intervencionesdiv a.enlaceExtIcon{
+  display:inline-block;
+  font-size:11pt;
+}
+
+#iniciativasdiv a.enlaceExtIcon i, #intervencionesdiv a.enlaceExtIcon i{
+  padding:2px;
+}
+
+/* TEMPORALES PARA PROBAR OTRO DISEÑO EN INTERV*/
+/*#intervencionesdiv span.tituloInterv{
+   font-weight:bold;
+}*/
+
+#intervencionesdiv a{
+   color:#FE5339;
+}
+
+#intervencionesdiv a:hover{
+  text-decoration:underline;
+}
+
+/* FIN TEMPORALES*/
+
+#iniciativasdiv .tituloInic, #intervencionesdiv .tituloInterv{
    color:black;
    font-size:11pt !important;
 }
 
-#iniciativasdiv #cargarmas{
+
+#iniciativasdiv #cargarmas, #intervencionesdiv #cargarmas{
   /*display:inline-block;
   margin:auto;*/
   text-align:center;
@@ -520,32 +585,52 @@ h3#totalInic{
   margin-top:30px;
 }
 
-#iniciativasdiv #cargarmas a{
+#iniciativasdiv #cargarmas a, #intervencionesdiv #cargarmas a{
   padding:10px;
   border:1px solid lightgrey;
   color:#FE5339;
   font-size:11pt;
 }
 
-#iniciativasdiv #cargarmas a:hover{
+#iniciativasdiv #cargarmas a:hover, #intervencionesdiv #cargarmas a:hover{
   color:white;
   background-color:#FE5339
 }
-#iniciativasdiv #volverarriba{
+#iniciativasdiv #volverarriba, #intervencionesdiv #volverarriba{
   position:absolute;
   display:inline-block !important;
   right:10px;
 }
 
-#iniciativasdiv #volverarriba a{
+#iniciativasdiv #volverarriba a, #intervencionesdiv #volverarriba a{
   color:#FE5339;
 }
 
-#iniciativasdiv img{
+#iniciativasdiv img, #intervencionesdiv img{
   display:block;
   margin:auto;
 }
 
+#intervencionesdiv .iniRel, #iniciativasdiv .autoresList{
+  margin: 5px;
+}
+
+#intervencionesdiv .iniRel li, #iniciativasdiv .autoresList li{
+  padding:5px 0px;
+  font-size:11pt;
+}
+
+#intervencionesdiv .iniRel i, #iniciativasdiv .autoresList i{
+  color:#6A6A6A;
+  display:inline-block;
+  margin-right:5px;
+}
+
+#intervencionesdiv .videoInterv object{
+	padding:10px;
+	/*display:block;
+	margin:auto;*/
+}
 
 .filtros span{
   margin-bottom:10px;
@@ -589,6 +674,44 @@ h3#totalInic{
    color:#44474c;
    cursor: pointer;
 }
+
+.filtrosContainer select, .filtrosContainer span{
+   margin-left:20px;
+}
+
+.filtrosContainer span.catFiltros{
+   font-size:14px;
+}
+
+.filtrosContainer #selectFechas input{
+	max-width:200px !important;
+	margin-left:20px !important;
+}
+
+/* DATEPICKER */
+#ui-datepicker-div{
+	width:13em !important;
+}
+
+#ui-datepicker-div select{
+	font-size: 0.875rem !important;	
+	padding: 5px !important;
+	height:auto;
+}
+
+.ui-datepicker-header{
+	background:#FF6956 !important;
+}
+
+.ui-state-default{
+	color: black !important;
+	font-weight:normal !important;
+}
+
+.ui-state-hover{
+	color: #004276 !important;
+}
+
 /* ENLACES INICIATIVAS PÁGINAS GRUPO - DIPUTADOS */
 
 .list.box a{

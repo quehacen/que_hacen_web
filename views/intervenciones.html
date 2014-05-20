@@ -1,0 +1,76 @@
+{% extends 'layout.html' %}
+
+{% block styles %}
+<link rel="stylesheet" href="/stylesheets/jquery-ui.css"> 
+{%endblock%}
+
+{% block title %}
+Intervenciones parlamentarias
+{%endblock%}
+
+{% block content %}
+	<div class="row container">
+		<div class="diputadosTotal">
+			<h2 id="arriba">Intervenciones parlamentarias</h2>
+		</div>
+                <div class="large-12 columns">
+		<div class="large-9 small-9 columns">
+			<h3 id="totalInic" class="title" style="text-align:center">{{numIntervenciones}} intervenciones</h3>
+		        <div id="filtrosActivos"></div>
+			<div id="intervencionesdiv" style="">
+				{% include "./modules/intervenciones.html" %}
+			</div>
+		</div>
+		
+		<div class="filtros large-3 small-3 columns">
+		   <!--<div class="filtrosContainer">	
+			<span class="title">Ordenaciones</span>
+			<select class="selectFiltro" id="ordenes">
+				<option value="edad">Por edad (ascendente)</option>
+				<option value="edadR">Por edad (descendente)</option>
+			</select>
+		   </div>-->
+		   <div class="filtrosContainer">
+			<span class="title">Filtros</span>
+			<span class='catFiltros'>Lugar</span>
+			<select class="selectFiltro filtro" id="lugar">
+				<option class="titleSelect" disabled selected value="no">Lugar general</option>
+				<option value="lugar-P">Pleno</option>
+				<option value="lugar-DP">Diputación Permanente</option>
+				<option value="lugar-C">Comisión</option>
+				<option value="lugar-Otros">Otros</option>	
+			</select>
+			<select class="selectFiltro filtro" id="comision">
+				<option class="titleSelect" disabled selected value="no">Comisiones</option>
+				{% for com in comisiones%}
+				<option value="comision-{{com.id}}">{{com.nombre}}</option>
+				{% endfor %}
+			</select>
+			<hr/>
+			<span class='catFiltros'>Autor</span>
+			<select class="selectFiltro filtro" id="diputado">
+				<option class="titleSelect" disabled selected value="no">Diputados</option>
+				{% for diputado in diputados%}
+				<option value="diputado-{{diputado.id}}">{{diputado.apellidos}}, {{diputado.nombre}}</option>
+				{% endfor %}
+			</select>
+			<hr/>	
+			<span class='catFiltros'>Fecha</span>
+			</select>
+			<form id="selectFechas">
+				<input type="text" class="datepicker" id="desde" placeholder="Desde"></input>
+				<input type="text" class="datepicker" id="hasta" placeholder="Hasta"></input>
+			</form>
+		</div>
+		</div>
+	</div>
+{% endblock %}
+{% block scripts %}
+	{% parent %}
+        <!--<script src="/javascripts/vendors/mustache.js"></script>-->
+	<script src="/javascripts/intervenciones.js"></script>
+	<script src="/javascripts/vendors/jquery-ui.js"></script>
+	<script src="/javascripts/vendors/datepicker_es.js"></script>
+	<script src="/javascripts/vendors/jquery.media.js"></script>
+{% endblock %}
+
