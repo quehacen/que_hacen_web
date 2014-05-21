@@ -1,8 +1,16 @@
+{%spaceless%}
+{% if salario.url_renuncia%}
+	{% set renun="*"%}
+{% else%}
+	{%set renun=""%}
+{%endif%}
+{%endspaceless%}
+
 <div class="salario mark">
 	<table id="salario" class="large-12 columns">
 		<tr>
 			<th>Salario bruto <i><a href='http://quehacenlosdiputados.net/los-sueldos-de-los-diputados-que-trabajan-para-nosotros/' alt='enlace a página donde informemos de cómo calculamos el salario estimado'>estimado</a></i></th>
-			<td>{{salario.bruto_mes | euros}} al mes.</td>
+			<td>{{salario.bruto_mes | euros}} al mes.{{renun}}</td>
 		</tr>
 		<tr>
 			<th>Desglose por concepto</th>
@@ -20,4 +28,7 @@
 			<td>{% if url_nomina %}<a href='{{url_nomina}}'>Enlace a nómina de {{diputado.nombre}} {{diputado.apellidos}}</a>{% else %}El diputado no ha hecho pública su nómina o <a href='/mas-informacion-diputados' alt='enlace a página donde pidamos colaboración a la gente para recabar datos que falten'>nosotros no la tenemos</a>{% endif %}.</td>
 		</tr>
 	</table>
+	{% if salario.url_renuncia%}
+	<span style="display:block;padding:15px 10px;font-size:10pt;">* {{diputado.nombre}} {{diputado.apellidos}} ha <a href="{{salario.url_renuncia}}" target="blank_">renunciado a su salario como parlamentaria</a>.</td>
+	{%endif%}
 </div>

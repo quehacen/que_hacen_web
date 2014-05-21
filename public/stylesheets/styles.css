@@ -706,9 +706,16 @@ a:hover {
 .submenu.organos .organo.active a {
   color: white;
 }
+
 .submenu.organos .organo:hover {
-  background-color: #eee;
+  /*background-color: #eee;*/
+  background-color: #333333;
 }
+
+.submenu.organos .organo:hover a{
+  color: white;
+}
+
 .submenu.organos .organo a {
   color: black;
   font-weight: bold;
