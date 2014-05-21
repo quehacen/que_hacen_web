@@ -69,8 +69,17 @@
 				</ul>
 			</div>
 			<div class="large-12 columns pagination">
-				{{ currentPage*10 }} / {{ totalVotaciones/10 }}
-
+				<ul class="pagination">
+					<li class="arrow unavailable"><a href="/votaciones/{% if currentPage>0 %}{{currentPage-1}}{% endif %}">&laquo;</a></li>
+					{% for page in pageRange %}
+					{% if page==currentPage %}
+						<li class="current"><a href="#">{{page}}</a></li>
+					{% else %}
+						<li class="current"><a href="/votaciones/{{page}}">{{page}}</a></li>
+					{% endif %}
+					{% endfor %}
+					<li class="arrow"><a href="/votaciones/{{currentPage+1}}">&raquo;</a></li>
+				</ul>
 			</div>
 		</div>
 	</div>

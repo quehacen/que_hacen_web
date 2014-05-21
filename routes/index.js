@@ -1,5 +1,6 @@
 var request = require('request');
 var async = require('async');
+var _ = require('lodash');
 var APIUrl = 'http://localhost:3002';
 
 /*
@@ -168,7 +169,11 @@ exports.votaciones = function(req, res) {
         var resultBody = JSON.parse(body)
         viewObject.votaciones = resultBody.result;
         viewObject.totalVotaciones = resultBody.totalObjects;
-        viewObject.currentPage = req.params.page;
+        viewObject.currentPage = parseInt(req.params.page) || 0;
+        viewObject.pages = Math.ceil(resultBody.totalObjects / pageCount);
+        var startPage = ((viewObject.currentPage - pageCount) < 0) ? 0 :
+            ((viewObject.currentPage + pageCount) > viewObject.pages) ? (viewObject.pages - pageCount) : viewObject.currentPage;
+        viewObject.pageRange = _.range(startPage, pageCount);
 
         res.render('votaciones', viewObject);
     });

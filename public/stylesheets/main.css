@@ -163,7 +163,10 @@ ul.diputados li a span {line-height:100%;}
 .grupos .grupo { display:inline-block; padding:.5em .5em; border-radius: 5px;}
 .grupos .grupo.active { background-color: #fe5339; }
 .grupos .grupo a { color:black; font-weight:bold; font-size:8pt; text-transform:uppercase;}
-.grupos .grupo:hover { background-color: #eee; } 
+/*.grupos .grupo:hover { background-color: #eee; } */
+/*.grupos .grupo.active a{color: white;}*/
+.grupos .grupo:hover { background-color: #333333; }             
+.grupos .grupo:hover a{ color:white; }             
 .grupos .grupo.active a{color: white;}
 
 .encabezadoMod {text-align: center; padding: 1em 0; border-top: 1px solid #c3c3c3; display: block;font-weight: bold;color: #555;font-size: 15pt;line-height: 1em;}
