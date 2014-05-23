@@ -56,7 +56,7 @@
 			<img src="/img/imagenesDipus/{{diputado.id}}.jpg" alt="Fotografía de {{diputado.nombre}} {{diputado.apellidos}}">
 		</span>
 		<span class="nombre"><b>{{diputado.apellidos}}</b>, {{diputado.nombre}}</span>
-		<img class="partidoimg" src="/img/logosPartidos/{{diputado.partido }}.png" alt="logotipo del partido {{diputado.partido}}">
+		<img class="partidoimg" src="/img/logosPartidos/{{diputado.partido | sinTildes}}.png" alt="logotipo del partido {{diputado.partido}}">
 	</a>
 	<!--<a href="#"><span class="partido">GP {{diputado.grupo}}</span></a>-->
 	{%if cargoarriba==1%}<a href='#'><span class="partido">{{cargonom}}</span></a>{%endif%}	

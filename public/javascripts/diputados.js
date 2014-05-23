@@ -26,6 +26,16 @@ function legistotxt(legis){
 	}
 }
 
+function sinTildes(input){
+	var cambios={"[áà]":"a","[ÀÁ]":"A","[éè]":"e","[ÉÈ]":"E", "[íì]":"i","[ÍÌ]":"I",
+                "[óò]":"o","[ÓÒ]":"[O]","[úù]":"u","[ÚÙ]":"U",};
+        var text=input;
+        for(var cambio in cambios){
+		text=text.replace(new RegExp(cambio, 'g'), cambios[cambio]);
+	}
+	return text;
+}
+
 function toSlug(text){
   	var str=text.toLowerCase().replace(/\s/g,'-');
 	var from = "àáäâèéëêìíïîòóöôùúüûñç";
@@ -460,7 +470,7 @@ $(function(){
 		basicaHandler: function(){
 			//alert('sin parámetros');
 			if(!this.diputados || !this.grupos || !this.circunscripciones){
-				setTimeout(this.basicaHandler,2700);
+				setTimeout(this.basicaHandler,3300);
 				return;
 			}
 			var datos=[];
@@ -469,6 +479,10 @@ $(function(){
 			var template = templateDipu('grupo');
 			$('h3.title').text(numDipus+" diputados");
 			$('.diputados').html( Mustache.render(template, datos));
+			$( ".partidoimg" ).each(function() {
+				var src=$( this ).attr('src');
+				$(this).attr('src',sinTildes(src));
+			});
 			if(datos.data.length > 40){	
 				$('#volverarriba a').show();
 			}else{
@@ -480,7 +494,7 @@ $(function(){
 			//console.log(ord+" "+fil);
 			//$('.diputados').hide();
 			if(!this.diputados || !this.grupos || !this.circunscripciones){
-				setTimeout(this.dipusHandler,2700,ord,fil);
+				setTimeout(this.dipusHandler,3300,ord,fil);
 				return;
 			}
 
@@ -807,6 +821,10 @@ $(function(){
 			$('.filtro option[value="no"]').prop('selected', true);
 			
 			$('#ordenes option[value="'+ord+'"]').attr("selected","selected");
+			$( ".partidoimg" ).each(function() {
+				var src=$( this ).attr('src');
+				$(this).attr('src',sinTildes(src));
+			});
 			$('.diputados').show();
 			if(dipus.length > 40){	
 				$('#volverarriba a').show();

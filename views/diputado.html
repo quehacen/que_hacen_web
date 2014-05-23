@@ -52,7 +52,7 @@
 					<span  class="foto">
 						<img class="carnet" src="{{baseURL}}/img/imagenesDipus/{{diputado.id}}.jpg">
 					</span>
-					<img class="partido" src="{{baseURL}}/img/logosPartidos/{{diputado.partido | url_decode}}.png">
+					<img class="partido" src="{{baseURL}}/img/logosPartidos/{{diputado.partido | url_decode | sinTildes}}.png">
 				</div>
 				<div class="ficha large-4 small-6 columns mark">
 					{%if diputado.activo==0%}
