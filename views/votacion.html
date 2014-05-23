@@ -5,10 +5,11 @@
 {%set tipoVot = votacion.numExpediente | tipoInic %}
 {% if votacion.xml.resultado.totales.asentimiento == "Sí"%}
 	{% set txtResul="Aprobada por asentimiento"%}{%set iresul="thumbs-up"%}{% set votog="sí"%}
+
 {%else %}
 	{# Votación constitucional #}
 	{%if tipoVot==100%}
-		{% if votacion.xml.resultado.totales.afavor > 210 %}
+		{% if votacion.xml.resultado.totales.afavor | toInt > 210 %}
 			{% set txtResul="Aprobada"%}{%set iresul="thumbs-up"%}{%set votog="sí"%}
 		{% else %}
 			{% set txtResul="Rechazada" %}{% set iresul="thumbs-down"%}{%set votog="no"%}
@@ -16,7 +17,7 @@
 
 	{# Estatuto de autonomía o reforma del reglamento #}
 	{%elif tipoVot==127 or tipoVot==410 %}
-		{% if votacion.xml.resultado.totales.afavor > 176 %}
+		{% if votacion.xml.resultado.totales.afavor | toInt > 176 %}
 			{% set txtResul="Aprobada"%}{%set iresul="thumbs-up"%}{%set votog="sí"%}
 		{% else %}
 			{% set txtResul="Rechazada" %}{% set iresul="thumbs-down"%}{%set votog="no"%}
@@ -24,14 +25,22 @@
 	
 	{# Iniciativa ordinaria #}
 	{%else%}
-		{% if votacion.xml.resultado.totales.afavor > votacion.xml.resultado.totales.encontra %}
+		{% if votacion.xml.resultado.totales.afavor | toInt > votacion.xml.resultado.totales.encontra | toInt%}
 			{% set txtResul="Aprobada"%}{%set iresul="thumbs-up"%}{%set votog="sí"%}
-		{% elif votacion.xml.resultado.totales.afavor == votacion.xml.resultado.totales.encontra %}
+		{% elif votacion.xml.resultado.totales.afavor | toInt == votacion.xml.resultado.totales.encontra | toInt%}
 			{% set txtResul="Empate"%}{%set iresul="minus-square-o"%}{%set votog="no"%}
 		{% else %}
+			{% set temp="Entra donde no debe"%}
 			{% set txtResul="Rechazada" %}{% set iresul="thumbs-down"%}{%set votog="no"%}
 		{% endif %}
 	{%endif%}
+{% endif %}
+
+{% set _votacion = votacion.xml.resultado.votaciones.votacion|first %}
+{% if _votacion.voto == "No" %}{% set txtVoto="Votó en contra" %}{% set ivoto="thumbs-down"%}
+{% elseif _votacion.voto == "Sí" %}{% set txtVoto="Votó a favor"%}{% set ivoto="thumbs-up"%}
+{% elseif _votacion.voto == "No vota" %}{% set txtVoto="No vota"%}{% set ivoto="times"%}
+{% elseif _votacion.voto == "Abstención" %}{% set txtVoto="Abstención"%}{% set ivoto="minus-square-o"%}
 {% endif %}
 {%endspaceless%}
 	<div class="row container infoVotacion">
@@ -45,10 +54,10 @@
 		</div>
 		<div id="infoVotacion" class="large-12 small-1 columns">
 			<span class="info">Sesion {{ votacion.xml.resultado.informacion.sesion }} - Votacion {{ votacion.xml.resultado.informacion.numerovotacion }} - {{ votacion.xml.resultado.informacion.fecha }}</span>
-			<h2><a href="{{votacion.url}}" target="_blank">{{ votacion.xml.resultado.informacion.titulo }}</a></h2>
+			<h2><a href="{{votacion.url}}" target="_blank">{{votacion.xml.resultado.informacion.textoexpediente}}</a></h2>
 			<span class="resultado voto {{votog | slugify}}"><i class="fa fa-{{iresul}}"></i> {{txtResul}}</span>
 			<div class="descVotacion">
-				<span class="descripcion">{{votacion.xml.resultado.informacion.textoexpediente}}</span>
+				<span class="descripcion">{{ votacion.xml.resultado.informacion.titulo }}</span>
 				{% if votacion.xml.resultado.informacion.titulosubgrupo.length > 0 %}
 				<span class="subgrupo">{{votacion.xml.resultado.informacion.titulosubgrupo}}</span>
 				<span class="subgrupo">{{votacion.xml.resultado.informacion.textosubgrupo}}</span>
@@ -60,7 +69,7 @@
 					{% for result in votacion.xml.resultado.totales %}
 					<li id="{{loop.key}}" class="{{loop.key}}">
 						<span class="tipo">
-							{% if loop.key=='novotan' %}Ausentes
+							{% if loop.key=='novotan' %}No votan o ausentes
 							{% elseif loop.key=='afavor' %}A favor
 							{% elseif loop.key=='encontra' %}En contra
 							{% elseif loop.key=='presentes' %}Presentes
@@ -82,7 +91,7 @@
 						<li class="presentes"><span class="tipo"><i>&nbsp;</i>Presentes {{votacion.xml.resultado.totales.presentes}}</span></li>
 						<li class="abstenciones"><span class="tipo"><i>&nbsp;</i>Abstenciones {{votacion.xml.resultado.totales.abstenciones}}</span></li>
 						<li class="afavor"><span class="tipo"><i>&nbsp;</i>A favor {{votacion.xml.resultado.totales.afavor}}</span></li>
-						<li class="novotan"><span class="tipo"><i>&nbsp;</i>No votan {{votacion.xml.resultado.totales.novotan}}</span></li>
+						<li class="novotan"><span class="tipo"><i>&nbsp;</i>No votan o ausentes {{votacion.xml.resultado.totales.novotan}}</span></li>
 						<li class="encontra"><span class="tipo"><i>&nbsp;</i>En contra {{votacion.xml.resultado.totales.encontra}}</span></li>
 					</ul>
         		</div>

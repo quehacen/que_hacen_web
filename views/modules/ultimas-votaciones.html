@@ -2,16 +2,17 @@
 {% for votacion in votaciones %}
 	<li class="votacion">
 			<span class="info">Sesión {{votacion.xml.resultado.informacion.sesion}} - Votación {{votacion.xml.resultado.informacion.numerovotacion}} - {{votacion.xml.resultado.informacion.fecha | fecha}}</span>	
-			<h2><a href="/votacion/sesion/{{votacion.xml.resultado.informacion.sesion}}/votacion/{{votacion.xml.resultado.informacion.numerovotacion}}">{{votacion.xml.resultado.informacion.titulo}}</a></h2>
+			<h2><a href="/votacion/sesion/{{votacion.xml.resultado.informacion.sesion}}/votacion/{{votacion.xml.resultado.informacion.numerovotacion}}">{{votacion.xml.resultado.informacion.textoexpediente}}</a></h2>
 {%spaceless%}
 
 {%set tipoVot = votacion.numExpediente | tipoInic %}
 {% if votacion.xml.resultado.totales.asentimiento == "Sí"%}
 	{% set txtResul="Aprobada por asentimiento"%}{%set iresul="thumbs-up"%}{% set votog="sí"%}
+
 {%else %}
 	{# Votación constitucional #}
 	{%if tipoVot==100%}
-		{% if votacion.xml.resultado.totales.afavor > 210 %}
+		{% if votacion.xml.resultado.totales.afavor | toInt > 210 %}
 			{% set txtResul="Aprobada"%}{%set iresul="thumbs-up"%}{%set votog="sí"%}
 		{% else %}
 			{% set txtResul="Rechazada" %}{% set iresul="thumbs-down"%}{%set votog="no"%}
@@ -19,7 +20,7 @@
 
 	{# Estatuto de autonomía o reforma del reglamento #}
 	{%elif tipoVot==127 or tipoVot==410 %}
-		{% if votacion.xml.resultado.totales.afavor > 176 %}
+		{% if votacion.xml.resultado.totales.afavor | toInt > 176 %}
 			{% set txtResul="Aprobada"%}{%set iresul="thumbs-up"%}{%set votog="sí"%}
 		{% else %}
 			{% set txtResul="Rechazada" %}{% set iresul="thumbs-down"%}{%set votog="no"%}
@@ -27,11 +28,12 @@
 	
 	{# Iniciativa ordinaria #}
 	{%else%}
-		{% if votacion.xml.resultado.totales.afavor > votacion.xml.resultado.totales.encontra %}
+		{% if votacion.xml.resultado.totales.afavor | toInt > votacion.xml.resultado.totales.encontra | toInt%}
 			{% set txtResul="Aprobada"%}{%set iresul="thumbs-up"%}{%set votog="sí"%}
-		{% elif votacion.xml.resultado.totales.afavor == votacion.xml.resultado.totales.encontra %}
+		{% elif votacion.xml.resultado.totales.afavor | toInt == votacion.xml.resultado.totales.encontra | toInt%}
 			{% set txtResul="Empate"%}{%set iresul="minus-square-o"%}{%set votog="no"%}
 		{% else %}
+			{% set temp="Entra donde no debe"%}
 			{% set txtResul="Rechazada" %}{% set iresul="thumbs-down"%}{%set votog="no"%}
 		{% endif %}
 	{%endif%}
@@ -47,13 +49,13 @@
 {%endspaceless%}
 		<!--<span class="asentimiento {{votacion.xml.resultado.totales.asentimiento | slugify}}"><i class="fa fa-thumbs-{{iresul}}"> </i> {{txtResul}}</span>-->
 		<span class="resultado voto {{votog | slugify}}"><i class="fa fa-{{iresul}}"> </i> {{txtResul}}</span>
-		<div class="textoExpediente">{{votacion.xml.resultado.informacion.textoexpediente}}</div>
+		<div class="textoExpediente">{{votacion.xml.resultado.informacion.titulo}}</div>
 		<span class="result"><b>Resultado de la votación:</b></span>
 		<ul class="summary">
 			<li class="presentes"><span class="tipo"><i>&nbsp;</i>Presentes {{votacion.xml.resultado.totales.presentes}}</span></li>
 			<li class="abstenciones"><span class="tipo"><i>&nbsp;</i>Abstenciones {{votacion.xml.resultado.totales.abstenciones}}</span></li>
 			<li class="afavor"><span class="tipo"><i>&nbsp;</i>A favor {{votacion.xml.resultado.totales.afavor}}</span></li>
-			<li class="novotan"><span class="tipo"><i>&nbsp;</i>No votan {{votacion.xml.resultado.totales.novotan}}</span></li>
+			<li class="novotan"><span class="tipo"><i>&nbsp;</i>No votan o ausentes {{votacion.xml.resultado.totales.novotan}}</span></li>
 			<li class="encontra"><span class="tipo"><i>&nbsp;</i>En contra {{votacion.xml.resultado.totales.encontra}}</span></li>
 		</ul>
 	</li>

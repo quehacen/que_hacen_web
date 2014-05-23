@@ -88,6 +88,7 @@ app.get('/subcomisiones', routes.subcomisiones);
 app.get('/iniciativas', routes.iniciativas);
 app.get('/iniciativas_', routes.iniciativas_);
 app.get('/intervenciones', routes.intervenciones);
+app.get('/search', routes.search);
 
 /** nosotros **/
 app.get('/quienes-somos', routes.nosotros);

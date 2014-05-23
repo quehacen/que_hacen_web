@@ -394,6 +394,10 @@ exports.intervenciones = function(req, res) {
     });
 }
 
+exports.search= function(req, res){
+    res.json({result:0});   
+}
+
 /*
  * GET nosotros page.
  */

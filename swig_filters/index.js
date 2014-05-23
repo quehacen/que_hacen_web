@@ -123,6 +123,10 @@ module.exports= function(swig){
 		return org;
 	});
 
+	swig.setFilter('percentBy',function(input,by){
+		return parseFloat(input/by*100).toFixed(2);
+	});
+
 	swig.setFilter('cargo_friendly_h', function (input){
 	  switch(input){
 	     case 'P': return 'Presidente';
