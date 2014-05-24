@@ -1,0 +1,4 @@
+<td>{% if _bien.sociedad %}{{ _bien.sociedad }}{% else %}{{no_disponible}}{% endif %}</td>
+<td>{% if _bien.participada_por %}{{ _bien.participada_por }}{% else %}{{no_disponible}}{% endif %}</td>
+<td>{% if _bien.titulos %}{{ _bien.titulos }}{% else %}{{no_disponible}}{% endif %}</td>
+<td>{% if _bien.euros %}{{ _bien.euros | euros }}{% else %}{{no_disponible}}{% endif %}</td>

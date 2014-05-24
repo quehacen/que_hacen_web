@@ -5,6 +5,8 @@
 		{%if loop.key == "BIU"%}{% set tipoBien="Bienes inmuebles urbanos"%}
 		{%elseif loop.key == "BIR"%}{% set tipoBien="Bienes inmuebles rurales"%}
 		{%elseif loop.key == "VE"%}{% set tipoBien="Vehículos"%}
+		{%elseif loop.key == "Otros"%}{% set tipoBien="Otros bienes"%}
+		{%elseif loop.key == "Sociedades"%}{% set tipoBien="Sociedades participadas por otras sociedades"%}
 		{%else%}{% set tipoBien=loop.key%}
 		{%endif%}
 	{%endspaceless%}
@@ -22,12 +24,18 @@
 						{% include "../partials/bienes/inmueblesHeader.html" %}
 					{% elseif loop.key == 'BIR' %}
 						{% include "../partials/bienes/birHeader.html" %}
+					{% elseif loop.key == 'BIS' %}
+						{% include "../partials/bienes/bisHeader.html" %}
+					{% elseif loop.key == 'Sociedades' %}
+						{% include "../partials/bienes/sociedadesHeader.html" %}
 					{% elseif loop.key == 'Rentas' %}
 						{% include "../partials/bienes/rentasHeader.html" %}
 					{% elseif loop.key == 'VE' %}
 						{% include "../partials/bienes/vehiculoHeader.html" %}
 					{% elseif loop.key == 'Deudas' %}
 						{% include "../partials/bienes/deudasHeader.html" %}
+					{% elseif loop.key == 'Otros' %}
+						{% include "../partials/bienes/otrosHeader.html" %}
 					{% endif %}
 
 				</tr>
@@ -43,12 +51,18 @@
 							{% include "../partials/bienes/inmuebles.html" with _bien %}
 						{% elseif bien.tipo == 'BIR' %}
 							{% include "../partials/bienes/bir.html" with _bien %}
+						{% elseif bien.tipo == 'BIS' %}
+							{% include "../partials/bienes/bis.html" with _bien %}
+						{% elseif bien.tipo == 'Sociedades' %}
+							{% include "../partials/bienes/sociedades.html" with _bien %}
 						{% elseif bien.tipo == 'Rentas' %}
 							{% include "../partials/bienes/rentas.html" with _bien %}
 						{% elseif bien.tipo == 'VE' %}
 							{% include "../partials/bienes/vehiculo.html" with _bien %}
 						{% elseif bien.tipo == 'Deudas' %}
 							{% include "../partials/bienes/deudas.html" with _bien %}
+						{% elseif bien.tipo == 'Otros' %}
+							{% include "../partials/bienes/otros.html" with _bien %}
 						{% endif %}
 					</tr>
 				{% endfor %}
