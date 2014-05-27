@@ -1,4 +1,6 @@
 {% extends 'layout.html' %}
+{% block title %}Sesión {{ votacion.xml.resultado.informacion.sesion }}, votación {{ votacion.xml.resultado.informacion.numerovotacion }} ({{ votacion.xml.resultado.informacion.fecha }})
+{%endblock%}
 {% block content %}
 	{%spaceless%}
 
@@ -47,13 +49,13 @@
 		<div class="diputadosTotal">
 			<span>Votaciones en el pleno del Congreso</span>
 			<span>Legislatura {{ votacion.legislatura }}</span>
-			<form action="/search">
+			<!--<form action="/search">
 				<input type="text" placeholder="Buscar" />
 				<input type="submit" value="Buscar">
-			</form>	
+			</form>	-->
 		</div>
 		<div id="infoVotacion" class="large-12 small-1 columns">
-			<span class="info">Sesion {{ votacion.xml.resultado.informacion.sesion }} - Votacion {{ votacion.xml.resultado.informacion.numerovotacion }} - {{ votacion.xml.resultado.informacion.fecha }}</span>
+			<span class="info">Sesión {{ votacion.xml.resultado.informacion.sesion }} - Votación {{ votacion.xml.resultado.informacion.numerovotacion }} - {{ votacion.xml.resultado.informacion.fecha }}</span>
 			<h2><a href="{{votacion.url}}" target="_blank">{{votacion.xml.resultado.informacion.textoexpediente}}</a></h2>
 			<span class="resultado voto {{votog | slugify}}"><i class="fa fa-{{iresul}}"></i> {{txtResul}}</span>
 			<div class="descVotacion">
@@ -64,7 +66,7 @@
 				{% endif %}
 			</div> 
 			<div class="resultadoVotacion large-8 columns">
-				<span><b>Resultado de la votacion:</b></span>
+				<span><b>Resultado de la votación:</b></span>
 				<ul class="resultado">
 					{% for result in votacion.xml.resultado.totales %}
 					<li id="{{loop.key}}" class="{{loop.key}}">
@@ -78,7 +80,7 @@
 						<span class="result">{{result}}</span>
 						{% if loop.key!='asentimiento' %}
 						<span class="votoemitido"><b>{{ result | percentBy(votacion.xml.resultado.totales.presentes) }}%</b> sobre voto emitido</span>
-						<span class="votoemitido"><b>{{ result | percentBy(350) }}%</b> sobre composicion (350)</span>
+						<span class="votoemitido"><b>{{ result | percentBy(350) }}%</b> sobre composición (350)</span>
 						{% endif %}
 					</li>
 					{% endfor %}
@@ -87,18 +89,19 @@
 			<div class="large-4 columns">
         		<div id="hemiciclo" class="large-12 columns"></div>
         		<div class="large-12 columns">
-        			<ul class="summary">
+        			<ul id="hemiciclo_summary" class="summary">
 						<li class="presentes"><span class="tipo"><i>&nbsp;</i>Presentes {{votacion.xml.resultado.totales.presentes}}</span></li>
 						<li class="abstenciones"><span class="tipo"><i>&nbsp;</i>Abstenciones {{votacion.xml.resultado.totales.abstenciones}}</span></li>
 						<li class="afavor"><span class="tipo"><i>&nbsp;</i>A favor {{votacion.xml.resultado.totales.afavor}}</span></li>
 						<li class="novotan"><span class="tipo"><i>&nbsp;</i>No votan o ausentes {{votacion.xml.resultado.totales.novotan}}</span></li>
 						<li class="encontra"><span class="tipo"><i>&nbsp;</i>En contra {{votacion.xml.resultado.totales.encontra}}</span></li>
+						<li class="telematico" display="none"></li>
 					</ul>
         		</div>
 			</div>
 		</div>
 		<div class="large-12 columns ultimasvotaciones">
-			<span class="encabezadoMod">Ultimas votaciones <a href="/votaciones">Ver todas</a></span>
+			<span class="encabezadoMod">Últimas votaciones <a href="/votaciones">Ver todas</a></span>
 			<!--#include virtual="/modules/portada/ultimas-votaciones/2" -->
 		</div>
 	</div>

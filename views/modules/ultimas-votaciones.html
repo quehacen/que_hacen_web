@@ -1,6 +1,6 @@
 <ul class="votaciones">
 {% for votacion in votaciones %}
-	<li class="votacion">
+	<li class="votacion large-12 columns">
 			<span class="info">Sesión {{votacion.xml.resultado.informacion.sesion}} - Votación {{votacion.xml.resultado.informacion.numerovotacion}} - {{votacion.xml.resultado.informacion.fecha | fecha}}</span>	
 			<h2><a href="/votacion/sesion/{{votacion.xml.resultado.informacion.sesion}}/votacion/{{votacion.xml.resultado.informacion.numerovotacion}}">{{votacion.xml.resultado.informacion.textoexpediente}}</a></h2>
 {%spaceless%}

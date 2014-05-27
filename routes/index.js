@@ -1,6 +1,5 @@
 var request = require('request');
 var async = require('async');
-var _ = require('lodash');
 var APIUrl = 'http://localhost:3002';
 
 /*
@@ -160,7 +159,7 @@ exports.grupo = function(req, res) {
 };
 
 exports.votaciones = function(req, res) {
-    var pageCount = 10;
+    var pageCount = 30;
     var viewObject = {
         "originalURL": req.originalUrl,
         'pageActive': "votaciones"
@@ -169,11 +168,7 @@ exports.votaciones = function(req, res) {
         var resultBody = JSON.parse(body)
         viewObject.votaciones = resultBody.result;
         viewObject.totalVotaciones = resultBody.totalObjects;
-        viewObject.currentPage = parseInt(req.params.page) || 0;
-        viewObject.pages = Math.ceil(resultBody.totalObjects / pageCount);
-        var startPage = ((viewObject.currentPage - pageCount) < 0) ? 0 :
-            ((viewObject.currentPage + pageCount) > viewObject.pages) ? (viewObject.pages - pageCount) : viewObject.currentPage;
-        viewObject.pageRange = _.range(startPage, pageCount);
+        viewObject.currentPage = req.params.page;
 
         res.render('votaciones', viewObject);
     });
@@ -248,14 +243,15 @@ exports.organos = function(req, res) {
         "originalURL": req.originalUrl,
         'pageActive': "organos"
     };
-    var ahora = parseInt(Date.now() / 1000);
-    request(APIUrl + '/organos?q={"normalized.url":"mesa-del-congreso"}', function(error, response, body) {
+    var ahora = new Date(Date.now()).toISOString();
+    var idorg = 100;
+    request(APIUrl + '/organos?q={"id":100}', function(error, response, body) {
         request(APIUrl + '/organos', function(error2, response2, body2) {
-            var organo = JSON.parse(body)[0];
-            var idorg = organo.id;
+            /*var organo = JSON.parse(body)[0];
+            var idorg = organo.id;*/
             request(APIUrl + '/diputados?q={"cargos_congreso.idOrgano":' + idorg + '}&only=["id","nombre","apellidos","grupo","sexo","cargos_congreso"]', function(error3, response3, body3) {
-                request(APIUrl + '/eventos?q={"organo.id":' + idorg + ',"fechahorats":{"$gte":' + ahora + '}}&order={"fechahorats":1}&limit=5', function(error4, response4, body4) {
-                    request(APIUrl + '/eventos?q={"organo.id":' + idorg + ',"fechahorats":{"$lt":' + ahora + '}}&order={"fechahorats":-1}&limit=5', function(error5, response5, body5) {
+                request(APIUrl + '/eventos?q={"organo.id":' + idorg + ',"fechahoraJS":{"$gte":"' + ahora + '"}}&order={"fechahoraJS":1}&limit=5', function(error4, response4, body4) {
+                    request(APIUrl + '/eventos?q={"organo.id":' + idorg + ',"fechahoraJS":{"$lt":"' + ahora + '"}}&order={"fechahoraJS":-1}&limit=5', function(error5, response5, body5) {
                         viewObject.organo = JSON.parse(body)[0];
                         viewObject.organos = JSON.parse(body2);
                         viewObject.diputados = JSON.parse(body3);
@@ -274,7 +270,6 @@ exports.organo = function(req, res) {
         "originalURL": req.originalUrl,
         'pageActive': "organos"
     };
-    //var ahora=parseInt(Date.now()/1000);
     var ahora = new Date(Date.now()).toISOString();
     if (!isNaN(req.params.id)) {
         // es por id
@@ -394,8 +389,91 @@ exports.intervenciones = function(req, res) {
     });
 }
 
-exports.search= function(req, res){
-    res.json({result:0});   
+exports.search = function(req, res) {
+
+    var _query = JSON.stringify(req.body.q);
+    console.log(_query);
+
+    async.parallel([
+        //diputados
+        function(callback) {
+            request(APIUrl + '/diputados?q=[{"nombre":' + _query + '},{"apellidos":' + _query + '}]&only=["id","nombre","apellidos","normalized", "grupo", "partido"]&limit=20', function(err, response, body) {
+                var _res = JSON.parse(body);
+                callback(err, (_res.length) ? {
+                    "diputados": _res
+                } : null);
+            });
+        },
+        //votaciones
+        function(callback) {
+            request(APIUrl + '/votaciones?q=[{"xml.resultado.informacion.textoexpediente":' + _query + '},{"xml.resultado.informacion.titulo":' + _query + '}]&not=["xml.resultado.votaciones"]&limit=20&count=1', function(err, response, body) {
+                var _res = JSON.parse(body);
+                console.log(_res.result);
+                callback(err, (_res && _res.result.length) ? {
+                    "votaciones": _res
+                } : null);
+            });
+        },
+        //iniciativas
+        function(callback) {
+            request(APIUrl + '/iniciativas?q=[{"titulo":' + _query + '}]&count=1&limit=20', function(err, response, body) {
+                var _res = JSON.parse(body);
+                console.log(_res.result);
+                callback(err, (_res && _res.result.length) ? {
+                    "iniciativas": _res
+                } : null);
+            });
+        },
+        //circunscripciones
+        function(callback) {
+            request(APIUrl + '/circunscripciones?q=[{"nombre":' + _query + '}]&not=["totales_votacion","desglose_votacion"]', function(err, response, body) {
+                var _res = JSON.parse(body);
+                callback(err, (_res.length) ? {
+                    "circunscripciones": _res
+                } : null);
+            });
+        },
+        //grupos
+        function(callback) {
+            request(APIUrl + '/grupos?q=[{"nombre":' + _query + '}]&not=["formaciones","iniciativas"]&limit=20', function(err, response, body) {
+                var _res = JSON.parse(body);
+                callback(err, (_res.length) ? {
+                    "grupos": _res
+                } : null);
+            });
+        },
+        //organos
+        function(callback) {
+            request(APIUrl + '/organos?q=[{"nombre":' + _query + '}]&only=["nombre","normalized"]', function(err, response, body) {
+                var _res = JSON.parse(body);
+                callback(err, (_res.length) ? {
+                    "organos": _res
+                } : null);
+            });
+        }
+
+    ], function(err, _results) {
+        var _ = require('lodash');
+        console.log(_results);
+        _results = _.compact(_results);
+        var totalObjects = _.reduce(_results, function(memo, result, key) {
+            var _res = (_.isArray(result[_.keys(result)[0]])) ? result[_.keys(result)[0]] : result[_.keys(result)[0]].result
+            return memo + _res.length;
+        }, 0);
+        /*res.json({
+            totalResults: totalObjects,
+            query: req.query.q,
+            results: _results
+        });*/
+        res.render('search', {
+            'search': {
+                totalResults: totalObjects,
+                query: _query.replace(/"/g, ''), //req.query.q,
+                results: _results,
+                error: err
+            }
+        });
+    });
 }
 
 /*
@@ -436,6 +514,9 @@ exports.agenda = function(req, res) {
     res.render('agenda', {
         'pageActive': "agenda"
     });
+};
+exports.api_docs = function(req, res) {
+    res.render('api-docs', {});
 };
 
 

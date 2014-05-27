@@ -7,7 +7,7 @@
 			<img src="/img/imagenesDipus/{{diputado.id}}.jpg" alt="Fotografía de {{diputado.nombre}} {{diputado.apellidos}}">
 		</span>
 		<span class="nombre"><b>{{diputado.apellidos}}</b>, {{diputado.nombre}}</span>
-		<img class="partidoimg" src="/img/miniaturasPartidos/{{diputado.partido }}.png" alt="logotipo del partido {{diputado.partido}}">
+		<img class="partidoimg" src="/img/miniaturasPartidos/{{diputado.partido | sinTildes}}.png" alt="logotipo del partido {{diputado.partido}}">
 	</a>
 	<a href="/grupo-parlamentario/{{diputado.grupo}}">
 		<span class="grupo">G.P. {{diputado.grupo}}</span>

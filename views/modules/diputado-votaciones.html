@@ -6,7 +6,7 @@
 			<span class="numerovotacion">Votación {{votacion.xml.resultado.informacion.numerovotacion}} - </span>
 			<span class="fecha">{{votacion.xml.resultado.informacion.fecha | fecha}}</span>
 		</div>
-		<div class="tituloVotacion"><a href="javascript:alert('Próximamente')">{{votacion.xml.resultado.informacion.titulo}}</a></div>
+		<div class="tituloVotacion"><a href="../votacion/sesion/{{votacion.xml.resultado.informacion.sesion}}/votacion/{{votacion.xml.resultado.informacion.numerovotacion}}">{{votacion.xml.resultado.informacion.titulo}}</a></div>
 {%spaceless%}
 
 {%set tipoVot = votacion.numExpediente | tipoInic %}

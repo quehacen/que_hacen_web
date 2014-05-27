@@ -1,0 +1,66 @@
+{% extends 'layout.html' %}
+{% block title %}
+Resultados de la búsqueda {{search.query|raw}}
+{%endblock%}
+
+{% block content %}
+	<div class="row container">
+		<div class="diputadosTotal">
+			<h2 id="arriba">Resultados de la búsqueda {{search.query|raw}} </h2>
+			<span class="encabezadoMod">Mostrando {{search.totalResults}} resultados</span>
+		</div>
+		{% if search.error %}
+			<div class="large-12 columns error">
+				{{search.error}}
+			</div>
+		{% endif %}
+		<div id="searchResults" class="large-12 columns">
+    	{% for result in search.results %}
+    		{% if result.iniciativas %}
+    			{% set iniciativas = result.iniciativas.result %}
+                {% set totalIniciativas = result.iniciativas.totalObjects %}
+    			<div class="large-12 columns">
+    				<span class="encabezadoMod">Iniciativas ({{iniciativas|length}}/{{result.iniciativas.totalObjects}}) {% if totalIniciativas > iniciativas|length %}<a href="/iniciativas#filter/texto={{search.query}}">Ver todas</a>{% endif %}</span>
+    				<div class="large-12 columns mark">
+    					{% include "./modules/ultimas-iniciativas.html" %}
+    				</div>
+    			</div>
+    		{% elif result.votaciones %}
+    			{% set votaciones = result.votaciones.result %}
+                {% set totalVotaciones = result.votaciones.totalObjects %}
+    			<div class="large-12 columns">
+    				<span class="encabezadoMod">Votaciones ({{votaciones|length}}/{{result.votaciones.totalObjects}}) {% if totalVotaciones > votaciones|length %}<a href="/votaciones#filter/texto={{search.query}}">Ver todas</a>{% endif %}</span></span>
+    				<div class="large-12 columns mark">
+    					{% include "./modules/ultimas-votaciones.html" %}
+    				</div>
+    			</div>
+    		{% elif result.diputados %}
+    			{% set diputados = result.diputados %}
+    			<div class="large-12 columns">
+    				<span class="encabezadoMod">Diputados ({{diputados|length}})</span>
+    				<div class="large-12 columns mark">
+    					{% include "./modules/diputados.html" %}
+    				</div>
+    			</div>
+    		{% elif result.circunscripciones %}
+    			{% set circunscripciones = result.circunscripciones %}
+    			<div class="large-12 columns">
+    				<span class="encabezadoMod">Circunscripciones ({{circunscripciones|length}})</span>
+    				<div class="large-12 columns mark">
+    					{% include "./modules/circunscripciones.html" %}
+    				</div>
+    			</div>
+    		{% elif result.organos %}
+    			{% set organos = result.organos %}
+    			<div class="large-12 columns">
+    				<span class="encabezadoMod">Órganos ({{organos|length}})</span>
+    				<div class="large-12 columns mark">
+    					{% include "./modules/organos.html" %}
+    				</div>
+    			</div>
+    		{% endif %}
+    	{% endfor %}
+    	</div>
+	</div>
+{% endblock %}
+

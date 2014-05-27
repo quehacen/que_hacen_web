@@ -1,5 +1,5 @@
 <td>{% if _bien.tipoBIR %}{{ _bien.tipoBIR }}{%else%}{{no_disponible}}{% endif %}</td>
-<td>{% if _bien.tamano %}{{ _bien.tamano }}{%else%}{{no_disponible}}{% endif %}</td>
+<td>{% if _bien.tamano %}{{ _bien.tamano }} m<sup>2</sup>{%else%}{{no_disponible}}{% endif %}</td>
 <td>{% if _bien.situacion %}{{ _bien.situacion }}{%else%}{{no_disponible}}{% endif %}</td>
 <td>{% if _bien.fecha_adq %}{{ _bien.fecha_adq | fecha }}{%else%}{{no_disponible}}{% endif %}</td>
 <td>{% if _bien.derecho_bien %}{{ _bien.derecho_bien }}{%else%}{{no_disponible}}{% endif %}</td>

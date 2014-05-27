@@ -1,0 +1,73 @@
+{% extends 'apiLayout.html' %}
+{% block title %}Documentación API{% endblock %}
+{% block content %}
+<div class="row container">
+	<div class="columns large-12 mark">
+		<div class="columns large-8 mark" id="arribaqs">
+			<h2 class="marked">Documentación de la API pública para desarrolladores</h2>
+			<div class="insideContent">
+				<p><div class="alert-box warning"><i class="fa fa-exclamation-triangle"></i> Documentación en progreso</div></p> 
+				<p>Desde que_hacen queremos ofrecer los datos parlamentarios de los que disponemos facilitando una API pública para realizar tus consultas. <a href="mailto:quehacenlosdiputados@gmail.com">quehacenlosdiputados@gmail.com</a></p>
+				<p>De momento, los datos se ofrecen en <a href="http://es.wikipedia.org/wiki/JSON">formato JSON</a>.</p>
+				<h3 class="strong">Url pública de la API</h3>
+				<p><a href="http://api.quehacenlosdiputados.net">http://api.quehacenlosdiputados.net</a></p>
+				<h3 class="strong">Diputados</h3>
+				<p><a href="http://api.quehacenlosdiputados.net/diputados">http://api.quehacenlosdiputados.net/diputados</a></p>
+				<p>	
+					<ul>
+						<li>http://api.quehacenlosdiputados.net/diputados/bienes</li>
+						<li>http://api.quehacenlosdiputados.net/diputado/[id]</li>
+						<li>http://api.quehacenlosdiputados.net/diputado/[id]/bienes</li>
+					</ul>
+
+					<div class="alert-box secondary"><span>Ejemplo:&nbsp;</span><a href="http://api.quehacenlosdiputados.net/diputado/100">http://api.quehacenlosdiputados.net/diputado/100</a></div>
+				</p>
+
+				<h3 class="strong">Grupos parlamentarios</h3>
+				<p><a href="http://api.quehacenlosdiputados.net">http://api.quehacenlosdiputados.net/grupos</a></p>
+				<p>	
+					<ul>
+						<li>http://api.quehacenlosdiputados.net/grupo/[id]</li>
+						<!--<li>http://api.quehacenlosdiputados.net/grupo/[id]/iniciativas</li>-->
+					</ul>
+					<div class="alert-box secondary"><span>Ejemplo:&nbsp;</span><a href="http://api.quehacenlosdiputados.net/grupo/201">http://api.quehacenlosdiputados.net/grupo/201</a></div>
+
+				</p>
+
+				<h3 class="strong">Iniciativas parlamentarias</h3>
+				<p><a href="http://api.quehacenlosdiputados.net">http://api.quehacenlosdiputados.net/iniciativas</a></p>
+				<div class="alert-box secondary"><span>Ejemplo:&nbsp;</span><a href="http://api.quehacenlosdiputados.net/iniciativas">http://api.quehacenlosdiputados.net/iniciativas</a></div>
+				<h3 class="strong">Intervenciones parlamentarias</h3>
+				<p><a href="http://api.quehacenlosdiputados.net">http://api.quehacenlosdiputados.net/intervenciones</a></p>
+				<div class="alert-box secondary"><span>Ejemplo:&nbsp;</span><a href="http://api.quehacenlosdiputados.net/intervenciones">http://api.quehacenlosdiputados.net/intervenciones</a></div>
+				<h3 class="strong">Votaciones</h3>
+				<p><a href="http://api.quehacenlosdiputados.net">http://api.quehacenlosdiputados.net/votaciones</a></p>
+				<p>
+					<ul>
+						<li>http://api.quehacenlosdiputados.net/votacion/[sesion]</li>
+						<li>http://api.quehacenlosdiputados.net/votacion/[sesion]/[votacion]</li>
+					</ul>
+				</p>
+				<div class="alert-box secondary"><span>Ejemplo:&nbsp;</span><a href="http://api.quehacenlosdiputados.net/votacion/100/1">http://api.quehacenlosdiputados.net/votacion/100/1</a></div>
+				<h3 class="strong">Búsquedas avanzadas</h3>
+				<p>La documentación de las búsquedas avanzadas todavía está en progeso, pero aquí dejamos algunos ejemplos de la potencia de éstas búsquedas:</p>
+				<ul>
+						<li>Obtener, del diputado con id 262 (Carlos Floriano), sólo sus cargos en el Congreso:</li>
+						<li class="no_circ"><a href='http://api.quehacenlosdiputados.net/diputado/262?only=["cargos_congreso"]'>http://api.quehacenlosdiputados.net/diputado/262?only=["cargos_congreso"]</a></li>
+						<li>Obtener las 3 últimas intervenciones en comisión del diputado con id 70 (Alberto Garzón)</li>
+						<li class="no_circ"><a href='http://api.quehacenlosdiputados.net/intervenciones?q={"autor":70,"lugar":"C"}&order={"fechahora":1}&limit=3'>http://api.quehacenlosdiputados.net/intervenciones?q={"autor":70,"lugar":"C"}&order={"fechahora":1}&limit=3</a></li>
+						<li>Obtener las iniciativas del diputado con id 135 (Elena Valenciano), ordenadas por 'primero más antigua'</li>
+						<li class="no_circ"><a href='http://api.quehacenlosdiputados.net/iniciativas?order={"presentadoJS2":1}&q={"tipo_autor":"Diputado","autores":{"$in":[135]}}'>http://api.quehacenlosdiputados.net/iniciativas?order={"presentadoJS2":1}&q={"tipo_autor":"Diputado","autores":{"$in":[135]}}</a></li>
+						<li>Obtener, de las votaciones de tipo 122 (Proposiciones de Ley): su nº expediente, su información general y los totales de votación.</li>
+						<li class="no_circ"><a href='http://api.quehacenlosdiputados.net/votaciones?q={"numExpediente":"^122"}&only=["numExpediente","xml.resultado.informacion","xml.resultado.totales"]'>http://api.quehacenlosdiputados.net/votaciones?q={"numExpediente":"^122"}&only=["numExpediente","xml.resultado.informacion","xml.resultado.totales"]</a></li>
+						<li>Obtener las acciones de Telefónica declaradas por los diputados:</li>
+						<li class="no_circ"><a href='http://api.quehacenlosdiputados.net/diputados/bienes?q={"tipo":"Activos","concepto":"Acciones","entidad":"Telefónica S.A."}'>http://api.quehacenlosdiputados.net/diputados/bienes?q={"tipo":"Activos","concepto":"Acciones","entidad":"Telefónica S.A."}</a></li>
+					</ul>
+			</div>
+			<div style="float:right;width:auto;height:auto;font-weight:bold;font-size:15px;">
+				<a href="#arribaqs">Volver arriba</a>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

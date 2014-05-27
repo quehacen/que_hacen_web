@@ -1,20 +1,3 @@
-function edad(fechanac) {
-	var date = fechanac;
-	var nums = date.split('/');
-	var nac= new Date(nums[2],nums[1],nums[0]);
-	var hoy=new Date();
-	return parseInt((hoy - nac)/365/24/60/60/1000);
-}
-
-function textToApi(text){
-	var cambios={"a":"[aáà]","e":"[eèé]","i":"[iíì]","o":"[oóò]","u":"[uúùü]"};
-	for(var cambio in cambios){
-		text=text.replace(new RegExp(cambio, 'g'), cambios[cambio]);
-	}
-	return text;
-}
-
-
 function toSlug(text){
   	var str=text.toLowerCase().replace(/\s/g,'-');
 	var from = "àáäâèéëêìíïîòóöôùúüûñç";
@@ -32,85 +15,12 @@ function loadingDiv(){
 	alto=alto-32;
 	var div="<div id='loading' style='position: absolute; left:"+ancho+"px; top:"+alto+";'>";
 	div+="<img src='http://www.movidamovil.com/descargas/images/cmobile/loading.gif' alt='cargando contenido'/>";
-	//div+="<span>Cargando diputados</span>";
+	//div+="<span>Cargando intervenciones</span>";
 	div+="</div>";
 	return div;
 }
 
-function validParams(order, filter){
-	var valido=true;
-
-	if(order!=null){	
-		var ordenes=order.split('&');
-		_.each(ordenes,function(orden){
-			switch(orden){
-				case 'edad': case 'salario': case 'nombre': case 'inic': case 'interv': case 'nlegis':
-				case 'edadR': case 'salarioR': case 'nombreR': case 'inicR': case 'intervR': case 'nlegisR':
-					break;
-				default:
-					valido = false;return;
-			}
-		});
-		if(valido==false) return false;
-	}
-
-
-	if(filter!=null){
-		var filtros=filter.split('&');
-		// Mejora --> Detectar si se pasan más de un filtro de circunsc o grupo --> no válido
-		_.each(filtros,function(filtro){
-			var enc;
-			// Filtro de grupo
-			if(filtro.indexOf('grupo=')==0){
-				var gruposf=filtro.substr(6).split('+');
-				_.each(gruposf,function(grupof){
-					enc = _.find(this.grupos, function(g){ 
-						return grupof == toSlug(g.nombre); });
-					if(enc == undefined) valido=false;
-				});
-				return;
-			}
-
-			// Filtro de circunscripcion
-			if(filtro.indexOf('circuns=')==0){
-				var circunsf=filtro.substr(8).split('+');
-				_.each(circunsf,function(circunf){
-					enc = _.find(this.circunscripciones, function(c){ 
-						return circunf == c.normalized.url; });
-					if(enc == undefined) valido=false;
-				});
-				return;
-			}
-
-			// Filtro de cargos
-			if(filtro.indexOf('cargo=')==0){
-				var cargosf=filtro.substr(6).split('+');
-				_.each(cargosf,function(cargof){
-					switch(cargof){
-						case 'P': case 'VP': case 'S': case 'PO': case 'POT': case 'POA':
-						case 'POS': case 'V': case 'VS': case 'A':
-							break;
-						default:
-							valido=false; return;
-					}
-				});
-				return;
-			}
-
-
-			switch(filtro){
-				case 'contw': case 'sintw': case 'concorreo': case 'sincorreo': case 'confb': case 'sinfb':
-				case 'mujeres': case 'hombres': case 'sininterv': case 'sininic':
-					break;
-				default:
-					valido=false; return;
-			}
-		});
-		if(valido==false) return false;
-	}
-
-	return true;
-}
+// function validParams(order,filter)
 
 function ordenURL(url){
 	var orden=url.match(/^order\/(\w|\-)*/);
@@ -700,7 +610,7 @@ function htmlIntervenciones(intervenciones){
 	
 		masInterv+='<li class="intervencion" >';
 		masInterv+='<a href="/diputado/'+dipu.id+'" title="Ver ficha de '+dipu.nombre+' '+dipu.apellidos+'" ><img src="/img/miniaturasDipus/'+dipu.id+'.jpg" /></a>';
-		masInterv+='<span class="tituloInterv">Intervención de <a href="'+dipu.id+'" title="Ver ficha de '+dipu.nombre+' '+dipu.apellidos+'" >'+dipu.apellidos+', '+dipu.nombre+'</a> '+lugares[interv.lugar]+' '+comEnlace+'</span>';
+		masInterv+='<span class="tituloInterv">Intervención de <a href="/diputado/'+dipu.id+'" title="Ver ficha de '+dipu.nombre+' '+dipu.apellidos+'" >'+dipu.apellidos+', '+dipu.nombre+'</a> '+lugares[interv.lugar]+' '+comEnlace+'</span>';
 		//masInterv+='<span class="tituloInterv">Intervención de '+dipu.apellidos+', '+dipu.nombre+' '+lugares[interv.lugar]+' '+comEnlace+'</span>';
         	
 		masInterv+='<span>Fecha: '+interv.fecha+'</span>';
@@ -761,7 +671,7 @@ function skipIntervenciones(nivel){
         $.when(
                 $.ajax(apiUrl)
          ).done(function(_data){
-		var nuevas=_data;
+		var nuevas=_data.result;
 		console.log(nuevas);	
 		var masInterv="";
         	var lugares=[];
@@ -778,7 +688,7 @@ function skipIntervenciones(nivel){
                         	return d.id == interv.autor;
                 	});
 
-			// QUITAR CUANDO DIPUS COMPLETADOS (388)
+			// Para evitar errores inesperadoscon nuevos dipus
 			if(typeof(dipu)!="undefined"){
 
 			console.log(dipu);
@@ -809,7 +719,7 @@ function skipIntervenciones(nivel){
 
                		masInterv+='<li class="intervencion" >';
                 	masInterv+='<a href="/diputado/'+dipu.id+'" title="Ver ficha de '+dipu.nombre+' '+dipu.apellidos+'" ><img src="/img/miniaturasDipus/'+dipu.id+'.jpg" /></a>';
-                	masInterv+='<span class="tituloInterv">Intervención de <a href="'+dipu.id+'" title="Ver ficha de '+dipu.nombre+' '+dipu.apellidos+'" >'+dipu.apellidos+', '+dipu.nombre+'</a> '+lugares[interv.lugar]+' '+comEnlace+'</span>';
+                	masInterv+='<span class="tituloInterv">Intervención de <a href="/diputado/'+dipu.id+'" title="Ver ficha de '+dipu.nombre+' '+dipu.apellidos+'" >'+dipu.apellidos+', '+dipu.nombre+'</a> '+lugares[interv.lugar]+' '+comEnlace+'</span>';
 
                 	masInterv+='<span>Fecha: '+interv.fecha+'</span>';
 
@@ -849,7 +759,7 @@ function skipIntervenciones(nivel){
                 	masInterv+='</li>';
                 	numInterv++;
 				
-			// QUITAR CUANDO DIPUS COMPLETADOS (388)
+			// Fin if errores inesperados nuevos dipus
 			}
 		});
 
@@ -885,8 +795,6 @@ $(document).ready(function(){
 			$(this).prop('placeholder',tipoFecha.charAt(0).toUpperCase() + tipoFecha.slice(1)+': '+dateText);
 			$(this).val('');
 		}
-		/*showButtonPanel: true,
-		closeText: 'Cerrar'*/
 	});
 });
 
@@ -960,33 +868,31 @@ $(function(){
 		},
 
 		intervencionesHandler: function(fil){
-			//console.log(ord+" "+fil);
-			//$('.diputados').hide();
 			if(!this.diputados || !this.comisiones){
 				setTimeout(this.intervencionesHandler,2000,fil);
 				return;
 			}
 
 			// Comprobamos validez de url
-			var urlValida=true;
+			/*var urlValida=true;
 			if(fil== null){
 				urlValida=false;
 			}
 
-			/*else{
+			else{
 				// Comprobamos que fil es válido
 				var valid=validParams(fil);
 				if(valid === false){
 					urlValida=false;
 				}
-			}*/
+			}
 		
 			// Si la url no es válida, no seguimos
 			if(urlValida==false){
 				window.location.href='/404';
 				//alert('url no válida');
 				return;
-			}
+			}*/
 			
 			var filtros=fil.split('&');
 			urlApi=filtrosInicApiUrl(filtros);
@@ -1001,37 +907,7 @@ $(function(){
 				$('#filtrosActivos').html(dibujaFiltrosActivos());
 				
 				$('.filtro option[value="no"]').prop("selected",true);
-				//$('#textoBusc').val('');
-				/*var autor=filtroAutor(filtros);
-				if(autor !== false){
-					if(autor=="grupo"){
-						// 1er select seleccionado
-						$('.filtro#tipo_autor option[value="autor-grupo"]').prop("selected",true);
-						//$('.filtro#tipo_autor option[value="autor-diputado"]').css("color","black");	
-						// Añadimos select grupo, quitamos select de dipu si lo hay
-						$("select#grupo").show();
-						$("select#diputado").hide();
-						// Actualizamos select de tipo inic
-						$("select#tipoCat").html(selectInic("grupo"));
-	
-					}else if(autor=="diputado"){
-						// 1er select seleccionado
-						$('.filtro#tipo_autor option[value="autor-diputado"]').prop("selected",true);
-						//$('.filtro#tipo_autor option[value="autor-diputado"]').css("font-weight","bold");	
-						// Añadimos select dipus, quitamos select de grupos si lo hay
-						$("select#diputado").show();
-						$("select#grupo").hide();
-						// Actualizamos select de tipo inic
-						$("select#tipoCat").html(selectInic("diputado"));
-					}
-
-				}else{
-					$("select#diputado").hide();
-					$("select#grupo").hide();
-					// Actualizamos select de tipo inic
-					$("select#tipoCat").html(selectInic("todos"));
-					
-				}*/
+				
 				//$('#ordenes option[value="'+ord+'"]').attr("selected","selected");
 				$('.intervenciones').html(htmlInterv);
 				$('h3.title').text(totalInic+' intervenciones');

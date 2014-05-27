@@ -1,10 +1,10 @@
-{% set baseURL = "http://dev.quehacenlosdiputados.net" %}
+{% set baseURL = "http://quehacenlosdiputados.net" %}
 
 <!doctype html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>{% block title %}{{ titlePage }}{% endblock %}</title>
+	<title>{% block title %}{{ titlePage }}{% endblock %} | Qué hacen los diputados</title>
 	<link rel="stylesheet" href="/stylesheets/foundation.min.css" />
 	<link rel="stylesheet" href="/stylesheets/font-awesome.min.css" />
 	<link rel="stylesheet" href="/stylesheets/main.css" />
@@ -19,7 +19,7 @@
 	{% endblock %}
 </head>
 <body>
-	<div class="header">
+	<div class="header" id="headerTop">
 	{% block header %}
 		{% include "./partials/header.html" %}
 	{% endblock %}

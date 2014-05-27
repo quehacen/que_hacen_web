@@ -71,7 +71,7 @@ $(function(){
 		listo:null,
 		initialize: function(){
 			$.when(
-				$.ajax('http://api.quehacenlosdiputados.net/organos?q={"tipo":"^SC"}&order:{"nombre":1}'),
+				$.ajax('http://api.quehacenlosdiputados.net/organos?q={"tipo":"^SC","n_diputados":{"$gt":0}}&order:{"nombre":1}'),
 				$.ajax('http://api.quehacenlosdiputados.net/eventos?q={"organo.tipo":"^SC"}&only=["organo","fecha"]')
 			).done(function(_data,_data2){
 				// Añadimos campos que harán falta	

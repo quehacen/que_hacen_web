@@ -138,7 +138,12 @@ var HemicicloGrupoView = HemicicloViewBase.extend({
             _.each(diputados, function(diputado) {
                 var escano = self.escanos[diputado.escano_actual];
                 var grupo = self.string_to_slug(diputado.grupo);
-                //console.log(diputado.grupo, grupo);
+
+                if (!escano) {
+                    //console.log(escano, diputado);
+                    console.log("no se ha encontrado al diputado " + diputado.apellidos, diputado.nombre);
+                    return;
+                }
                 escano.diputado = diputado;
                 escano.attr({
                     fill: self.colors[grupo].normal,
@@ -201,7 +206,7 @@ var HemicicloVotacionView = HemicicloViewBase.extend({
             "out": "#ecbc02"
         }
     },
-    popUpTemplate: '<div class="popUpDip"><span class="fotoimg"> <img src="/img/imagenesDipus/<%= diputado.id %>.jpg" alt="Fotografía de <%=diputado.nombre%> <%=diputado.apellidos%>"></span><div class="name"><%=diputado.nombre%> <%=diputado.apellidos%></div></div>',
+    popUpTemplate: '<div class="popUpDip"><span class="asiento">Nº escaño: <%= diputado.escano_actual %></span><span class="fotoimg"> <img src="/img/imagenesDipus/<%= diputado.id %>.jpg" alt="Fotografía de <%=diputado.nombre%> <%=diputado.apellidos%>"></span><div class="name"><%=diputado.nombre%> <%=diputado.apellidos%></div><% if (diputado.voto_telematico) { %><span class="telematico">(voto telemático)</span><% } %></div>',
     initialize: function(opts) {
         HemicicloGrupoView.__super__.initialize.apply(this, arguments);
         this.grupoID = (opts && opts.grupo) ? opts.grupo : this.$el.attr('data-grupo-parlamentario');
@@ -228,18 +233,21 @@ var HemicicloVotacionView = HemicicloViewBase.extend({
         var votos_telematicos = 0;
         $.get(this.diputadosUrl, function(diputados) {
             _.each(self.votaciones, function(voto) {
-                var escano = self.escanos[voto.asiento] || {};
-                var sentido_voto = self.string_to_slug(voto.voto);
-                //console.log(diputado.grupo, grupo);
-                escano.diputado = _.findWhere(diputados, {
+                var diputado_actual = _.findWhere(diputados, {
                     "apellidos": voto.diputado.split(',')[0],
                     "nombre": voto.diputado.split(',')[1].substr(1)
                 });
-                //console.log(voto.diputado, escano.diputado, sentido_voto);
                 if (voto.asiento == -1) {
-                    console.log("asiento -1 del diputado " + voto.diputado, voto);
-                    return;
+                    console.log("voto telematico ", diputado_actual, voto);
+                    diputado_actual.voto_telematico = true;
+                    votos_telematicos++;
+                    $('#hemiciclo_summary .telematico').html('<span class="tipo"><i>&nbsp;</i>Telemáticos ' + votos_telematicos + '</span>').show();
                 }
+                var escano = self.escanos[voto.asiento] || self.escanos[diputado_actual.escano_actual] || {};
+                var sentido_voto = self.string_to_slug(voto.voto);
+                escano.diputado = diputado_actual;
+
+                //console.log(voto.diputado, escano.diputado, sentido_voto);
                 if (!escano.diputado) {
                     escano.diputado = {
                         "apellidos": voto.diputado.split(',')[0],
@@ -247,13 +255,14 @@ var HemicicloVotacionView = HemicicloViewBase.extend({
                         "normalized": {
                             "url": '#'
                         }
-
                     }
                     console.log("no se ha encontrado al diputado " + voto.diputado, voto);
                     //return;
                 }
                 escano.attr({
                     fill: self.colors[sentido_voto].normal,
+                    stroke: (escano.diputado.voto_telematico) ? '#000000' : "none",
+                    "stroke-width": (escano.diputado.voto_telematico) ? '1' : "none",
                     cursor: "pointer",
                     href: "/diputado/" + escano.diputado.normalized.url
                 }).hover(function() {
@@ -270,7 +279,7 @@ var HemicicloVotacionView = HemicicloViewBase.extend({
                     });
                     var template = _.template(self.popUpTemplate)
                     self.popUp.html(template({
-                        "diputado": this.diputado
+                        "diputado": this.diputado,
                     }));
                     $("body").append(self.popUp);
                     this.attr({

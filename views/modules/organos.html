@@ -1,0 +1,7 @@
+<ul class="organos">
+	{% for org in organos %}
+	<li class="organo">
+		<a href='/organo/{{org.id}}'>{{org.nombre}}</a>
+	</li>
+	{% endfor %}
+</ul>

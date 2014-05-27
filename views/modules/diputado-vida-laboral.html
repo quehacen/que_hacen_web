@@ -1,3 +1,7 @@
+{%spaceless%}
+{% set fuentes = trayectoria| getFuentes(cargos_partido)%}
+{%endspaceless%}
+
 <div class="vidalaboral mark">
 	<table id="vidalaboral" class="large-12 columns">
 			<tr><th colspan="2">Estudios</th></tr>
@@ -10,8 +14,17 @@
 
 			<tr><th colspan="2">Vida laboral</th></tr>
 		{% for trayec in trayectoria %}
-			<tr>	
-				<td>{{trayec.cargo}}</td>
+			{%spaceless%}
+			{%for f in fuentes%}
+				{%if trayec.fuente.url == f.url%}
+				{%set fuente=f.num%}
+				{%set fuentenom=f.texto%}
+				{%set fuenteurl=f.url%}
+				{%endif%}
+			{%endfor%}
+			{%endspaceless%}
+			<tr>
+				<td>{{trayec.cargo}} <a href="#fuente{{fuente}}"><sup>{{fuente}}</sup></a></td>
 			{% if !trayec.fini and !trayec.ffin %}
 				<td><span class="unknow">Fechas desconocidas</span></td>
 			{% else %}	
@@ -23,11 +36,19 @@
 		{% if cargos_partido %}
 			<tr><th colspan="2">Cargos actuales en el partido</th></tr>
 			{% for cargo_p in cargos_partido %}
-			<tr><td>{{cargo_p.cargo}}</td></tr>
+			{%spaceless%}
+			{%for f in fuentes%}
+				{%if cargo_p.fuente.url == f.url%}
+				{%set fuente=f.num%}
+				{%set fuentenom=f.texto%}
+				{%set fuenteurl=f.url%}
+				{%endif%}
+			{%endfor%}
+			{%endspaceless%}
+			<tr><td>{{cargo_p.cargo}} <a href="#fuente{{fuente}}"><sup>{{fuente}}</sup></a></td></tr>
 			{% endfor %}
 		{% endif %}
 		
-
 		{% if cargos_gobierno %}
 			<tr><th colspan="2">Cargos actuales en el Gobierno</th></tr>
 			{% for cargo_g in cargos_gobierno %}
@@ -56,4 +77,10 @@
 		{% endif %}
 		#}
 	</table>
+
+	<ul style="display:block;padding:15px;font-size:11pt;"><span style="font-weight:bold;">Referencias:</span>
+	{%for f in fuentes%}
+		<li style="display:block;padding:5px 0px;font-size:11pt;">{{f.num}}: <span style="display:inline-block;margin-left:5px"><a id="fuente{{f.num}}" href="{{f.url}}" target="blank_">{{f.texto}}</a></li>
+	{%endfor%}
+	</ul>
 </div>

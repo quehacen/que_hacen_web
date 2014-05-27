@@ -5,6 +5,7 @@
 		{%if loop.key == "BIU"%}{% set tipoBien="Bienes inmuebles urbanos"%}
 		{%elseif loop.key == "BIR"%}{% set tipoBien="Bienes inmuebles rurales"%}
 		{%elseif loop.key == "VE"%}{% set tipoBien="Vehículos"%}
+		{%elseif loop.key == "BIS"%}{% set tipoBien="Bienes inmuebles societarios"%}
 		{%elseif loop.key == "Otros"%}{% set tipoBien="Otros bienes"%}
 		{%elseif loop.key == "Sociedades"%}{% set tipoBien="Sociedades participadas por otras sociedades"%}
 		{%else%}{% set tipoBien=loop.key%}

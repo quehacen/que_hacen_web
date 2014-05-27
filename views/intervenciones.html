@@ -1,18 +1,11 @@
 {% extends 'layout.html' %}
 
 {% block styles %}
- <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
- <!--<link rel="stylesheet" type="text/css" href="/javascripts/vendors/shadowbox/shadowbox.css">
- <script type="text/javascript" src="/javascripts/vendors/shadowbox/shadowbox.js"></script>
- <script type="text/javascript">
-	Shadowbox.init({
-		skipSetup:true;
-	});
-</script>-->
-
+<link rel="stylesheet" href="/stylesheets/jquery-ui.css"> 
 {%endblock%}
+
 {% block title %}
-Intervenciones parlamentarias
+Intervenciones
 {%endblock%}
 
 {% block content %}
@@ -20,11 +13,11 @@ Intervenciones parlamentarias
 		<div class="diputadosTotal">
 			<h2 id="arriba">Intervenciones parlamentarias</h2>
 		</div>
-                <div class="large-12 columns">
-		<div class="large-9 small-9 columns">
+                <div class="large-12 columns mark">
+		<div class="large-9 small-9 columns mark">
 			<h3 id="totalInic" class="title" style="text-align:center">{{numIntervenciones}} intervenciones</h3>
 		        <div id="filtrosActivos"></div>
-			<div id="intervencionesdiv" style="">
+			<div id="intervencionesdiv" class="mark">
 				{% include "./modules/intervenciones.html" %}
 			</div>
 		</div>
@@ -76,14 +69,8 @@ Intervenciones parlamentarias
 	{% parent %}
         <!--<script src="/javascripts/vendors/mustache.js"></script>-->
 	<script src="/javascripts/intervenciones.js"></script>
-	<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+	<script src="/javascripts/vendors/jquery-ui.js"></script>
 	<script src="/javascripts/vendors/datepicker_es.js"></script>
- 	<!--<script type="text/javascript" src="/javascripts/vendors/shadowbox/shadowbox.js"></script>
- 	<script type="text/javascript">
-		Shadowbox.init({
-			skipSetup:true
-		});
-	</script>-->
 	<script src="/javascripts/vendors/jquery.media.js"></script>
 {% endblock %}
 

@@ -39,7 +39,7 @@ function ultimasInicDipu(dipu,tipo){
 	$.when(
                 $.ajax(apiUrl)
          ).done(function(_data){
-                var nuevas=_data;
+                var nuevas=JSON.parse(_data).result;
                 var masInic="";
 		if(nuevas.length > 0){
                    _.each(nuevas,function(inic){

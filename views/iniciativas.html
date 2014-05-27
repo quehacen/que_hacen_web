@@ -1,7 +1,12 @@
 {% extends 'layout.html' %}
 {% block title %}
-Iniciativas parlamentarias
+Iniciativas
 {%endblock%}
+
+{% block styles %}
+<link rel="stylesheet" href="/stylesheets/jquery-ui.css">
+{%endblock%}
+
 
 {% block content %}
 	<div class="row container">
@@ -9,21 +14,15 @@ Iniciativas parlamentarias
 			<h2 id="arriba">Iniciativas parlamentarias</h2>
 		</div>
                 <div class="large-12 columns">
-		<div class="large-9 small-9 columns">
+		<div class="large-9 small-9 columns mark">
 			<!--<div id="ordenaciones">
 				<ul>
 					<li><a href=''></a></li>
-					<li><a href=''></a></li>
-					<li><a href=''></a></li>
-					<li><a href=''></a></li>
-					<li><a href=''></a></li>
-					<li><a href=''></a></li>
-					<li><a href=''></a></li>	
 				</ul>
 			</div>-->
 			<h3 id="totalInic" class="title" style="text-align:center">{{numIniciativas}} iniciativas</h3>
 		        <div id="filtrosActivos"></div>
-			<div id="iniciativasdiv" style="">
+			<div id="iniciativasdiv" class="mark">
 				{% include "./modules/iniciativas.html" %}
 				<!--<span id="volverarriba" class="enlacesfinal" style="display:block;padding:15px;text-align:center"><a style="font-size:11pt;" href="javascript:$('html')[0].scrollIntoView( true );">Volver arriba</a></span>
 				<span id="cargarmas" style='display:none' class="enlacesfinal"><a href="javascript:skipIniciativas(1)">Cargar más</a></span>-->
@@ -42,18 +41,11 @@ Iniciativas parlamentarias
 			<select class="selectFiltro" id="ordenes">
 				<option value="edad">Por edad (ascendente)</option>
 				<option value="edadR">Por edad (descendente)</option>
-				<option value="nlegis">Por nº de legislaturas (ascendente)</option>
-				<option value="nlegisR">Por nº de legislaturas (descendente)</option>
-				<option value="inic">Por nº de iniciativas (ascendente)</option>
-				<option value="inicR">Por nº de iniciativas (descendente)</option>
-				<option value="interv">Por nº de intervenciones (ascendente)</option>
-				<option value="intervR">Por nº de intervenciones (descendente)</option>
-				<option value="salario">Por salario estimado (ascendente)</option>
-				<option value="salarioR">Por salario estimado (descendente)</option>
 			</select>
 		   </div>-->
 		   <div class="filtrosContainer">
-			<span class="title">Añadir filtros</span>
+			<span class="title">Filtros</span>
+                        <span class='catFiltros'>Autor</span>
 			<select class="selectFiltro filtro" id="tipo_autor">
 				<option class="titleSelect" disabled selected value="no">Tipo de autor</option>
 				<option value="autor-diputado">Diputados</option>
@@ -76,6 +68,9 @@ Iniciativas parlamentarias
 				<option value="individual">Un autor</option>
 				<option value="compartida">Más de un autor</option>
 			</select>
+			<hr/>
+
+                        <span class='catFiltros'>Tipo de iniciativa</span>
 			<select class="selectFiltro filtro" id="tipoCat">
 				<option class="titleSelect" disabled selected value="no">Tipo de iniciativa</option>
 				<option value="tipoCat-INTERP">Interpelación</option>
@@ -89,14 +84,14 @@ Iniciativas parlamentarias
 				<option value="tipoCat-SOLIC_NO">Solicitud de nuevo órgano</option>
 				<option value="tipoCat-SOLIC_INF">Solicitud de informe</option>
 			</select>
-			<!--<select class="selectFiltro filtro" id="anio">
-				<option class="titleSelect" disabled selected value="no">Año</option>
-				<option value="anio-2011">2011</option>
-				<option value="anio-2012">2012</option>
-				<option value="anio-2013">2011</option>
-				<option value="anio-2014">2012</option>
-			</select>-->
-			
+			<hr/>
+
+                        <span class='catFiltros'>Tramitación</span>	
+			<select class="selectFiltro filtro" id="estado">
+				<option class="titleSelect" disabled selected value="no">Estado de tramitación</option>
+				<option value="estado-entramit">En tramitación</option>
+				<option value="estado-yatramit">Tramitada</option>
+			</select>	
 			<select class="selectFiltro filtro" id="tramit">
 				<option class="titleSelect" disabled selected value="no">Resultado de tramitación</option>
 				<optgroup label="Resultado global">
@@ -121,6 +116,15 @@ Iniciativas parlamentarias
 				<option value="tramit-RET">Retirado</option>
 				</optgroup>
 			</select>
+                        <hr/>
+			
+			<span class='catFiltros'>Fecha de presentación</span>	
+			<form id="selectFechas">
+                                <input type="text" class="datepicker" id="desde" placeholder="Desde"></input>
+                                <input type="text" class="datepicker" id="hasta" placeholder="Hasta"></input>
+                        </form>
+			
+			<span class="enlace_faq"><a href="http://blog.quehacenlosdiputados.net/preguntas-y-respuestas-sobre-las-iniciativas-parlamentarias-de-los-diputados/" class="fa fa-info-circle"> </i>Preguntas y respuestas sobre las iniciativas parlamentarias</a></span>
 		</div>
 		</div>
 	</div>
@@ -129,5 +133,8 @@ Iniciativas parlamentarias
 	{% parent %}
         <script src="/javascripts/vendors/mustache.js"></script>
 	<script src="/javascripts/iniciativas.js"></script>
+	<script src="/javascripts/vendors/jquery-ui.js"></script>
+        <script src="/javascripts/vendors/datepicker_es.js"></script>
+
 {% endblock %}
 

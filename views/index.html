@@ -1,14 +1,21 @@
 {% extends 'layout.html' %}
-
+{% block title %}Portada{%endblock%}
 {% block content %}
 <!--div class="twitterContent">TwitterContent</div-->
 <div class="row">
 	<div class="large-7 columns">
 		<div class="latestPost large-12 columns">
-			<!--#include virtual="/modules/portada/ultimos-posts/4" -->
-		</div>
-		<div class="iniciativas latest large-12 columns container">
-			<!--#include virtual="/modules/portada/ultimas-iniciativas/2" -->
+			<!-- #include virtual="/modules/portada/ultimos-posts/4" -->
+			<ul>
+				<li><div class="post container">
+			<div class="imgT">
+				<img src="http://quehacenlosdiputados.net/wp-content/uploads/2014/05/naranja.jpg" alt="Lanzamiento web" />
+			</div>
+			<div class="entradilla">
+				<div class="summary">Presentación nueva web</div>	
+			</div>		
+		</div></li>
+			</ul>
 		</div>	
 	</div>
 	<div class="large-5 columns">
@@ -23,16 +30,19 @@
 			</dl>
 			<div class="tabs-content">
 			  <div class="content active" id="masiniciativas">
-			    <!--#include virtual="/modules/portada/actividad/mas-iniciativas/10" -->
+			    <!--#include virtual="/modules/portada/actividad/mas-iniciativas/9" -->
 			  </div>
 			  <div class="content" id="menosiniciativas">
-			    <!--#include virtual="/modules/portada/actividad/menos-iniciativas/10" -->
+			    <!--#include virtual="/modules/portada/actividad/menos-iniciativas/9" -->
 			  </div>
 			</div>
 		</div>
-		<!--div class="votaciones container">
-			<!--#include virtual="/modules/portada/ultimas-votaciones/" -->
-		<!--/div-->
+		<div class="iniciativas latest large-12 columns container">
+			<!--#include virtual="/modules/portada/ultimas-iniciativas/3" -->
+		</div>
+		<div class="votaciones latest large-12 columns container">
+			<!--#include virtual="/modules/portada/ultimas-votaciones/3" -->
+		</div>
 
 	</div>
 </div>

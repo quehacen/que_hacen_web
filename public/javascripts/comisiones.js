@@ -75,7 +75,7 @@ $(function(){
 		listo:null,
 		initialize: function(){
 			$.when(
-				$.ajax('http://api.quehacenlosdiputados.net/organos?q={"tipo":"^C"}&order={"nombre":1}&limit=100'),
+				$.ajax('http://api.quehacenlosdiputados.net/organos?q={"tipo":"^C","n_diputados":{"$gt":0}}&order={"nombre":1}&limit=100'),
 				//$.ajax('http://api.quehacenlosdiputados.net/diputados?q={"cargos_congreso.tipoOrgano":"^C"}&only=["cargos_congreso"]')
 				$.ajax('http://api.quehacenlosdiputados.net/eventos?q={"organo.tipo":"^C","organo.tipo_evento":"N"}&only=["organo","fecha"]')
 			).done(function(_data,_data2){
@@ -131,7 +131,7 @@ $(function(){
 
 		nombreHandler: function(){
 			if(!this.listo){
-				setTimeout(this.nombreHandler, 1000);
+				setTimeout(this.nombreHandler, 1500);
 				return;
 			}
 			var datos=[];

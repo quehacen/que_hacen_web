@@ -150,6 +150,28 @@ function busquedaTextoInic(){
 }
 
 
+function tipoTramit(tipo){
+	switch(tipo){
+		case "Aprobado con modificaciones":
+		case "Aprobado sin modificaciones":
+		case "Convertido":
+		case "Subsumido en otra iniciativa":
+		case "Tramitado por completo sin req. acuerdo o decisión":
+        		return "exito";
+		case "Caducado":
+		case "Decaído":
+		case "Extinguido por desaparición o cese del autor":
+		case "Inadmitido a trámite con recalificación":
+		case "Inadmitido a trámite en términos absolutos":
+		case "No celebración":
+		case "Rechazado":
+		case "Retirado":
+			return "noexito";
+		default:
+			return "entramit";
+	}
+}
+
 function tipoGlobalTramit(filtro){
 	switch(filtro){
 		case 'CAD': case 'D': case 'EDCA': case 'ITR': case 'ITTA': case 'NC': case 'RECH': case 'RET':
@@ -161,11 +183,25 @@ function tipoGlobalTramit(filtro){
 	}
 }
 
+function filtroEstadoTramit(filtros){
+	var estado='';
+	var filtrosTramit=getFiltrosTipo(filtros,"estado");
+	_.each(filtrosTramit,function(filtro){
+		if(filtro=="entramit"){
+			estado="entramit";
+		}else if(filtro=="yatramit"){
+			estado="yatramit";
+		}
+	});
+	if (estado=='') return false;
+	return estado;
+}
+
 function filtroTramitGlobal(filtros){
 	var global='';
 	var filtrosTramit=getFiltrosTipo(filtros,"tramit");
 	_.each(filtrosTramit,function(filtro){
-		if(tramit=="EXITO"){
+		if(filtro=="EXITO"){
 			global="EXITO";
 		}else if(filtro=="NEXITO"){
 			global="NEXITO";
@@ -210,11 +246,27 @@ function getFiltrosTipo(filtros,filtroTipo){
 	return filtrosTipo;
 }
 
+function quitaTipoFiltro(filtroscad,tipo){
+	if (filtroscad=='') return '';
+	var arrayFil=filtroscad.substr(7).split('&');
+	var filtros="filter/";
+	_.each(arrayFil,function(filAnt){
+		if(filAnt.indexOf(tipo+"=")!=0){
+			filtros+=filAnt+"&";
+		}
+	});
+	filtros=filtros.substring(0,filtros.length-1);
+	if (filtros=="filter") return '';
+	return filtros;
+}
+
 function anadirFiltroUrl(filtro,tipoFiltro){
 	var urlBB=Backbone.history.fragment;
 	var filtrosAnt,filtros;
 	//orden=ordenURL(urlBB);
 	filtrosAnt=filtrosURL(urlBB);
+	if(tipoFiltro=="tramit") filtrosAnt=quitaTipoFiltro(filtrosAnt,"estado");
+	if(tipoFiltro=="estado") filtrosAnt=quitaTipoFiltro(filtrosAnt,"tramit");
 
 	if(filtrosAnt==''){
 		if(filtro.indexOf(tipoFiltro)!=-1){
@@ -232,8 +284,8 @@ function anadirFiltroUrl(filtro,tipoFiltro){
 		filtros='filter/'+filtro;
 	}else{
 		var arrayFil=filtrosAnt.substr(7).split('&');
-		var excluyentes = ["individual","compartida"];
-		
+		var excluyentes = ["individual","compartida","estado-entramit","estado-yatramit"];
+
 		// Si es un filtro ya añadido, informamos y no hacemos nada
 		if( _.contains(arrayFil,filtro) == true){
 			alert('Ya tienes ese filtro añadido');
@@ -242,9 +294,26 @@ function anadirFiltroUrl(filtro,tipoFiltro){
 		
 		// Si es un filtro excluyente, lo sustituimos por su asociado
 		}else if(_.contains(excluyentes,filtro)==true){
-			var excluyentesAsoc = ["compartida","individual"];
+			var excluyentesAsoc = ["compartida","individual","estado-yatramit","estado-entramit"];
 			var i=_.indexOf(excluyentes,filtro);
-			if(_.contains(arrayFil,excluyentesAsoc[i])){
+			if(filtro.indexOf("estado")==0){
+				var estadoAnt=filtroEstadoTramit(arrayFil);
+				if(estadoAnt!=false) estadoAnt="estado="+estadoAnt;
+				var filEstado="estado="+filtro.substr(7);
+				filtros="filter/";
+				_.each(arrayFil,function(filAnt){
+					if(filAnt.indexOf("tramit=")!=0){
+						filtros+=filAnt+"&";
+					}
+				});
+				filtros=filtros.substring(0,filtros.length-1);
+						
+				if(estadoAnt==excluyentesAsoc[i].replace('-','=')){
+					filtros=filtros.replace(excluyentesAsoc[i].replace('-','='),filEstado);
+				}else{
+					filtros=filtros+'&'+filEstado;
+				}
+			}else if(_.contains(arrayFil,excluyentesAsoc[i])){
 				filtros=filtrosAnt.replace(excluyentesAsoc[i],filtro);
 			}else{
 				filtros=filtrosAnt+'&'+filtro;
@@ -309,6 +378,30 @@ function anadirFiltroUrl(filtro,tipoFiltro){
 				});
 				filtros=filtros.substring(0,filtros.length-1);
 			}
+
+                // Si es un filtro de fecha (desde o hasta), hay que quitar el anterior en caso de que esté
+                }else if(tipoFiltro=="desde" || tipoFiltro=="hasta"){
+                        var filtroTipoAnt = _.find(arrayFil, function(fil){
+                                return fil.indexOf(tipoFiltro+"=") == 0; });
+
+                        if(filtroTipoAnt==undefined){
+                                filtros="filter/"+filtro+"&";
+                                _.each(arrayFil,function(filAnt){
+                                        filtros+=filAnt+"&";
+                                });
+                                filtros=filtros.substring(0,filtros.length-1);
+                        }else{
+                                filtros="filter/";
+                                _.each(arrayFil,function(filAnt){
+                                        if(filAnt.indexOf(tipoFiltro+"=")!=0){
+                                                filtros+=filAnt+"&";
+                                        }else{
+                                                filtros+=filtro+"&";
+                                        }
+                                });
+                                filtros=filtros.substring(0,filtros.length-1);
+                        }
+
 			
 		
 		// Si es un filtro de los que se comportan como OR, hay que procesar de forma diferente
@@ -340,8 +433,10 @@ function anadirFiltroUrl(filtro,tipoFiltro){
 				});
 				filtros=filtros.substring(0,filtros.length-1);
 
-			// Procesamiento para casos especiales de tramitación (globales)
+			// Procesamiento para casos especiales de resultados de tramitación (globales)
+			// Si se selecciona tramitación global, se quitan los de tramitación concreta
 			}else if(filtro=="tramit-EXITO" || filtro=="tramit-NEXITO"){
+				
 				var filsTramit="tramit="+filVal+'+';
 				if(arrayFiltrosTipo.length!=0){
 					_.each(arrayFiltrosTipo,function (filTramit){
@@ -354,12 +449,16 @@ function anadirFiltroUrl(filtro,tipoFiltro){
 				filtros="filter/";
 				_.each(arrayFil,function(filAnt){
 					if(filAnt.indexOf("tramit=")!=0){
-						filtros+=filAnt+"&";
+						if(filAnt.indexOf("estado")!=0)
+							filtros+=filAnt+"&";
 					}else{
 						filtros+=filsTramit+"&";
 					}
 				});
 				filtros=filtros.substring(0,filtros.length-1);
+
+
+
 				if(arrayFiltrosTipo.length==0) filtros+="&"+filsTramit;
 			}else if(tipoFiltro=="tramit" && (tipoGlobalTramit(filVal)=="EXITO" && _.contains(arrayFiltrosTipo,"EXITO")==true || tipoGlobalTramit(filVal)=="NEXITO" && _.contains(arrayFiltrosTipo,"NEXITO")==true) ){
 				var filsTramit="tramit="+filVal+'+';
@@ -375,7 +474,8 @@ function anadirFiltroUrl(filtro,tipoFiltro){
 				filtros="filter/";
 				_.each(arrayFil,function(filAnt){
 					if(filAnt.indexOf("tramit=")!=0){
-						filtros+=filAnt+"&";
+						if(filAnt.indexOf("estado")!=0)
+							filtros+=filAnt+"&";
 					}else{
 						filtros+=filsTramit+"&";
 					}
@@ -387,7 +487,6 @@ function anadirFiltroUrl(filtro,tipoFiltro){
 			// Si no había filtros de ese tipo, añadimos 'tipoFiltro='
 			if(filtrosAnt.indexOf(tipoFiltro+"=") == -1){
 				filtros=filtrosAnt+'&'+tipoFiltro+'='+filtroSinPre;
-				
 			/* Si había filtros de ese tipo:
 			 	- (1) Si estaba ya, informamos y no hacemos nada
 				- (2) Si no estaba ya, lo añadimos*/
@@ -422,8 +521,8 @@ function anadirFiltroUrl(filtro,tipoFiltro){
 
 function dibujaFiltrosActivos(){
 	var urlBB=Backbone.history.fragment;
-	var excluyentes = ["individual","compartida"];
-	var excluyentesAsoc = ["compartida","individual"];
+	var excluyentes = ["individual","compartida","entramit","yatramit"];
+	var excluyentesAsoc = ["compartida","individual","yatramit","entramit"];
 	var html='';
 	filtrosCad=filtrosURL(urlBB);
 	if(filtrosCad==''){
@@ -461,6 +560,28 @@ function dibujaFiltrosActivos(){
 				quitar='<a title="'+titleQuitar+'" href="javascript:quitaFiltro(\''+filtro+'\')"> <i class="fa fa-times"> </i></a>';
 				html+='<span>'+texto+quitar+'</span>';
 
+                        }else if(filtro.indexOf("desde=")==0 || filtro.indexOf("hasta=")==0){
+                                // Si es de tipo fecha: '(Desde|Hasta) <fecha>'
+                                var tipoFecha;
+                                var fecha=filtro.substr(6).replace(/\-/g,'/');
+                                var arrF=fecha.split('/');
+                                if(filtro.indexOf("desde")==0){
+                                        tipoFecha="Presentada: Desde el";
+                                        var fechaMin=new Date(parseInt(arrF[2]),parseInt(arrF[1])-1,parseInt(arrF[0]));
+                                        $( "#hasta" ).datepicker( "option", "minDate",fechaMin);
+                                        $( "#desde" ).prop('placeholder', "Desde: "+fecha);
+                                }else{
+                                        tipoFecha="Presentada: Hasta el";
+                                        var fechaMax=new Date(parseInt(arrF[2]),parseInt(arrF[1])-1,parseInt(arrF[0]));
+                                        $( "#desde" ).datepicker( "option", "maxDate",fechaMax);
+                                        $( "#hasta" ).prop('placeholder', "Hasta: "+fecha);
+                                }
+                                texto=tipoFecha+' '+fecha;
+
+                                quitar='<a title="'+titleQuitar+'" href="javascript:quitaFiltro(\''+filtro+'\')"> <i class="fa fa-times"> </i></a>';
+                                html+='<span>'+texto+quitar+'</span>';
+
+
 			}else if(grupoFiltro!=''){
 				// Si es de tipo or, recorremos (una cajita para cada valor) 
 				filtro=filtro.replace(grupoFiltro+"=","");
@@ -469,8 +590,16 @@ function dibujaFiltrosActivos(){
 				_.each(filtrosGrupo,function(filtroG){
 					subFiltro=grupoFiltro+'-'+filtroG;
 					texto=$(".filtro option[value='"+subFiltro+"']").text();
-					//if(grupoFiltro == "grupo") texto="G.P. "+texto;
-					html+='<span>'+texto+'<a title="'+titleQuitar+'" href="javascript:quitaFiltro(\''+subFiltro+'\')"> <i class="fa fa-times"> </i></a></span>';
+					
+					if(grupoFiltro == "estado"){
+						var i=_.indexOf(excluyentes,filtro);
+						var filtroAsoc=excluyentesAsoc[i];
+						var titleCambiar="Cambiar a '"+ $(".filtro option[value='estado-"+filtroAsoc+"']").text()+"'";
+						var cambiar='<a title="'+titleCambiar+'" href="javascript:cambiaFiltro(\'estado-'+filtroAsoc+'\')"> <i class="fa fa-refresh"> </i></a>';
+						html+='<span>'+texto+cambiar+'<a title="'+titleQuitar+'" href="javascript:quitaFiltro(\''+subFiltro+'\')"> <i class="fa fa-times"> </i></a></span>';
+					}else{
+						html+='<span>'+texto+'<a title="'+titleQuitar+'" href="javascript:quitaFiltro(\''+subFiltro+'\')"> <i class="fa fa-times"> </i></a></span>';
+					}
 				});
 			}else{ 
 				texto=$(".filtro option[value='"+filtro+"']").text();
@@ -501,6 +630,15 @@ function quitaFiltro(filtro){
 	var url,tipos;
 	var grupoFiltro='';
 	var filtros="filter/";
+
+        if(filtro.indexOf("desde=")==0){
+                $( "#hasta" ).datepicker( "option", "minDate", new Date(2011,11,13));
+                $( "#desde" ).prop('placeholder', "Desde");
+        }else if(filtro.indexOf("hasta=")==0){
+                $( "#desde" ).datepicker( "option", "maxDate", new Date());
+                $( "#hasta" ).prop('placeholder', "Hasta");
+        }
+
 
 	$('.filtro').each(function(){
 		if(filtro.indexOf($(this).attr('id')) == 0 ){
@@ -619,6 +757,8 @@ function filtrosInicApiUrl(filtros){
 	var q="q={";
 	var qs=[];
 	var valFil;
+	var fechasInic=[];
+	var fechasQuery;
 	var apiUrl='http://api.quehacenlosdiputados.net/iniciativas?';
 	_.each(filtros,function(filtro){
 	   if(filtro.indexOf("grupo=")==0){
@@ -693,6 +833,18 @@ function filtrosInicApiUrl(filtros){
 		qs.push(tramitQuery);
 
 
+           }else if(filtro.indexOf("estado=")==0){
+                valFil=filtro.substr(7);
+                var estadoQuery='"resultado_tramitacion":{"$exists":';
+		if(valFil=="entramit"){
+			estadoQuery+='false';
+		}else{
+			estadoQuery+='true';
+		}
+           
+                estadoQuery+='}';
+                qs.push(estadoQuery);
+
 	   }else if(filtro.indexOf("texto=")==0){
 		var textoQuery='"titulo":"';
 		var textoNorm=textToApi(filtro.substr(6).replace(/\+/g,' '));
@@ -700,6 +852,17 @@ function filtrosInicApiUrl(filtros){
 		textoQuery+='"';
 		qs.push(textoQuery);
 
+	   }else if(filtro.indexOf("desde=")==0 || filtro.indexOf("hasta=")==0){
+                var opFecha;
+                if(filtro.indexOf("desde")==0){
+                        opFecha='"$gte"';
+                }else{
+                        opFecha='"$lte"';
+                }
+                var fCad=filtro.substr(6).split('-');
+                var fecha=new Date(parseInt(fCad[2]),parseInt(fCad[1])-1,parseInt(fCad[0]));
+                fecha=fecha.toISOString();
+                fechasInic.push(''+opFecha+':"'+fecha+'"');
 	   }else{
 		if(filtro=="individual"){
 			qs.push('"autores.1":{"$exists":false}');
@@ -709,6 +872,17 @@ function filtrosInicApiUrl(filtros){
 	   }
 	
 	});
+
+	// Si hay fechas de principio o fin, las metemos en el mismo query
+        if(fechasInic.length > 0){
+                fechasQuery='"presentadoJS2":{';
+                _.each(fechasInic,function(f){
+                        fechasQuery+=f+',';
+                });
+                fechasQuery=fechasQuery.substring(0,fechasQuery.length-1);
+                fechasQuery+='}';
+                qs.push(fechasQuery);
+        }
 
 	_.each(qs,function(qsi){
 		q+=qsi+",";
@@ -775,52 +949,78 @@ function selectInic(tipoAutor){
 	return select;
 }
 
+function mostrarAutores(numInic){
+        $('#autoresList'+numInic).fadeIn();
+        $('#enlaceAutores'+numInic).text('ocultar');
+        $('#enlaceAutores'+numInic).attr('href','javascript:ocultarAutores('+numInic+')');
+}
+
+function ocultarAutores(numInic){
+        $('#autoresList'+numInic).fadeOut();
+        $('#enlaceAutores'+numInic).text('mostrar');
+        $('#enlaceAutores'+numInic).attr('href','javascript:mostrarAutores('+numInic+')');
+}
+
 function htmlIniciativas(iniciativas){      
 	var masInic="";
+	var numInic=1;
         _.each(iniciativas,function(inic){
 			var urlInic=enlaceInic(inic.num_expediente);
-                        masInic+='<li class="iniciativa"><a target="_blank" href="'+urlInic+'"><i class="fa fa-circle"> </i> '+inic.titulo+'</a>';
-                        masInic+='<span>Presentada el '+inic.presentado+', calificada el '+inic.calificado+'</span>';
+			//masInic+='<li class="iniciativa"><a target="_blank" href="'+urlInic+'"><i class="fa fa-circle"> </i> '+inic.titulo+'</a>';
+                        enlaceExt='<a class="enlaceExtIcon" href="'+urlInic+'" target="_blank" title="Ver ficha de la iniciativa en Congreso.es" ><i class="fa fa-external-link"> </i></a>';
+			masInic+='<li class="iniciativa"><span class="tituloInic"><i class="fa fa-circle" style="display:inline-block"> </i> '+inic.titulo+' '+enlaceExt+'</span>';
+			masInic+='<span>Presentada el '+inic.presentado+', calificada el '+inic.calificado+'</span>';
+                        
                         if(inic.autores.length==1){
-				masInic+="<span>Autor: ";
-				if(inic.tipo_autor  == "Diputado"){
-					var d=_.find(this.diputados,function(dipu){
-						return dipu.id == inic.autores[0];
-					});
-					masInic+='<a href="/diputado/'+d.id+'">'+d.nombre+' '+d.apellidos+'</a>';
-				}else if(inic.tipo_autor == "Grupo"){
-					var g=_.find(grupos,function(grupo){
-						return grupo.id == inic.autores[0];
-					});
-					masInic+='<a href="/grupo-parlamentario/'+g.id+'">G.P. '+g.nombre+'</a>';	
-				}
-				masInic+="</span>";
+                                masInic+="<span>Autor: ";
+                                if(inic.tipo_autor  == "Diputado"){
+                                        var d=_.find(this.diputados,function(dipu){
+                                                return dipu.id == inic.autores[0];
+                                        });
+                                        masInic+='<a href="/diputado/'+d.id+'">'+d.nombre+' '+d.apellidos+'</a>';
+                                }else if(inic.tipo_autor == "Grupo"){
+                                        var g=_.find(grupos,function(grupo){
+                                                return grupo.id == inic.autores[0];
+                                        });
+                                        masInic+='<a href="/grupo-parlamentario/'+g.id+'">G.P. '+g.nombre+'</a>';
+                                }
+                                masInic+="</span>";
 
-			}else{
-				masInic+="<span>Autores ("+inic.autores.length+"): ";
-				if(inic.tipo_autor  == "Diputado"){
-					_.each(inic.autores,function(autor){
-						var d=_.find(diputados,function(dipu){
-							return dipu.id == autor;
-						});
-						masInic+='<a href="/diputado/'+d.id+'">'+d.nombre+' '+d.apellidos+'</a> ';
-					});
-				}else if(inic.tipo_autor == "Grupo"){
-					_.each(inic.autores,function(autor){
-						var g=_.find(grupos,function(grupo){
-							return grupo.id == autor;
-						});
-						masInic+='<a href="/grupo-parlamentario/'+g.id+'">G.P. '+g.nombre+'</a> ';
-					});
-				}
-				masInic+="</span>";
-			}
-                        if(typeof(inic.resultado_tramitacion) != "undefined"){
-                                masInic+='<span>Estado: '+inic.resultado_tramitacion+'</span>';
                         }else{
-                                masInic+='<span>Estado: En tramitación</span>';
+                                masInic+='<span>Autores ('+inic.autores.length+') <a style="font-size:8pt;" id="enlaceAutores'+numInic+'" href="javascript:mostrarAutores('+numInic+')">mostrar</a></span>';
+                                masInic+='<div id="autoresList'+numInic+'" class="autoresList" style="display:none"><ul>';
+                                if(inic.tipo_autor  == "Diputado"){
+                                        _.each(inic.autores,function(autor){
+                                                var d=_.find(diputados,function(dipu){
+                                                        return dipu.id == autor;
+                                                });
+                                                masInic+='<li><i class="fa fa-user"> </i> <a href="/diputado/'+d.id+'">'+d.nombre+' '+d.apellidos+'</a></li>';
+                                        });
+                                }else if(inic.tipo_autor == "Grupo"){
+                                        _.each(inic.autores,function(autor){
+                                                var g=_.find(grupos,function(grupo){
+                                                        return grupo.id == autor;
+                                                });
+                                                masInic+='<li><i class="fa fa-users" > </i> <a href="/grupo-parlamentario/'+g.id+'">G.P. '+g.nombre+'</a></li>';
+                                        });
+                                }
+                                masInic+="</ul></div>";
                         }
+                        if(typeof(inic.resultado_tramitacion) != "undefined"){
+				var tipoRes=tipoTramit(inic.resultado_tramitacion);
+				var icono;
+				if(tipoRes=="exito"){
+					icono="fa-thumbs-up";
+				}else{
+					icono="fa-thumbs-down";
+				}
+                                masInic+='<span class="tramit '+tipoRes+'"><i class="fa '+icono+'"> </i> '+inic.resultado_tramitacion+'</span>';
+                        }else{
+                                masInic+='<span class="tramit entramit"><i class="fa fa-clock-o"> </i> En tramitación</span>';
+                        }
+
                         masInic+='</li>';
+			numInic++;
                 });
 
          return masInic;
@@ -842,12 +1042,29 @@ function skipIniciativas(nivel){
         $.when(
                 $.ajax(apiUrl)
          ).done(function(_data){
-                var nuevas=_data;
+                var nuevas=_data.result;
                 var masInic="";
+		var numInic=saltar;
+		var enlaceExt;
                 _.each(nuevas,function(inic){
 			var urlInic=enlaceInic(inic.num_expediente);
-                        masInic+='<li class="iniciativa"><a target="_blank" href="'+urlInic+'"><i class="fa fa-circle"> </i> '+inic.titulo+'</a>';
-                        //masInic+='<li class="iniciativa"><a><i class="fa fa-circle"> </i> '+inic.titulo+'</a>';
+                        enlaceExt='<a class="enlaceExtIcon" href="'+urlInic+'" target="_blank" title="Ver ficha de la iniciativa en Congreso.es" ><i class="fa fa-external-link"> </i></a>';
+			
+			/*var buscTxt=getFiltrosTipo(filtros,"texto");
+			if(buscTxt.length > 0){
+				var txtregexp=textToApi(buscTxt.join(' '));
+				var tit=inic.titulo;
+				var encontrados=tit.match(new RegExp(txtregexp,'gi'));
+				var enc=false;
+				_.each(encontrados,function(encontrado){
+					enc=true;
+					tit=tit.replace(encontrado,'<strong style="display:inline-block;color:white;font-weight:normal;background:#ff8897;padding:1px;">'+encontrado+'</strong>');
+				});
+				
+				masInic+='<li class="iniciativa"><i class="fa fa-circle" style="display:inline-block"> </i> '+tit+' '+enlaceExt;
+			}else{*/
+				masInic+='<li class="iniciativa"><span class="tituloInic"><i class="fa fa-circle" style="display:inline-block"> </i> '+inic.titulo+' '+enlaceExt+'</span>';
+			//}
                         masInic+='<span>Presentada el '+inic.presentado+', calificada el '+inic.calificado+'</span>';
                         if(inic.autores.length==1){
 				masInic+="<span>Autor: ";
@@ -865,30 +1082,39 @@ function skipIniciativas(nivel){
 				masInic+="</span>";
 
 			}else{
-				masInic+="<span>Autores ("+inic.autores.length+"): ";
+				masInic+='<span>Autores ('+inic.autores.length+') <a style="font-size:8pt;" id="enlaceAutores'+numInic+'" href="javascript:mostrarAutores('+numInic+')">mostrar</a></span>';
+				masInic+='<div id="autoresList'+numInic+'" class="autoresList" style="display:none"><ul>';
 				if(inic.tipo_autor  == "Diputado"){
 					_.each(inic.autores,function(autor){
 						var d=_.find(diputados,function(dipu){
 							return dipu.id == autor;
 						});
-						masInic+='<a href="/diputado/'+d.id+'">'+d.nombre+' '+d.apellidos+'</a> ';
+						masInic+='<li><i class="fa fa-user"> </i> <a href="/diputado/'+d.id+'">'+d.nombre+' '+d.apellidos+'</a></li>';
 					});
 				}else if(inic.tipo_autor == "Grupo"){
 					_.each(inic.autores,function(autor){
 						var g=_.find(grupos,function(grupo){
 							return grupo.id == autor;
 						});
-						masInic+='<a href="/grupo-parlamentario/'+g.id+'">G.P. '+g.nombre+'</a> ';
+						masInic+='<li><i class="fa fa-users" > </i> <a href="/grupo-parlamentario/'+g.id+'">G.P. '+g.nombre+'</a></li>';
 					});
 				}
-				masInic+="</span>";
+				masInic+="</ul></div>";
 			}
                         if(typeof(inic.resultado_tramitacion) != "undefined"){
-                                masInic+='<span>Estado: '+inic.resultado_tramitacion+'</span>';
+				var tipoRes=tipoTramit(inic.resultado_tramitacion);
+				var icono;
+				if(tipoRes=="exito"){
+					icono="fa-thumbs-up";
+				}else{
+					icono="fa-thumbs-down";
+				}
+                                masInic+='<span class="tramit '+tipoRes+'"><i class="fa '+icono+'"> </i> '+inic.resultado_tramitacion+'</span>';
                         }else{
-                                masInic+='<span>Estado: En tramitación</span>';
+                                masInic+='<span class="tramit entramit"><i class="fa fa-clock-o"> </i> En tramitación</span>';
                         }
                         masInic+='</li>';
+			numInic++;
                 });
                 var siguiente=nivel+1;
                 var cargarMas='<a href="javascript:skipIniciativas('+siguiente+')">Cargar más</a>';
@@ -910,6 +1136,22 @@ $(document).ready(function(){
 	var img="<img style='height:70px;' src='http://www.mo-experts.com/images/loading.gif'/>";
 	$('.iniciativas').html(img);
 	$('#iniciativasdiv').show();
+	$(".datepicker").datepicker({
+                minDate: new Date(2011, 11, 13),
+                maxDate: new Date(),
+                changeMonth: true,
+                changeYear: true,
+                onSelect: function(dateText,inst){
+                        var tipoFecha=$(this).attr('id');
+                        var fechaCool=dateText.replace(/\//g,'-');
+                        anadeFiltro(''+tipoFecha+'='+fechaCool,tipoFecha);
+                        $(this).prop('placeholder',tipoFecha.charAt(0).toUpperCase() + tipoFecha.slice(1)+': '+dateText);
+                        $(this).val('');
+                }
+                /*showButtonPanel: true,
+                closeText: 'Cerrar'*/
+        });
+
 });
 
 $('#ordenes').change(function() {

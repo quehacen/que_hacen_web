@@ -9,7 +9,11 @@
                 <span class="nombre"><b>{{diputado.apellidos}}</b>, {{diputado.nombre}}</span>
                 <img class="partidoimg" src="/img/miniaturasPartidos/{{diputado.partido }}.png" alt="logotipo del partido {{diputado.partido}}">
         </a>
+	{%if diputado.actividad.iniciativas.total != 0%}
         <a href="/iniciativas#filter/diputado={{diputado.id}}">
+	{%else%}
+	<a class="nolink" href="#">
+	{% endif%}
                 <span class="grupo">{{diputado.actividad.iniciativas.total}} iniciativas</span>
         </a>
 </li>

@@ -3,6 +3,11 @@
 Iniciativas parlamentarias
 {%endblock%}
 
+{% block styles %}
+<link rel="stylesheet" href="/stylesheets/jquery-ui.css">
+{%endblock%}
+
+
 {% block content %}
 	<div class="row container">
 		<div class="diputadosTotal">
@@ -13,15 +18,9 @@ Iniciativas parlamentarias
 			<!--<div id="ordenaciones">
 				<ul>
 					<li><a href=''></a></li>
-					<li><a href=''></a></li>
-					<li><a href=''></a></li>
-					<li><a href=''></a></li>
-					<li><a href=''></a></li>
-					<li><a href=''></a></li>
-					<li><a href=''></a></li>	
 				</ul>
 			</div>-->
-			<h3 class="title" style="text-align:center"></h3>
+			<h3 id="totalInic" class="title" style="text-align:center">{{numIniciativas}} iniciativas</h3>
 		        <div id="filtrosActivos"></div>
 			<div id="iniciativasdiv" style="">
 				{% include "./modules/iniciativas.html" %}
@@ -53,7 +52,8 @@ Iniciativas parlamentarias
 			</select>
 		   </div>-->
 		   <div class="filtrosContainer">
-			<span class="title">Añadir filtros</span>
+			<span class="title">Filtros</span>
+                        <span class='catFiltros'>Autor</span>
 			<select class="selectFiltro filtro" id="tipo_autor">
 				<option class="titleSelect" disabled selected value="no">Tipo de autor</option>
 				<option value="autor-diputado">Diputados</option>
@@ -76,6 +76,9 @@ Iniciativas parlamentarias
 				<option value="individual">Un autor</option>
 				<option value="compartida">Más de un autor</option>
 			</select>
+			<hr/>
+
+                        <span class='catFiltros'>Tipo de iniciativa</span>
 			<select class="selectFiltro filtro" id="tipoCat">
 				<option class="titleSelect" disabled selected value="no">Tipo de iniciativa</option>
 				<option value="tipoCat-INTERP">Interpelación</option>
@@ -89,14 +92,14 @@ Iniciativas parlamentarias
 				<option value="tipoCat-SOLIC_NO">Solicitud de nuevo órgano</option>
 				<option value="tipoCat-SOLIC_INF">Solicitud de informe</option>
 			</select>
-			<!--<select class="selectFiltro filtro" id="anio">
-				<option class="titleSelect" disabled selected value="no">Año</option>
-				<option value="anio-2011">2011</option>
-				<option value="anio-2012">2012</option>
-				<option value="anio-2013">2011</option>
-				<option value="anio-2014">2012</option>
-			</select>-->
-			
+			<hr/>
+
+                        <span class='catFiltros'>Tramitación</span>	
+			<select class="selectFiltro filtro" id="estado">
+				<option class="titleSelect" disabled selected value="no">Estado de tramitación</option>
+				<option value="estado-entramit">En tramitación</option>
+				<option value="estado-yatramit">Tramitada</option>
+			</select>	
 			<select class="selectFiltro filtro" id="tramit">
 				<option class="titleSelect" disabled selected value="no">Resultado de tramitación</option>
 				<optgroup label="Resultado global">
@@ -121,6 +124,13 @@ Iniciativas parlamentarias
 				<option value="tramit-RET">Retirado</option>
 				</optgroup>
 			</select>
+                        <hr/>
+			
+			<span class='catFiltros'>Fecha de presentación</span>	
+			<form id="selectFechas">
+                                <input type="text" class="datepicker" id="desde" placeholder="Desde"></input>
+                                <input type="text" class="datepicker" id="hasta" placeholder="Hasta"></input>
+                        </form>
 		</div>
 		</div>
 	</div>
@@ -128,6 +138,9 @@ Iniciativas parlamentarias
 {% block scripts %}
 	{% parent %}
         <script src="/javascripts/vendors/mustache.js"></script>
-	<script src="/javascripts/iniciativas.js"></script>
+	<script src="/javascripts/iniciativas_.js"></script>
+	<script src="/javascripts/vendors/jquery-ui.js"></script>
+        <script src="/javascripts/vendors/datepicker_es.js"></script>
+
 {% endblock %}
 

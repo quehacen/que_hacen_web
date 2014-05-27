@@ -1,14 +1,35 @@
+<div id="iniciativasdiv">
 <ul class="iniciativas">
 {% for iniciativa in iniciativas %}
-<li class="iniciativa">
-        <a href="#">
-                <i class="fa fa-circle"></i> 
-                <span>{{iniciativa.titulo}}</span>
-        </a>
-        <span>Presentado el {{iniciativa.presentado |fecha }}, calificado el {{iniciativa.calificado |fecha }}</span>
-        {%if iniciativa.resultado_tramitacion%}<span>Resultado de tramitación: {{iniciativa.resultado_tramitacion}}</span>
-        {%else%}<span>Iniciativa en tramitación</span>
-        {%endif%}
-</li>
+	{% if !iniciativa.resultado_tramitacion %}
+		{% set resulTramitClass = "entramit" %}
+		{% set resulTramit = "En tramitación" %}
+		{% set resulTramitIcon = "fa-clock-o" %}
+	{% elif iniciativa.resultado_tramitacion == "Aprobado con modificaciones" || 
+		iniciativa.resultado_tramitacion == "Aprobado sin modificaciones"||
+		iniciativa.resultado_tramitacion == "Convertido"||
+		iniciativa.resultado_tramitacion == "Subsumido en otra iniciativa"||
+		iniciativa.resultado_tramitacion == "Tramitado por completo sin req. acuerdo o decisión" 
+	%}
+		{% set resulTramitClass = "exito" %}
+		{% set resulTramitIcon = "fa-thumbs-up" %}
+		{% set resulTramit = iniciativa.resultado_tramitacion %}
+	{% else %}
+		{% set resulTramitClass = "noexito" %}
+		{% set resulTramitIcon = "fa-thumbs-down" %}
+		{% set resulTramit = iniciativa.resultado_tramitacion %}
+	{% endif %}
+
+	<li class="iniciativa">
+		{% set urlIniciativa = num_expediente|split('/')  %}
+	    <span class="tituloInic"><i class="fa fa-circle" style="display:inline-block"> </i> {{iniciativa.titulo}} <a class="enlaceExtIcon" href="http://www.congreso.es/portal/page/portal/Congreso/Congreso/Iniciativas?_piref73_2148295_73_1335437_1335437.next_page=/wc/servidorCGI&CMD=VERLST&BASE=IW10&FMT=INITXDSS.fmt&DOCS=1-3&DOCORDER=FIFO&OPDEF=ADJ&QUERY=%28{{urlIniciativa[0]}}%2F{{urlIniciativa[1]}}*.NDOC.%29" target="_blank" title="Ver ficha de la iniciativa en Congreso.es"><i class="fa fa-external-link"> </i></a>
+	    </span>
+	    <span>Presentada el {{iniciativa.presentado |fecha }}, calificada el {{iniciativa.calificado |fecha }}</span>
+	    <span class="tramit {{resulTramitClass}}"><i class="fa {{resulTramitIcon}}"> </i> {{resulTramit}}</span>
+	   
+	</li>
 {% endfor %}
 </ul>
+</div>
+
+

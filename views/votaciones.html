@@ -1,60 +1,63 @@
 {% extends 'layout.html' %}
+{% block title %}Votaciones{%endblock%}
 {% block content %}
+
 	<div class="row container">
 		<div class="diputadosTotal">
 			<h2 id="arriba">Votaciones</h2>
 		</div>
 		<div class="large-12 columns mark">
-			<div class="large-12 columns ultimasvotaciones mark">
+			<div class="large-9 small-9 columns ultimasvotaciones mark">
 				<ul class="votaciones">
 				{% for votacion in votaciones %}
 					<li class="votacion large-12">
 							<span class="info">Sesión {{votacion.xml.resultado.informacion.sesion}} - Votación {{votacion.xml.resultado.informacion.numerovotacion}} - {{votacion.xml.resultado.informacion.fecha | fecha}}</span>	
 							<h2><a href="/votacion/sesion/{{votacion.xml.resultado.informacion.sesion}}/votacion/{{votacion.xml.resultado.informacion.numerovotacion}}">{{votacion.xml.resultado.informacion.textoexpediente}}</a></h2>
-				{%spaceless%}
 
-				{%set tipoVot = votacion.numExpediente | tipoInic %}
-{% if votacion.xml.resultado.totales.asentimiento == "Sí"%}
-	{% set txtResul="Aprobada por asentimiento"%}{%set iresul="thumbs-up"%}{% set votog="sí"%}
+					{%spaceless%}
+					{%set tipoVot = votacion.numExpediente | tipoInic %}
+					{% if votacion.xml.resultado.totales.asentimiento == "Sí"%}
+					{% set txtResul="Aprobada por asentimiento"%}{%set iresul="thumbs-up"%}{% set votog="sí"%}
 
-{%else %}
-	{# Votación constitucional #}
-	{%if tipoVot==100%}
-		{% if votacion.xml.resultado.totales.afavor | toInt > 210 %}
-			{% set txtResul="Aprobada"%}{%set iresul="thumbs-up"%}{%set votog="sí"%}
-		{% else %}
-			{% set txtResul="Rechazada" %}{% set iresul="thumbs-down"%}{%set votog="no"%}
-		{% endif %}
+					{%else %}
+					{# Votación constitucional #}
+					{%if tipoVot==100%}
+					{% if votacion.xml.resultado.totales.afavor | toInt > 210 %}
+					{% set txtResul="Aprobada"%}{%set iresul="thumbs-up"%}{%set votog="sí"%}
+					{% else %}
+					{% set txtResul="Rechazada" %}{% set iresul="thumbs-down"%}{%set votog="no"%}
+					{% endif %}
 
-	{# Estatuto de autonomía o reforma del reglamento #}
-	{%elif tipoVot==127 or tipoVot==410 %}
-		{% if votacion.xml.resultado.totales.afavor | toInt > 176 %}
-			{% set txtResul="Aprobada"%}{%set iresul="thumbs-up"%}{%set votog="sí"%}
-		{% else %}
-			{% set txtResul="Rechazada" %}{% set iresul="thumbs-down"%}{%set votog="no"%}
-		{% endif %}
-	
-	{# Iniciativa ordinaria #}
-	{%else%}
-		{% if votacion.xml.resultado.totales.afavor | toInt > votacion.xml.resultado.totales.encontra | toInt%}
-			{% set txtResul="Aprobada"%}{%set iresul="thumbs-up"%}{%set votog="sí"%}
-		{% elif votacion.xml.resultado.totales.afavor | toInt == votacion.xml.resultado.totales.encontra | toInt%}
-			{% set txtResul="Empate"%}{%set iresul="minus-square-o"%}{%set votog="no"%}
-		{% else %}
-			{% set temp="Entra donde no debe"%}
-			{% set txtResul="Rechazada" %}{% set iresul="thumbs-down"%}{%set votog="no"%}
-		{% endif %}
-	{%endif%}
-{% endif %}
+					{# Estatuto de autonomía o reforma del reglamento #}
+					{%elif tipoVot==127 or tipoVot==410 %}
+					{% if votacion.xml.resultado.totales.afavor | toInt > 176 %}
+					{% set txtResul="Aprobada"%}{%set iresul="thumbs-up"%}{%set votog="sí"%}
+					{% else %}
+					{% set txtResul="Rechazada" %}{% set iresul="thumbs-down"%}{%set votog="no"%}
+					{% endif %}
 
-{% set _votacion = votacion.xml.resultado.votaciones.votacion|first %}
-{% if _votacion.voto == "No" %}{% set txtVoto="Votó en contra" %}{% set ivoto="thumbs-down"%}
-{% elseif _votacion.voto == "Sí" %}{% set txtVoto="Votó a favor"%}{% set ivoto="thumbs-up"%}
-{% elseif _votacion.voto == "No vota" %}{% set txtVoto="No vota"%}{% set ivoto="times"%}
-{% elseif _votacion.voto == "Abstención" %}{% set txtVoto="Abstención"%}{% set ivoto="minus-square-o"%}
-{% endif %}
+					{# Iniciativa ordinaria #}
+					{%else%}
+					{% if votacion.xml.resultado.totales.afavor | toInt > votacion.xml.resultado.totales.encontra | toInt%}
+					{% set txtResul="Aprobada"%}{%set iresul="thumbs-up"%}{%set votog="sí"%}
+					{% elif votacion.xml.resultado.totales.afavor | toInt == votacion.xml.resultado.totales.encontra | toInt%}
+					{% set txtResul="Empate"%}{%set iresul="minus-square-o"%}{%set votog="no"%}
+					{% else %}
+					{% set temp="Entra donde no debe"%}
+					{% set txtResul="Rechazada" %}{% set iresul="thumbs-down"%}{%set votog="no"%}
+					{% endif %}
+					{%endif%}
+					{% endif %}
 
-				{%endspaceless%}
+					{% set _votacion = votacion.xml.resultado.votaciones.votacion|first %}
+					{% if _votacion.voto == "No" %}{% set txtVoto="Votó en contra" %}{% set ivoto="thumbs-down"%}
+					{% elseif _votacion.voto == "Sí" %}{% set txtVoto="Votó a favor"%}{% set ivoto="thumbs-up"%}
+					{% elseif _votacion.voto == "No vota" %}{% set txtVoto="No vota"%}{% set ivoto="times"%}
+					{% elseif _votacion.voto == "Abstención" %}{% set txtVoto="Abstención"%}{% set ivoto="minus-square-o"%}
+					{% endif %}
+
+					{%endspaceless%}
+				
 						<!--<span class="asentimiento {{votacion.xml.resultado.totales.asentimiento | slugify}}"><i class="fa fa-thumbs-{{iresul}}"> </i> {{txtResul}}</span>-->
 						<span class="resultado voto {{votog | slugify}}"><i class="fa fa-{{iresul}}"> </i> {{txtResul}}</span>
 						<div class="textoExpediente">{{votacion.xml.resultado.informacion.titulo}}</div>
@@ -69,6 +72,15 @@
 					</li>
 				{% endfor %}
 				</ul>
+			</div>
+			<div class="large-3 small-3 columns filtros">
+				<div class="filtrosContainer buscador"> 
+					<form action="javascript:busquedaTextoInic();"> 
+						<input id="textoBusc" type="search" maxlength="60" placeholder="Buscar por texto"/>
+						<input type="submit" value="Buscar" />
+				   	</form>
+			        </div>
+				 <span class="enlace_faq"><a href="http://blog.quehacenlosdiputados.net/preguntas-y-respuestas-sobre-las-votaciones-parlamentarias/" class="fa fa-info-circle"> </i>Preguntas y respuestas sobre las votaciones</a></span>
 			</div>
 			<div class="large-12 columns pagination">
 				<ul class="pagination">

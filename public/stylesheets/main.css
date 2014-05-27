@@ -4,17 +4,34 @@ a:active, a:focus, input , select, option{
     outline-width:0 !important;
 }
 
+a.nolink, a.nolink:hover span {
+  cursor:default;
+  color:black !important;
+}
+li.no_circ {
+  list-style-type:none !important;
+}
+
 .header {
     background-color: black;
     color: white;
 }
+
+#headerTop, #headerTop .header{
+	background-color:white;
+}
+
+
+
 .header h1 {
-    width: 60%;
+    width: 460px;
     height: 93px;
     display: inline-block;
     overflow: hidden;
     text-indent: -100%;
-    background-image: url(/images/qhbeta.jpg);
+    color:transparent;
+    /*background-image: url(/images/logo.jpg);*/
+    background-image: url(/images/quehacenlosdiputados.jpg);
     background-repeat: no-repeat;
     background-position: left center;
     padding: 0;
@@ -22,9 +39,9 @@ a:active, a:focus, input , select, option{
     float: left;
 }
 .header form {
-    display: inline-block;
-    width: 40%;
-    padding-top: 1.5em;
+    /* display: inline-block; */
+    /* width: 40%; */
+    /* padding-top: 1.5em; */
 }
 .header form input[type="text"]{
     display: inline-block;
@@ -55,6 +72,19 @@ background: white;
 color:black;
 cursor: pointer;
 }
+
+.nav.secondary { border-bottom: 6px solid #ff6956; box-shadow: 0 2px 3px rgba(0,0,0,.2);}
+.nav.secondary ul       { padding: 0; margin: 0; }
+.nav.secondary ul li    { display: inline-block; float:left;}
+.nav.secondary ul li.right    { float:right;}
+.nav.secondary ul li a  { color: rgba(255,255,255,.7); font-weight: normal; font-size: 10pt; line-height: 1.1em; text-decoration: none; padding: 12px 9px; display: block;
+-webkit-border-radius: 2px;
+-moz-border-radius: 2px;
+border-radius: 2px;margin:0 2px 6px 0;background:#44474C;color:white;}
+.nav.secondary ul li a.active { background-color: #ff6956; box-shadow: inset 0 1px 1px rgba(255,255,255,.4); font-weight: bold; color: white;}
+.nav.secondary ul li a:hover:not(.active) {background-color:black;}
+
+/*
 .nav { background-color:#333;}
 .nav.secondary          { background-color: #44474c; border-bottom: 6px solid #ff6956; box-shadow: 0 1px 10px rgba(0,0,0,.2);}
 .nav.secondary ul       { padding: 0; margin: 0; }
@@ -62,7 +92,13 @@ cursor: pointer;
 .nav.secondary ul li.right    { float:right;}
 .nav.secondary ul li a  { color: rgba(255,255,255,.7); font-weight: normal; font-size: 8.5pt; line-height: 1.1em; text-decoration: none; padding: 14px 7px; display: block;}
 .nav.secondary ul li a.active { background-color: #ff6956; box-shadow: inset 0 1px 1px rgba(255,255,255,.4); font-weight: bold; color: white;}
-.nav.secondary ul li a:hover:not(.active) {background-color:black;}
+.nav.secondary ul li a:hover:not(.active) {background-color:black;}*/
+
+.header #rrssheader{color:red;background-color:white;padding:0;}
+.header #rrssheader.tw{color:#5DD7FC;}
+.header #rrssheader.fb{color:#3C599B;}
+.header #rrssheader.utube{color:#DC2725;}
+.header #rrssheader:hover{color:#ff6956;}
 
 .footer { background-color:#ff6956; color:white; margin-top: 1em;}
 .footer dl {line-height:1em;font-size: 9pt;}
@@ -222,8 +258,8 @@ ul.summary li.encontra .result{ color:#f70504;}
 ul.summary li.presentes .result{ color:#1695fe;}
 .infoVotacion ul.resultado li.abstenciones .result,
 ul.summary li.abstenciones .result{ color:#ecbc02;}
-.infoVotacion ul.resultado li.novotan  .result,
-ul.summary li.novotan  .result{ color:#333;}
+.infoVotacion ul.resultado li.novotan .result,
+ul.summary li.novotan .result{ color:#333;}
 /************/
 .infoVotacion ul.resultado li.afavor .tipo,
 ul.summary li.afavor .tipo{ border-color:#6fc354;}
@@ -235,6 +271,7 @@ ul.summary li.presentes .tipo{ border-color:#1695fe;}
 ul.summary li.abstenciones .tipo{ border-color:#ecbc02;}
 .infoVotacion ul.resultado li.novotan  .tipo,
 ul.summary li.novotan .tipo{ border-color:#333;}
+
 .infoVotacion ol {list-style:none; padding:0}
 
 /* ultimas votaciones */
@@ -264,6 +301,8 @@ ul.summary li span{display: inline;font-size: 10pt;color: #333;}
  ul.summary li.abstenciones .tipo i{ background-color: #ecbc02;}
 .ultimasvotaciones ul.resultado li.novotan .tipo i,
  ul.summary li.novotan .tipo i{ background-color: #333;}
+ .ultimasvotaciones ul.resultado li.telematico .tipo i,
+ ul.summary li.telematico .tipo i{ background-color: #fff; border: 2px solid black;}
 
 .ultimasvotaciones h3 {text-align: center; display:inline-block;} 
 .ultimasvotaciones h3 a { color: #fe5339; } 
@@ -563,8 +602,7 @@ height:50%;
 /* PÁGINA INICIATIVAS E INTERVENCIONES */
 
 #iniciativasdiv, #intervencionesdiv{
-  padding: 10px 30px;
-  min-height: 500px;
+ /*padding: 10px 30px;*/
 }
 
 h3#totalInic, h3#totalInterv{
@@ -615,7 +653,42 @@ h3#totalInic, h3#totalInterv{
   text-decoration:underline;
 }
 
+/* Cajitas para estados de tramitación */
+#iniciativasdiv span.tramit{
+  display:inline-block;
+  width:auto;
+  color: white;
+  padding: 3px;
+  font-size:10pt;
+}
+
+#iniciativasdiv span.tramit i{
+  /*color:white;*/
+}
+#iniciativasdiv span.tramit.noexito, #iniciativasdiv span.tramit.noexito i{
+  color:#E22B0B;
+}
+
+#iniciativasdiv span.tramit.exito, #iniciativasdiv span.tramit.exito i{
+  color:#28862A;
+}
+
+#iniciativasdiv span.tramit.entramit, #iniciativasdiv span.tramit.entramit i{
+  color: #C7A902;
+}
+
+#intervencionesdiv a, #iniciativasdiv a{
+   color:#FE5339;
+}
+
+#intervencionesdiv a:hover{
+  text-decoration:underline;
+}
+
+
 /* FIN TEMPORALES*/
+
+#iniciativasdiv span,#intervencionesdiv span{font-size:10pt;}
 
 #iniciativasdiv .tituloInic, #intervencionesdiv .tituloInterv{
    color:black;
@@ -657,13 +730,20 @@ h3#totalInic, h3#totalInterv{
   margin:auto;
 }
 
-#intervencionesdiv .iniRel {
-  padding:10px;
+#intervencionesdiv .iniRel, #iniciativasdiv .autoresList{
+  margin: 5px;
+  font-size:10pt;
 }
 
-#intervencionesdiv .iniRel li{
-  padding:5px;
-  font-size:11pt;
+#intervencionesdiv .iniRel li, #iniciativasdiv .autoresList li{
+  padding:5px 0px;
+  font-size:10pt;
+}
+
+#intervencionesdiv .iniRel i, #iniciativasdiv .autoresList i{
+  color:#FE5339;
+  display:inline-block;
+  margin-right:5px;
 }
 
 #intervencionesdiv .videoInterv object{
@@ -729,13 +809,38 @@ h3#totalInic, h3#totalInterv{
 }
 
 /* DATEPICKER */
-#ui-datepicker-div{
+/*#ui-datepicker-div{
   width:13em !important;
 }
 
 #ui-datepicker-div select{
   font-size: 0.875rem !important; 
+}*/
+
+/* DATEPICKER */
+#ui-datepicker-div{
+        width:13em !important;
 }
+
+#ui-datepicker-div select{
+        font-size: 0.875rem !important;
+        padding: 5px !important;
+        height:auto;
+}
+
+.ui-datepicker-header{
+        background:#FF6956 !important;
+}
+
+.ui-state-default{
+        color: black !important;
+        font-weight:normal !important;
+}
+
+.ui-state-hover{
+        color: #004276 !important;
+}
+
 
 /* ENLACES INICIATIVAS PÁGINAS GRUPO - DIPUTADOS */
 
@@ -787,6 +892,10 @@ h3#totalInic, h3#totalInterv{
   margin-top:15px;
 }
 
+#iniciativasGrupo li{
+  margin-left:20px !important;
+}
+
 #ultimasInicDipu a{
   border-bottom:none;
 }
@@ -816,6 +925,18 @@ h3#totalInic, h3#totalInterv{
   -moz-transform: translateX(-50%);
   -ms-transform: translateX(-50%);
   transform: translateX(-50%);
+}
+.popUp span.asiento {
+  display: block;
+  line-height: 1.2em;
+  font-size: 7pt;
+  margin-bottom: 1em;
+}
+.popUp span.telematico {
+  display: block;
+  line-height: 1.2em;
+  font-size: 7pt;
+  margin-top: 1em;
 }
 .popUp .popUpDip span.fotoimg{
   width: 70px;
@@ -848,3 +969,15 @@ h3#totalInic, h3#totalInterv{
   background-color:#FE5339;
 }
 
+
+#buscHeader{
+  margin:0;
+  padding:0;
+  float:right;
+}
+
+#buscHeader div, #buscHeader form{float:right;}
+#buscHeader div input{ float:right;}
+
+.enlace_faq{ padding-right:10px; font-size:14px;}
+.enlace_faq a{line-height:1.3em !important;}

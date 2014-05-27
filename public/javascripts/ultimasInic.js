@@ -60,19 +60,28 @@ function ultimasInic(tipoAutor,autor,tipo){
 	$.when(
                 $.ajax(apiUrl)
          ).done(function(_data){
-                var nuevas=_data;
+                var nuevas=_data.result;
                 var masInic="";
 		if(nuevas.length > 0){
                    _.each(nuevas,function(inic){
-                        var urlInic=enlaceInic(inic.num_expediente);
-                        masInic+='<li class="iniciativa"><a target="_blank" href="'+urlInic+'"><i class="fa fa-circle"> </i> '+inic.titulo+'</a>';
+			var urlInic=enlaceInic(inic.num_expediente);
+                        enlaceExt='<a class="enlaceExtIcon" href="'+urlInic+'" target="_blank" title="Ver ficha de la iniciativa en Congreso.es" ><i class="fa fa-external-link"> </i></a>';
+                        masInic+='<li class="iniciativa"><span class="tituloInic"><i class="fa fa-circle" style="display:inline-block"> </i> '+inic.titulo+' '+enlaceExt+'</span>';
                         masInic+='<span>Presentada el '+inic.presentado+', calificada el '+inic.calificado+'</span>';
-                        
+                       
 			if(typeof(inic.resultado_tramitacion) != "undefined"){
-                                masInic+='<span>Estado: '+inic.resultado_tramitacion+'</span>';
+                                var tipoRes=tipoTramit(inic.resultado_tramitacion);
+                                var icono;
+                                if(tipoRes=="exito"){
+                                        icono="fa-thumbs-up";
+                                }else{
+                                        icono="fa-thumbs-down";
+                                }
+                                masInic+='<span class="tramit '+tipoRes+'"><i class="fa '+icono+'"> </i> '+inic.resultado_tramitacion+'</span>';
                         }else{
-                                masInic+='<span>Estado: En tramitación</span>';
+                                masInic+='<span class="tramit entramit"><i class="fa fa-clock-o"> </i> En tramitación</span>';
                         }
+
                         masInic+='</li>';
                    });
                    //$(masInic).hide().appendTo(".iniciativas").fadeIn(1500);

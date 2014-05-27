@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="row container">
+	<div class="columns large-12 mark">
+		<div class="columns large-8 mark">
+			<h2 class="marked">{% block pageTitle %}{% endblock %}</h2>
+			<div class="insideContent">
+				{% block inside %}
+				{% endblock %}
+			</div>
+		</div>
+		<!--div class="container columns large-4 mark">
+			{# include "./partials/menuNosotros.html" #}
+		</div-->
+	</div>
+</div>
+{% endblock %}

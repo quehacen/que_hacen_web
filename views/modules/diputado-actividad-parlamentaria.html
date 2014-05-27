@@ -69,7 +69,7 @@
 		<ul class="list box">
 			<li>
 				{%if actividad.intervenciones.total != 0%}
-				<a href="javascript:alert('Próximamente')">
+				<a href="/intervenciones#filter/diputado={{diputado.id}}">
 				{%endif%}
 				<span class="data total">{{actividad.intervenciones.total}}</span>
 				<span class="desc">Total</span>
@@ -79,7 +79,7 @@
 			</li>
 			<li>
 				{%if actividad.intervenciones.pleno != 0%}
-				<a href="javascript:alert('Próximamente')">
+				<a href="/intervenciones#filter/diputado={{diputado.id}}&lugar=P">
 				{%endif%}
 				<span class="data">{{actividad.intervenciones.pleno}}</span>
 				<span class="desc">Pleno</span>
@@ -89,7 +89,7 @@
 			</li>
 			<li>
 				{%if actividad.intervenciones.comision != 0%}
-				<a href="javascript:alert('Próximamente')">
+				<a href="/intervenciones#filter/diputado={{diputado.id}}&lugar=C">
 				{%endif%}
 				<span class="data">{{actividad.intervenciones.comision}}</span>
 				<span class="desc">Comisión</span>
@@ -99,7 +99,7 @@
 			</li>
 			<li>
 				{%if actividad.intervenciones.dipuPerm != 0%}
-				<a href="javascript:alert('Próximamente')">
+				<a href="/intervenciones#filter/diputado={{diputado.id}}&lugar=DP">
 				{%endif%}
 				<span class="data">{{actividad.intervenciones.dipuPerm}}</span>
 				<span class="desc">Diputación permanente</span>
@@ -109,7 +109,7 @@
 			</li>
 			<li>
 				{%if actividad.intervenciones.otras != 0%}
-				<a href="javascript:alert('Próximamente')">
+				<a href="/intervenciones#filter/diputado={{diputado.id}}&lugar=Otros">
 				{%endif%}
 				<span class="data">{{actividad.intervenciones.otras}}</span>
 				<span class="desc">Otras</span>

@@ -1,0 +1,7 @@
+<ol class="circunscripciones">
+{% for circuns in circunscripciones %}
+	<li class="circunscripcion">
+		<a href="/circunscripcion/{{circuns.normalized.url}}">{{ circuns.nombre }}</a></td>
+	</li>
+{% endfor %}
+</ol>
