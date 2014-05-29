@@ -679,9 +679,10 @@ h3#totalInic, h3#totalInterv{
 
 #intervencionesdiv a, #iniciativasdiv a{
    color:#FE5339;
+   text-decoration:none;
 }
 
-#intervencionesdiv a:hover{
+#intervencionesdiv a:hover, #iniciativasdiv a:hover{
   text-decoration:underline;
 }
 
@@ -740,8 +741,14 @@ h3#totalInic, h3#totalInterv{
   font-size:10pt;
 }
 
-#intervencionesdiv .iniRel i, #iniciativasdiv .autoresList i{
+#intervencionesdiv .iniRel i{
   color:#FE5339;
+  display:inline-block;
+  margin-right:5px;
+}
+
+#iniciativasdiv .autoresList i{
+  color:#6A6A6A;
   display:inline-block;
   margin-right:5px;
 }

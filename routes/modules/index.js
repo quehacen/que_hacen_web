@@ -3,7 +3,7 @@ var rsj = require('rsj');
 var _ = require('lodash');
 var _String = require('underscore.string');
 var APIUrl = 'http://localhost:3002';
-var BLOGUrl = 'http://blog.quehacenlosdiputados.net/'
+var BLOGUrl = 'http://blog.quehacenlosdiputados.net'
 
 exports.ultimas_iniciativas = function(req, res) {
     if (!req.params.limit || isNaN(req.params.limit)) {
@@ -35,10 +35,10 @@ exports.ultimas_votaciones = function(req, res) {
 };
 
 exports.ultimos_posts = function(req, res) {
-    rsj.r2j(BLOGUrl + '/feed/', function(err, json) {
+    rsj.r2j(BLOGUrl+'/feed/', function(err, json) {
         //res.send(JSON.parse(json));
         if (err) {
-            res.end();
+            res.send('POSTS error\n'+err);
         }
         var posts = JSON.parse(json);
         var postCollection = [];
