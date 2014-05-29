@@ -6,7 +6,7 @@
 			<span class="numerovotacion">Votación {{votacion.xml.resultado.informacion.numerovotacion}} - </span>
 			<span class="fecha">{{votacion.xml.resultado.informacion.fecha | fecha}}</span>
 		</div>
-		<div class="tituloVotacion"><a href="../votacion/sesion/{{votacion.xml.resultado.informacion.sesion}}/votacion/{{votacion.xml.resultado.informacion.numerovotacion}}">{{votacion.xml.resultado.informacion.titulo}}</a></div>
+		<div class="tituloVotacion"><a href="../votacion/sesion/{{votacion.xml.resultado.informacion.sesion}}/votacion/{{votacion.xml.resultado.informacion.numerovotacion}}">{{votacion.xml.resultado.informacion.textoexpediente}}</a></div>
 {%spaceless%}
 
 {%set tipoVot = votacion.numExpediente | tipoInic %}
@@ -56,7 +56,7 @@
 			<span class="voto {{votog | slugify}}"><i class="fa fa-{{iresul}}"> </i> {{txtResul}}</span>
 			<span class="voto {{_votacion.voto | slugify}}"><i class="fa fa-{{ivoto}}"> </i> {{txtVoto}}</span>
 		</div>
-		<div class="textoExpediente">{{votacion.xml.resultado.informacion.textoexpediente}}</div>
+		<div class="textoExpediente">{{votacion.xml.resultado.informacion.titulo}}</div>
 	</li>
 {% endfor %}
 </ul>

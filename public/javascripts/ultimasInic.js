@@ -3,6 +3,29 @@ function enlaceInic(numExp){
         return "http://www.congreso.es/portal/page/portal/Congreso/Congreso/Iniciativas?_piref73_2148295_73_1335437_1335437.next_page=/wc/servidorCGI&CMD=VERLST&BASE=IW10&FMT=INITXDSS.fmt&DOCS=1-3&DOCORDER=FIFO&OPDEF=ADJ&QUERY=%28"+nums[0]+"%2F"+nums[1]+"*.NDOC.%29";
 }
 
+function tipoTramit(tipo){
+        switch(tipo){
+                case "Aprobado con modificaciones":
+                case "Aprobado sin modificaciones":
+                case "Convertido":
+                case "Subsumido en otra iniciativa":
+                case "Tramitado por completo sin req. acuerdo o decisión":
+                        return "exito";
+                case "Caducado":
+                case "Decaído":
+                case "Extinguido por desaparición o cese del autor":
+                case "Inadmitido a trámite con recalificación":
+                case "Inadmitido a trámite en términos absolutos":
+                case "No celebración":
+                case "Rechazado":
+                case "Retirado":
+                        return "noexito";
+                default:
+                        return "entramit";
+        }
+}
+
+
 function tipoCatQuery(tipoCat){
         var tipoQuery;
         var tiposInic=[];
