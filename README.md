@@ -1,3 +1,5 @@
+![Logotipo del sitio web quehacenlosdiputados](http://quehacenlosdiputados.net/images/quehacenlosdiputados.jpg)
+
 que_hacen_web
 =============
 
