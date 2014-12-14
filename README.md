@@ -1,9 +1,9 @@
-![Logotipo del sitio web quehacenlosdiputados](http://quehacenlosdiputados.net/images/quehacenlosdiputados.jpg)
-
 que_hacen_web
 =============
 
 Sitio web de Que Hacen los Diputados
+
+![Logotipo del sitio web quehacenlosdiputados](http://quehacenlosdiputados.net/images/quehacenlosdiputados.jpg)
 
 ## Requisitos para la puesta en produccion del proyecto:
 
