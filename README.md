@@ -14,7 +14,7 @@ Sitio web de Que Hacen los Diputados
 ## Cómo funciona
 
 ### Servidor HTTP
-Necesitamos un servidor HTTP que recoja las llamas y ser redirijan dichas llamadas mediante un proxy inverso, a las aplicaciones node.js que estan corriendo en ell servidor.
+Necesitamos un servidor HTTP que redirija las llamadas al servidor, mediante un proxy inverso, a las aplicaciones node.js que estan corriendo en el servidor.
 
 Además es necesario tener **activado SSI (Sever Side Includes)** para hacer funcionar correctamente la aplicacion node.js que corresponde al portal, ya que dicha aplicación hace uso de modulos reutilizables que se incluyen en distintas vistas.
 
