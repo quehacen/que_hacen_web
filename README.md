@@ -14,7 +14,7 @@ Sitio web de Que Hacen los Diputados
 ### Servidor HTTP
 Necesitamos un servidor HTTP que recoja las llamas y ser redirijan dichas llamadas mediante un proxy inverso, a las aplicaciones node.js que estan corriendo en ell servidor.
 
-Además es necesario tener activado SSI (sever side includes) para hacer funcionar correctamente la aplicacion node.js que corresponde al portal, ya que dicha aplicacion hace uso de modulos reutilizables que se incluyen en distintas vistas.
+Además es necesario tener **activado SSI (Sever Side Includes)** para hacer funcionar correctamente la aplicacion node.js que corresponde al portal, ya que dicha aplicacion hace uso de modulos reutilizables que se incluyen en distintas vistas.
 
 ### La web se compone de dos aplicaciones desarrolladas en node.js:
 * una api publica que accede a la base de datos para recopilar los datos requeridos [https://github.com/quehacen/que_hacen_api](https://github.com/quehacen/que_hacen_api)
